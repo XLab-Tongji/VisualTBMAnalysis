@@ -27,7 +27,7 @@
         <span></span>
       </div>
       <el-form
-        ref="loginForm"
+        ref="loginFormRef"
         :model="loginForm"
         :rules="loginFormRules"
         label-width="80px"
@@ -36,7 +36,7 @@
         class="login_form2"
       >
         <h2 align="center">Registering for an account…</h2>
-       
+
         <!-- 用户名 -->
         <el-form-item prop="username" label="用户名">
           <el-input
@@ -44,14 +44,28 @@
             prefix-icon="el-icon-user"
           ></el-input>
         </el-form-item>
-        <!-- 电话号码 -->
+        <!-- 邮箱 -->
         <el-form-item prop="email" label="电子邮箱">
           <el-input
             v-model="loginForm.email"
-            prefix-icon="el-icon-user"
+            prefix-icon="el-icon-message"
           ></el-input>
         </el-form-item>
-
+        <!-- 邮箱验证码 -->
+        <el-form-item class="school-yanzs" prop="code" label="验证码">
+          <el-input
+            v-model="loginForm.code"
+            prefix-icon="el-icon-chat-round"
+            style="width: 45%; float: left"
+          ></el-input>
+        </el-form-item>
+        <!-- 发送邮箱验证码 -->
+        <el-form-item class="school-pics"  style="width: 30%; float: left">
+          <el-button @click="getEmailCode()" :disabled="!show" >
+            <span v-show="show">发送验证码</span>
+            <span v-show="!show" class="count">{{ count }} s后可点击重发</span>
+          </el-button>
+        </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password" label="密码">
           <el-input
@@ -65,7 +79,7 @@
         <el-form-item prop="rePassword" label="确认密码">
           <el-input
             v-model="loginForm.rePassword"
-            prefix-icon="el-icon-lock"
+            prefix-icon="el-icon-check"
             type="password"
             class="length"
             show-password
@@ -86,6 +100,8 @@
 </template>
 
 <script>
+const TIME_COUNT = 60; // 设置一个全局的倒计时的时间
+
 import request from "@/utils/request";
 
 export default {
@@ -106,7 +122,8 @@ export default {
         username: "",
         password: "",
         rePassword: "",
-        email:"",
+        email: "",
+        code: "",
       },
 
       //这是表单的验证规则对象
@@ -116,22 +133,10 @@ export default {
           { required: true, message: "请输入用户名", trigger: "blur" },
           {
             min: 2,
-            max: 5,
-            message: "长度在 2 到 5 个字符",
+            max: 10,
+            message: "长度在 2 到 10 个字符",
             trigger: "blur",
           },
-          // {
-          //   validator: function (rule, value, callback) {
-          //     //校验中文的正则：/^[\u4e00-\u9fa5]{0,}$/
-          //     if (/^[\u4e00-\u9fa5]+$/.test(value) == false) {
-          //       callback(new Error("请输入中文"));
-          //     } else {
-          //       //校验通过
-          //       callback();
-          //     }
-          //   },
-          //   trigger: "blur",
-          // },
         ],
 
         //验证密码是否合法
@@ -177,8 +182,9 @@ export default {
       capsTooltip: false,
       loading: false,
       redirect: undefined,
+      show: true,
       activeName: "first",
-      // imgSrc: require("../assets/bg.png"),
+      Ecode: "",
       radio: "1",
     };
   },
@@ -186,6 +192,55 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    //向邮箱发送验证码
+    getEmailCode() {
+      if (this.loginForm.email === "") {
+        this.$message.error("请先输入邮箱再点击获取验证码");
+      } else {
+        let regemail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if (!regemail.test(this.loginForm.email)) {
+          this.$message({
+            showClose: true,
+            message: "请输入格式正确有效的邮箱号!",
+            type: "error",
+          });
+        } else {
+          request.post("/email", this.loginForm).then((res) => {
+            if (res.code === "0") {
+              this.$message({
+                showClose: true,
+                type: "success",
+                message: "验证码已发送",
+              });
+              console.log("111111111");
+              this.Ecode = res.Ecode;
+              console.log(res.Ecode);
+            } else {
+              this.$message({
+                message: res.msg,
+                type: "error",
+                showClose: true,
+              });
+            }
+          });
+        }
+      }
+      // 验证码倒计时
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      }
+    },
+
     //跳转到登录界面
     toLogin() {
       this.$router.push("/login");
@@ -196,20 +251,31 @@ export default {
     },
 
     //注册功能
-    Register(loginForm) {
-      this.$refs[loginForm].validate((valid, wrongstring) => {
+    Register() {
+      this.$refs.loginFormRef.validate((valid, wrongstring) => {
         if (valid) {
+          if (!this.loginForm.code) {
+            this.$message.error("请填写验证码");
+            return;
+          }
+          if (this.loginForm.code.toLowerCase() !== this.Ecode.toLowerCase()) {
+            this.$message.error("验证码错误");
+            return;
+          }
           request.post("/register", this.loginForm).then((res) => {
             if (res.code === "0") {
               this.$message({
                 type: "success",
                 message: "注册成功",
+                showClose: true,
               });
               this.$router.push("/login"); //登录成功之后进行页面的跳转，跳转到主页
             } else {
-              this.$message({
-                type: "error",
+              this.$notify({
+                title: "提示",
                 message: res.msg,
+                type: "error",
+                duration: 3000,
               });
             }
           });
@@ -219,53 +285,6 @@ export default {
           return false;
         }
       });
-
-      // this.$refs[loginForm].validate((valid, wrongstring) => {
-      //   // 获取loginform的实例（el-form），找到validate方法，根据验证规则rules校验是否valid
-      //   if (valid) {
-      //     //this.loading = true;
-      //     registerFun({
-      //       name: this.loginForm.username,
-      //       password: this.loginForm.password,
-      //       tel: this.loginForm.telephone,
-      //       identification: this.loginForm.identification,
-      //       sex: this.loginForm.sex,
-      //     })
-      //       .then((res) => {
-      //         if (res.result === false) {
-      //           this.$notify({
-      //             title: "提示",
-      //             message: "用户已注册过账号，无须再注册！",
-      //             type: "warning",
-      //             duration: 3000,
-      //           });
-      //         } else {
-      //           this.$router.push("/login"); //注册成功路由实现跳转
-      //           this.$message({
-      //             showClose: true,
-      //             message: `注册成功！请记住您的ID：${res.result}`,
-      //             type: "success",
-      //             duration: 0,
-      //           });
-      //         }
-      //         console.log(res);
-      //       })
-      //       .catch((err) => {
-      //         this.$notify({
-      //           title: "提示",
-      //           message: "用户访问错误",
-      //           type: "error",
-      //           duration: 0,
-      //         });
-      //         console.log(err);
-      //       });
-      //   } else {
-      //     console.log(valid, wrongstring);
-      //     console.log("error submit!!");
-      //     return false;
-      //   }
-      // }
-      // );
     },
   },
 };
@@ -282,14 +301,14 @@ export default {
 
 .login_box2 {
   width: 380px;
-  height: 400px;
+  height: 440px;
   background-color: #ffffff;
   opacity: 0.9;
   border-radius: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-45%, -45%);
+  transform: translate(-50%, -50%);
   z-index: 1;
   border: 1px solid #d8d2d2;
 }
@@ -356,5 +375,16 @@ h2 {
   font-family: Arial;
   font-size: 24px;
   font-weight: 300;
+}
+
+.school-yanzs {
+  width: 45%;
+  /* height: 80px; */
+  float: left;
+}
+
+.school-pics {
+  width: 30%;
+  float: left;
 }
 </style>
