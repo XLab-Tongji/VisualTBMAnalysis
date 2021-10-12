@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import echarts from 'echarts'
 import axios from 'axios'
 import dataV from '@jiaminghi/data-view'
+import VueParticles from 'vue-particles'
 import './assets/css/global.css'
 import './assets/css/font.css'
 import './assets/theme'
@@ -15,6 +16,7 @@ import './assets/theme'
 Vue.use(dataV)
 Vue.prototype.$echarts = echarts;
 Vue.use(ElementUI);
+Vue.use(VueParticles)
 Vue.config.productionTip = false
 Vue.prototype.$http=axios
 

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="login_background">
-      <!-- 背景图片 <img :src="imgSrc" width="100%" height="100%" alt="" /> -->
+    <div class="bg">
     </div>
     <vue-particles
       color="#39AFFD"
@@ -21,19 +20,17 @@
       clickMode="push"
       class="lizi"
     />
-    <div class="login_box">
+
+  <div align="center" style="position:relative;top:150px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
+ 
+    <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box">
       <!-- 登录表单区域 -->
       <div class="box">
         <span></span>
       </div>
-      <el-form
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginFormRules"
-        label-width="0px"
-        class="login_form"
-      >
-        <h2 align="center">泥水盾构可视化分析平台</h2>
+      <el-form  ref="loginFormRef" :model="loginForm" :rules="loginFormRules"
+        label-width="0px" class="login_form"  >
+
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
@@ -71,7 +68,9 @@
           <el-button type="info" @click="resetloginForm">重置</el-button>
         </el-form-item>
       </el-form>
-    </div>
+    </dv-border-box-10>
+   <!-- </dv-border-box-10> -->
+
   </div>
 </template>
 
@@ -174,39 +173,6 @@ export default {
         }
       });
 
-      // loginFun({
-      //   id: this.loginForm.username,
-      //   password: this.loginForm.password,
-      // })
-      //   .then((res) => {
-      //     if (res.result === true) {
-      //       //window.sessionStorage.setItem("token", res.data.token);
-      //       this.$notify({
-      //         title: "提示",
-      //         message: "用户登录成功",
-      //         type: "success",
-      //         duration: 3000,
-      //       });
-      //       this.$router.push("/home");
-      //     } else {
-      //       this.$notify({
-      //         title: "提示",
-      //         message: res.msg,
-      //         type: "error",
-      //         duration: 3000,
-      //       });
-      //     }
-      //     console.log(res);
-      //   })
-      //   .catch((err) => {
-      //     this.$notify({
-      //       title: "提示",
-      //       message: "用户访问错误",
-      //       type: "error",
-      //       duration: 3000,
-      //     });
-      //     console.log(err);
-      //   });
     },
 
     toRegister() {
@@ -219,19 +185,17 @@ export default {
 };
 </script>
 
-<style>
-.login_background {
+<style lang="less" scoped>
+.bg {
   width: 100%;
   height: 100%;
   z-index: -1;
   position: absolute;
   background-color: rgb(255, 255, 255);
 }
-
 .login_box {
   width: 450px;
   height: 320px;
-  /* background-color: rgb(209, 245, 239); */
   opacity: 0.9;
   border-radius: 10px;
   position: absolute;
@@ -250,9 +214,9 @@ export default {
   border-radius: 10px;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, #9607b9, #3f50eb);
+  width: 80%;
+  height: 80%;
+  //background: linear-gradient(45deg, #3571e0, #ffffff);
 }
 
 /* 这里是为了实现渐变边框虚化 */
@@ -264,7 +228,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #9607b9, #3f50eb);
+  //background: linear-gradient(45deg, #f7f7f7, #3f50eb);
   filter: blur(30px);
 }
 
@@ -274,20 +238,10 @@ export default {
   left: 6px;
   right: 6px;
   bottom: 6px;
-  background-color: rgba(0, 0, 0, 0.6);
+  //background-color: rgba(255, 255, 255, 0.205);
   z-index: 2;
 }
 
-/* 使左右两边颜色有一定差距
-.login_box .box span::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
-} */
 
 .login_form {
   position: absolute;
@@ -307,12 +261,9 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  background: #3e3e3e;
+  background: #ffffff00;
 }
 
-/* .input1 {
-  color: #3e3e3e;
-} */
 
 h2 {
   color: #ffffff;
