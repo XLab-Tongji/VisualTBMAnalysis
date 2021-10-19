@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="login_background2">
-      <!-- 背景图片 <img :src="imgSrc" width="100%" height="100%" alt="" /> -->
+    <div class="bg">
     </div>
     <vue-particles
       color="#39AFFD"
@@ -21,7 +20,11 @@
       clickMode="push"
       class="lizi"
     />
-    <div class="login_box2">
+
+    <div align="center" style="position:relative;top:100px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
+ 
+    <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box2">
+
       <!-- 表单区域 -->
       <div class="box2">
         <span></span>
@@ -31,11 +34,11 @@
         :model="loginForm"
         :rules="loginFormRules"
         label-width="80px"
-        :inline="true"
+        
         size="medium"
         class="login_form2"
       >
-        <h2 align="center">Registering for an account…</h2>
+        <h2 align="center">注册信息</h2>
 
         <!-- 用户名 -->
         <el-form-item prop="username" label="用户名">
@@ -52,16 +55,13 @@
           ></el-input>
         </el-form-item>
         <!-- 邮箱验证码 -->
-        <el-form-item class="school-yanzs" prop="code" label="验证码">
-          <el-input
+        <el-form-item  prop="code" label="验证码">
+          <el-input 
             v-model="loginForm.code"
             prefix-icon="el-icon-chat-round"
-            style="width: 45%; float: left"
+            style="width: 50%; "
           ></el-input>
-        </el-form-item>
-        <!-- 发送邮箱验证码 -->
-        <el-form-item class="school-pics"  style="width: 30%; float: left">
-          <el-button @click="getEmailCode()" :disabled="!show" >
+          <el-button @click="getEmailCode()" :disabled="!show" style="width: 40%; float: right; ">
             <span v-show="show">发送验证码</span>
             <span v-show="!show" class="count">{{ count }} s后可点击重发</span>
           </el-button>
@@ -95,7 +95,8 @@
         </el-form-item>
       </el-form>
       <!-- </el-form> -->
-    </div>
+
+    </dv-border-box-10>
   </div>
 </template>
 
@@ -290,8 +291,8 @@ export default {
 };
 </script>
 
-<style>
-.login_background2 {
+<style lang="less" scoped>
+.bg {
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -299,10 +300,11 @@ export default {
   background-color: rgb(255, 255, 255);
 }
 
+
 .login_box2 {
-  width: 380px;
-  height: 440px;
-  background-color: #ffffff;
+  width: 450px;
+  height: 500px;
+  //background-color: #ffffff;
   opacity: 0.9;
   border-radius: 10px;
   position: absolute;
@@ -323,7 +325,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #9607b9, #3f50eb);
+  //background: linear-gradient(45deg, #9607b9, #3f50eb);
 }
 
 /* 这里是为了实现渐变边框虚化 */
@@ -335,7 +337,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #9607b9, #3f50eb);
+  //background: linear-gradient(45deg, #9607b9, #3f50eb);
   filter: blur(30px);
 }
 
@@ -345,15 +347,15 @@ export default {
   left: 6px;
   right: 6px;
   bottom: 6px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 2;
 }
 
 .login_form2 {
   position: absolute;
   width: 100%;
-  padding: 10px 10px;
-  align-self: center;
+  padding: 20px 40px;
+  //align-self: center;
   box-sizing: border-box;
   z-index: 3;
 }
@@ -367,7 +369,7 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  background: #3e3e3e;
+  background: #ffffff00;
 }
 
 h2 {
@@ -377,14 +379,4 @@ h2 {
   font-weight: 300;
 }
 
-.school-yanzs {
-  width: 45%;
-  /* height: 80px; */
-  float: left;
-}
-
-.school-pics {
-  width: 30%;
-  float: left;
-}
 </style>
