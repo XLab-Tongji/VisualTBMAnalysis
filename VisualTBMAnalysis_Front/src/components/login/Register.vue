@@ -263,24 +263,27 @@ export default {
             this.$message.error("验证码错误");
             return;
           }
+
           request.post("/register", this.loginForm).then((res) => {
-            if (res.code === "0") {
+            console.log(res.code)
+            if (res.code == "0") {
               this.$message({
                 type: "success",
                 message: "注册成功",
                 showClose: true,
               });
               this.$router.push("/login"); //登录成功之后进行页面的跳转，跳转到主页
-            } else {
+            } 
+            else {
               this.$notify({
                 title: "提示",
                 message: res.msg,
                 type: "error",
                 duration: 3000,
-              });
-            }
+              });}
           });
-        } else {
+        } 
+        else {
           console.log(valid, wrongstring);
           console.log("error submit!!");
           return false;
