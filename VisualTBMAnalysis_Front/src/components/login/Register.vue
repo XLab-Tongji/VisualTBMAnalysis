@@ -118,6 +118,7 @@ export default {
     };
 
     return {
+      count:0,
       //这是注册表单的数据绑定对象
       loginForm: {
         username: "",
@@ -195,6 +196,7 @@ export default {
     },
     //向邮箱发送验证码
     getEmailCode() {
+      console.log("eess6@163.com");
       if (this.loginForm.email === "") {
         this.$message.error("请先输入邮箱再点击获取验证码");
       } else {
@@ -206,17 +208,20 @@ export default {
             type: "error",
           });
         } else {
+          console.log("经过检验格式正确");//已执行
           request.post("/email", this.loginForm).then((res) => {
+            console.log("2222222");//未执行
             if (res.code === "0") {
               this.$message({
                 showClose: true,
                 type: "success",
                 message: "验证码已发送",
               });
-              console.log("111111111");
+              console.log("3333333");//未执行
               this.Ecode = res.Ecode;
               console.log(res.Ecode);
             } else {
+              console.log("4444444");//未执行
               this.$message({
                 message: res.msg,
                 type: "error",
@@ -226,6 +231,7 @@ export default {
           });
         }
       }
+      console.log("55555");//执行
       // 验证码倒计时
       if (!this.timer) {
         this.count = TIME_COUNT;
@@ -244,7 +250,7 @@ export default {
 
     //跳转到登录界面
     toLogin() {
-      this.$router.push("/login");
+     this.$router.push("/login");//not
     },
     //点击重置按钮，重置登录
     resetloginForm() {
@@ -266,13 +272,13 @@ export default {
 
           request.post("/register", this.loginForm).then((res) => {
             console.log(res.code)
-            if (res.code == "0") {
+            if (res.code === "0") {
               this.$message({
                 type: "success",
                 message: "注册成功",
                 showClose: true,
               });
-              this.$router.push("/login"); //登录成功之后进行页面的跳转，跳转到主页
+              this.$router.push("/login"); //登录成功之后进行页面的跳转，跳转到主页not
             } 
             else {
               this.$notify({
@@ -285,7 +291,7 @@ export default {
         } 
         else {
           console.log(valid, wrongstring);
-          console.log("error submit!!");
+          console.log("error submit");
           return false;
         }
       });

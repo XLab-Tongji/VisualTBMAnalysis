@@ -8,25 +8,30 @@ import Register from '../components/login/Register.vue'
 Vue.use(Router)
 
 const routes = [
-  {path: '/index',component: index},
+  
   {path:'/',redirect:'/login'},
   {
     path: '/home',
     name: 'Home',
     component: Home,
-    meta:{title: '欢迎来到主页'}   
+    meta:{title: '这是一个测试界面'}   
   },
   {
     path: '/login',
     name: 'Login',
     component: Login,
-    meta:{title: '欢迎来到泥水盾构可视化平台！'}
+    meta:{title: '欢迎来到泥水盾构可视化平台'}
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
-    meta:{title: 'Registering'}
+    meta:{title: '注册界面'}
+  },
+  {
+    path: '/index',
+    component: index,
+    meta:{title: '可视化界面'}
   },
 ]
 
