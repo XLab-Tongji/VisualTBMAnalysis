@@ -6,10 +6,8 @@
 <el-container>
 
     <el-container  style="width:60%; height:100%" direction="vertical" >
-         <!-- <el-card class="card_2" style="float:left;width:100%;height:150px"> -->
-            <dv-decoration-11 style="width:100%;height:150px;"><h1 class="text">当前掘进环号：1245 <br> 当前掘进状态：掘进/并装
+            <dv-decoration-11 style="width:100%;height:150px;"><h1 class="text">当前掘进环号：S1245 <br> 当前掘进状态：掘进/拼装
                 </h1></dv-decoration-11>        
-        <!-- </el-card> -->
        
             
         <dv-border-box-8 class="card_1" dur=6 style="width:100%; height:450px; margin-top:20px;">
@@ -30,33 +28,9 @@
         </dv-border-box-8>
 
 
-        <!-- <el-card class="card_1" style="width:100%; height:450px; margin-top:20px;">
-       
-        <el-carousel indicator-position="none" height="400px" style="float:left; width:100%; height:500px">
-            <el-carousel-item>
-            <img src='../assets/image/bg1.jpg' style="height: 100%; width:100%">
-            </el-carousel-item>
-            <el-carousel-item>
-            <img src='../assets/image/bg2.png' style="height: 100%; width:100%">
-            </el-carousel-item>  
-            <el-carousel-item>
-            <img src='../assets/image/bg3.png' style="height: 100%; width:100%">
-            </el-carousel-item>  
-            <el-carousel-item>
-            <img src='../assets/image/bg4.png' style="height: 100%; width:100%">
-            </el-carousel-item>  
-        </el-carousel>  
-        
-        </el-card> -->
-
-
     </el-container>
 
     <el-container style="width:40%;height:100%">
-        <!-- <el-card  class="card_3" >       
-            <dv-decoration-7><div class="title">  总推力变化情况</div></dv-decoration-7>
-            <div style="width:500px;height:500px" ref="chart"></div>
-        </el-card> -->
         <dv-border-box-11 title="总推力变化情况" 
         style="font-family: 'zcool_title';font-size: 25px;"  
         :color="['#3f7c8b', '#96dee8']" >
@@ -73,7 +47,7 @@ export default {
  data () { 
 　　return {
         query:{
-            where:"([t]>='2021-09-17 23:56:00' and [t]<='2021-09-17 23:59:00')"
+            where:"([t]>='2021-09-22 23:50:00' and [t]<='2021-09-22 23:59:00')"
         },        
         all_data:[],
         time_point:['test1','test2','test3','test4','test5','test6','test7'],
@@ -110,8 +84,8 @@ export default {
         yAxis: {
             type: 'value',
             scale: true,
-            min:24600,
-            max:24800,
+            // min:24000,
+            // max:40000,
            
             boundaryGap: [0, '100%']
         },

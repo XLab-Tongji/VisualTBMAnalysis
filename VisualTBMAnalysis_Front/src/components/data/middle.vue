@@ -28,14 +28,6 @@
          <div style="width:450px;height:350px" ref="chart2" class="chart"></div>
     </dv-border-box-12>
 
-    <!-- <el-card class="card_1" style="height:90%;">       
-
-    </el-card>
-
-        <el-card class="card_1" style="height:90%;">       
-        <h2 style="color:#626c91">扭矩变化情况</h2>
-         <div style="width:500px;height:300px" ref="chart"></div>
-    </el-card> -->
 
   </el-container>
 </template>
@@ -46,7 +38,7 @@ export default {
  data () { 
 　　return {
         query:{
-            where:"([t]>='2021-09-17 23:56:00' and [t]<='2021-09-17 23:59:00')"
+            where:"([t]>='2021-09-22 23:50:00' and [t]<='2021-09-22 23:59:00')"
         },        
         all_data:[],
         time_point:['test1','test2','test3','test4','test5','test6','test7'],
@@ -85,8 +77,8 @@ export default {
         yAxis: {
             type: 'value',
             scale: true,
-            min:0,
-            max:100,
+            // min:0,
+            // max:100,
            
             boundaryGap: [0, '100%']
         },
@@ -137,8 +129,8 @@ export default {
         yAxis: {
             type: 'value',
             scale: true,
-            min:0,
-            max:100,
+            // min:0,
+            // max:100,
            
             boundaryGap: [0, '100%']
         },

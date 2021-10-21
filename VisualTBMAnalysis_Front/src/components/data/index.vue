@@ -24,6 +24,18 @@
 
     <bottom />
 
+    <div class="d-flex jc-center" >
+        <div class="title">
+            <dv-decoration-6
+            class="dv-dec-6"
+            :reverse="true"
+            :color="['#3fb1e3', '#96dee8']"
+            style="margin=20px"
+            />
+        </div>
+    </div>
+
+    <bottom2 />
 
 </dv-border-box-9>
 
@@ -35,12 +47,14 @@
 import top from './top';
 import middle from './middle';
 import bottom from './bottom';
+import bottom2 from './bottom2';
 
 export default{
  components:{
         top,
         middle,
         bottom,
+        bottom2,
     },
 
  data () { 
