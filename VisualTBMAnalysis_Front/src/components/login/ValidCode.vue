@@ -88,6 +88,9 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border: 0.5px solid #d2ecf8;
+  border-radius: 5px;
+  margin-left: 10px;
 }
 .ValidCode span{
   display: inline-block;

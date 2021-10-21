@@ -21,16 +21,11 @@
       class="lizi"
     />
 
-  <div align="center" style="position:relative;top:150px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
- 
+  <div align="center" style="position:relative;top:90px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box">
-      <!-- 登录表单区域 -->
-      <div class="box">
-        <span></span>
-      </div>
+      <!-- 登录表单区域 -->   
       <el-form  ref="loginFormRef" :model="loginForm" :rules="loginFormRules"
         label-width="0px" class="login_form"  >
-
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
@@ -195,53 +190,16 @@ export default {
 }
 .login_box {
   width: 450px;
-  height: 320px;
+  height: 300px;
   opacity: 0.9;
   border-radius: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -37%);
   z-index: 1;
   border: 1px solid #d8d2d2;
 }
-
-/* 通过两个伪类来实现渐变 */
-/* 这里是为了实现渐变边框 */
-.login_box .box::after {
-  content: "";
-  position: absolute;
-  border-radius: 10px;
-  top: 0;
-  left: 0;
-  width: 80%;
-  height: 80%;
-  //background: linear-gradient(45deg, #3571e0, #ffffff);
-}
-
-/* 这里是为了实现渐变边框虚化 */
-.login_box .box::before {
-  content: "";
-  position: absolute;
-  border-radius: 10px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  //background: linear-gradient(45deg, #f7f7f7, #3f50eb);
-  filter: blur(30px);
-}
-
-.login_box .box span {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  bottom: 6px;
-  //background-color: rgba(255, 255, 255, 0.205);
-  z-index: 2;
-}
-
 
 .login_form {
   position: absolute;

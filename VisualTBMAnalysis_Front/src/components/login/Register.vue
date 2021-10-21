@@ -21,45 +21,45 @@
       class="lizi"
     />
 
-    <div align="center" style="position:relative;top:100px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
- 
+    <div align="center" style="position:relative;top:45px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box2">
-
       <!-- 表单区域 -->
-      <div class="box2">
-        <span></span>
-      </div>
       <el-form
         ref="loginFormRef"
         :model="loginForm"
         :rules="loginFormRules"
-        label-width="80px"
-        
+        label-width="0px"
         size="medium"
         class="login_form2"
       >
-        <h2 align="center">注册信息</h2>
+        <p align="center" style="color: #d8e2e7;
+  font-size: 18px;">请填写您的注册信息</p>
 
         <!-- 用户名 -->
-        <el-form-item prop="username" label="用户名">
+        <el-form-item prop="username">
           <el-input
             v-model="loginForm.username"
             prefix-icon="el-icon-user"
+            style="width: 370px; float: left"
+              placeholder="请设定用户名"
           ></el-input>
         </el-form-item>
         <!-- 邮箱 -->
-        <el-form-item prop="email" label="电子邮箱">
+        <el-form-item prop="email">
           <el-input
             v-model="loginForm.email"
             prefix-icon="el-icon-message"
+             style="width: 370px; float: left"
+              placeholder="请输入电子邮箱"
           ></el-input>
         </el-form-item>
         <!-- 邮箱验证码 -->
-        <el-form-item  prop="code" label="验证码">
+        <el-form-item  prop="code">
           <el-input 
             v-model="loginForm.code"
             prefix-icon="el-icon-chat-round"
             style="width: 50%; "
+            placeholder="请输入验证码"
           ></el-input>
           <el-button @click="getEmailCode()" :disabled="!show" style="width: 40%; float: right; ">
             <span v-show="show">发送验证码</span>
@@ -67,22 +67,24 @@
           </el-button>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item prop="password" label="密码">
+        <el-form-item prop="password">
           <el-input
             v-model="loginForm.password"
             prefix-icon="el-icon-lock"
             type="password"
             show-password
+            placeholder="请设定密码"
           ></el-input>
         </el-form-item>
         <!-- 确认密码 -->
-        <el-form-item prop="rePassword" label="确认密码">
+        <el-form-item prop="rePassword">
           <el-input
             v-model="loginForm.rePassword"
             prefix-icon="el-icon-check"
             type="password"
             class="length"
             show-password
+            placeholder="请设定密码"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
@@ -312,52 +314,16 @@ export default {
 
 .login_box2 {
   width: 450px;
-  height: 500px;
-  //background-color: #ffffff;
+  height: 440px;
+  // background-color: #ffffff42;
   opacity: 0.9;
   border-radius: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -44%);
   z-index: 1;
   border: 1px solid #d8d2d2;
-}
-
-/* 通过两个伪类来实现渐变 */
-/* 这里是为了实现渐变边框 */
-.login_box2 .box2::after {
-  content: "";
-  position: absolute;
-  border-radius: 10px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  //background: linear-gradient(45deg, #9607b9, #3f50eb);
-}
-
-/* 这里是为了实现渐变边框虚化 */
-.login_box2 .box2::before {
-  content: "";
-  position: absolute;
-  border-radius: 10px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  //background: linear-gradient(45deg, #9607b9, #3f50eb);
-  filter: blur(30px);
-}
-
-.login_box2 .box2 span {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  bottom: 6px;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 2;
 }
 
 .login_form2 {
