@@ -84,7 +84,7 @@
             type="password"
             class="length"
             show-password
-            placeholder="请设定密码"
+            placeholder="请再次确认密码"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
@@ -314,14 +314,14 @@ export default {
 
 .login_box2 {
   width: 450px;
-  height: 440px;
+  height: 415px;
   // background-color: #ffffff42;
   opacity: 0.9;
   border-radius: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -44%);
+  transform: translate(-50%, -39%);
   z-index: 1;
   border: 1px solid #d8d2d2;
 }
@@ -329,7 +329,7 @@ export default {
 .login_form2 {
   position: absolute;
   width: 100%;
-  padding: 20px 40px;
+  padding: 5px 40px;
   //align-self: center;
   box-sizing: border-box;
   z-index: 3;

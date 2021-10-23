@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import index from '../components/data/index.vue'
-import Home from '../components/login/Home.vue'
 import Login from '../components/login/Login.vue'
 import Register from '../components/login/Register.vue'
 
@@ -10,12 +9,6 @@ Vue.use(Router)
 const routes = [
   
   {path:'/',redirect:'/index'},
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home,
-    meta:{title: '这是一个测试界面'}   
-  },
   {
     path: '/login',
     name: 'Login',

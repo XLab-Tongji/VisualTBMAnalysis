@@ -155,7 +155,7 @@ export default {
                 duration: 3000,
               });
               sessionStorage.setItem("user", JSON.stringify(res.data)); // 缓存用户信息
-              this.$router.push("/home"); //登录成功之后进行页面的跳转，跳转到主页
+              this.$router.push("/index"); //登录成功之后进行页面的跳转，跳转到主页
             } else {
               this.$notify({
                 title: "提示",
