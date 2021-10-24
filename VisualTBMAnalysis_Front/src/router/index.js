@@ -1,31 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '../components/data/index.vue'
+import home from '../components/main/home.vue'
 import Login from '../components/login/Login.vue'
 import Register from '../components/login/Register.vue'
+import Analysis from '../components/analysis/analysis.vue'
+import Data from '../components/data/data.vue'
+import Intro from '../components/main/intro.vue'
 
 Vue.use(Router)
 
 const routes = [
   
-  {path:'/',redirect:'/index'},
+  {path:'/', redirect:'/home'},
+  {path: '/login', name: 'Login', component: Login,},
+  {path: '/register',name: 'Register', component: Register},
+
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta:{title: '欢迎来到泥水盾构可视化平台'}
+    path: '/home',
+    component: home,
+    redirect:'/intoduction',
+    children:[
+      { path: '/intoduction', component: Intro },
+      { path: '/data', component: Data },
+      { path: '/analysis', component: Analysis },
+    ]
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
-    meta:{title: '注册界面'}
-  },
-  {
-    path: '/index',
-    component: index,
-    meta:{title: '可视化界面'}
-  },
+
 ]
 
 const router = new Router({

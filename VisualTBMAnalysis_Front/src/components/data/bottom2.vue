@@ -44,7 +44,6 @@
     </el-table>
       </el-container>
 </div>
-
 </template>
 
 
@@ -144,7 +143,6 @@ export default {
     cellStyle(row,column,rowIndex,columnIndex){
           return 'color:#96dee8'
     }
-
 　},
 　  mounted () {
         // this.getID_1();

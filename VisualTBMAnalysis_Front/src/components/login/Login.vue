@@ -21,7 +21,8 @@
       class="lizi"
     />
 
-  <div align="center" style="position:relative;top:90px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
+  <div align="center" style="position:relative;top:30px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
+  <div align="center" style="position:relative;bottom:100px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box">
       <!-- 登录表单区域 -->   
       <el-form  ref="loginFormRef" :model="loginForm" :rules="loginFormRules"
@@ -155,7 +156,7 @@ export default {
                 duration: 3000,
               });
               sessionStorage.setItem("user", JSON.stringify(res.data)); // 缓存用户信息
-              this.$router.push("/index"); //登录成功之后进行页面的跳转，跳转到主页
+              this.$router.push("/home"); //登录成功之后进行页面的跳转，跳转到主页
             } else {
               this.$notify({
                 title: "提示",

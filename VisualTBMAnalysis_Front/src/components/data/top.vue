@@ -1,31 +1,12 @@
 <template>
 <el-container  direction="vertical" >
-    <div align="center">  <img src="@/assets/image/title.png" class="title_img" style="width:800px;" /></div>
   
-        <dv-decoration-5 class="headline" dur=3  :color="['#3fb1e3', '#96dee8']" style="width:800px;height:80px;margin:0 auto" />
 <el-container>
 
     <el-container  style="width:60%; height:100%" direction="vertical" >
             <dv-decoration-11 style="width:100%;height:150px;"><h1 class="text">当前掘进环号：S1245 <br> 当前掘进状态：掘进/拼装
                 </h1></dv-decoration-11>        
        
-            
-        <dv-border-box-8 class="card_1" dur=6 style="width:100%; height:450px; margin-top:20px;">
-        <el-carousel indicator-position="outside" height="400px" style="width:90%;">
-            <el-carousel-item>
-            <img src='@/assets/image/bg1.jpg' style="height: 100%; width:100%;">
-            </el-carousel-item>
-            <el-carousel-item>
-            <img src='@/assets/image/bg2.png' style="height: 100%; width:100%">
-            </el-carousel-item>  
-            <el-carousel-item>
-            <img src='@/assets/image/bg3.png' style="height: 100%; width:100%">
-            </el-carousel-item>  
-            <el-carousel-item>
-            <img src='@/assets/image/bg4.png' style="height: 100%; width:100%">
-            </el-carousel-item>  
-        </el-carousel>  
-        </dv-border-box-8>
 
 
     </el-container>
