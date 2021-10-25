@@ -21,8 +21,8 @@
       class="lizi"
     />
 
-  <div align="center" style="position:relative;top:30px">  <img src="@/assets/image/title1.png"  style="width:800px;" /></div>
-  <div align="center" style="position:relative;bottom:0px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
+  <div align="center" style="position:relative;top:30px">  <img src="@/assets/image/title1.png"  style="width:700px;" /></div>
+  <div align="center" style="position:relative;bottom:15px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box">
       <!-- 登录表单区域 -->   
       <el-form  ref="loginFormRef" :model="loginForm" :rules="loginFormRules"
@@ -54,7 +54,7 @@
               style="width: 50%"
               placeholder="请输入验证码"
             ></el-input>
-            <ValidCode @input="createValidCode" />
+            <validCode @input="createValidCode" />
           </div>
         </el-form-item>
         <!-- 按钮区域 -->
@@ -72,12 +72,12 @@
 
 <script>
 import request from "@/utils/request";
-import ValidCode from "./ValidCode.vue";
+import validCode from "./validCode";
 
 export default {
   name: "login",
   components: {
-    ValidCode,
+    validCode,
   },
   data() {
     return {
@@ -197,7 +197,7 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -37%);
+  transform: translate(-50%, -26.5%);
   z-index: 1;
   border: 1px solid #d8d2d2;
 }

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from '../components/main/home.vue'
-import Login from '../components/login/Login.vue'
-import Register from '../components/login/Register.vue'
+import login from '../components/login/login.vue'
+import register from '../components/login/register.vue'
 import Analysis from '../components/analysis/analysis.vue'
 import Data from '../components/data/data.vue'
 import Intro from '../components/main/intro.vue'
@@ -12,8 +12,8 @@ Vue.use(Router)
 const routes = [
   
   {path:'/', redirect:'/home'},
-  {path: '/login', name: 'Login', component: Login,},
-  {path: '/register',name: 'Register', component: Register},
+  {path: '/login', name: 'login', component: login,},
+  {path: '/register',name: 'register', component: register},
 
   {
     path: '/home',
