@@ -29,5 +29,10 @@ export default{
     width:100%;
     height: 100%;
 }
+.el-breadcrumb  /deep/  .el-breadcrumb__inner 
+      {
+        color: #96dee8 !important;				//你想要设置的字体颜色
+        font-size: 20px;
+    }
 
 </style>
