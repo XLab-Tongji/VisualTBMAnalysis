@@ -3,7 +3,7 @@
 <div class="bg">
 <div style="margin:10px;">
 
-    <el-breadcrumb separator="|" style="margin-bottom:30px">
+    <el-breadcrumb separator="|" style="margin-bottom:30px;margin-left:15px;">
     <el-breadcrumb-item :to="{ path: '/home' }">主页</el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/data' }">数据概况</el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/analysis' }">机器学习分析</el-breadcrumb-item>

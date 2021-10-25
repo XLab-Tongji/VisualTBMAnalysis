@@ -97,7 +97,7 @@ export default {
         const { data: res } =await this.$http.
         post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
         this.query)
-        //console.log(res.data)
+        console.log(res.data)
         this.all_data=res.data
 
         var i;
