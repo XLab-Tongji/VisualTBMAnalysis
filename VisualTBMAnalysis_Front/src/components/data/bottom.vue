@@ -96,7 +96,7 @@ export default {
             data: this.v_push,
             //smooth: true,
             symbol: 'none',
-            areaStyle: {},
+            //areaStyle: {},
             type: 'line',
             }
         ]
@@ -148,7 +148,7 @@ export default {
             data: this.v_rotate,
             //smooth: true,
             symbol: 'none',
-            areaStyle: {},
+            //areaStyle: {},
             type: 'line',
             }
         ]

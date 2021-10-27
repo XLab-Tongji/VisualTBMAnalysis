@@ -98,7 +98,7 @@ export default {
             data: this.degree,
             //smooth: true,
             symbol: 'none',
-            areaStyle: {},
+            //areaStyle: {},
             type: 'line',
             }
         ]
@@ -150,7 +150,7 @@ export default {
             data: this.torsion,
             //smooth: true,
             symbol: 'none',
-            areaStyle: {},
+            //areaStyle: {},
             type: 'line',
             }
         ]
