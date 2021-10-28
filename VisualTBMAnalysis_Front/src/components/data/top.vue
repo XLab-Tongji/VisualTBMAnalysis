@@ -239,6 +239,5 @@ export default {
     //font-weight: bold;
     font-family: 'zcool_title';
     font-size: 25px;
-    
 }
 </style>
