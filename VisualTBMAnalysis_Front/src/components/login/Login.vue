@@ -197,7 +197,7 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -26.5%);
+  transform: translate(-50%, -26%);
   z-index: 1;
   border: 1px solid #d8d2d2;
 }
