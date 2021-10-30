@@ -37,7 +37,6 @@
                 size="mini"
                 max-height="420"
                 :span-method="objectSpanMethod"
-                highlight-current-row
                 @current-change="handleCurrentChange"
               >
                 <el-table-column prop="FK_SRingNo" label="分析环号" width="70">
@@ -351,6 +350,6 @@ export default {
   color: #fff !important;
 }
 .el-table__body tr.current-row>td.el-table__cell {
-    background-color: #066e7c !important;
+    background-color: #066e7c  !important;
 }
 </style>
