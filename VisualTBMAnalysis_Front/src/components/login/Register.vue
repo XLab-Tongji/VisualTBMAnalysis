@@ -107,7 +107,6 @@
 const TIME_COUNT = 60; // 设置一个全局的倒计时的时间
 
 import request from "@/utils/request";
-
 export default {
   name: "Register",
   data() {
