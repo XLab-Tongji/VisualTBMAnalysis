@@ -16,12 +16,7 @@
         </div>
     </div>
 
-  <!-- <middle /> -->
   <select-time/>
-
-  <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
-
-    <!-- <bottom /> -->
 
 
     <div class="d-flex jc-center" >

@@ -150,9 +150,6 @@ export default {
 .el-table .cell {
   background-color: #0d1a2c18;
 }
-</style>
-
-<style>
 .el-container .el-table td,
 .el-container .el-table th.is-leaf,
 .el-container .el-table--border,

@@ -18,7 +18,7 @@
       hoverMode="grab"
       :clickEffect="false"
       clickMode="push"
-      class="lizi"
+      class="particle"
     />
 
     <div align="center" style="position:relative;top:15px">  <img src="@/assets/image/title1.png"  style="width:650px;" /></div>
@@ -340,7 +340,7 @@ export default {
   justify-content: flex-end;
 }
 
-.lizi {
+.particle {
   position: fixed;
   top: 0;
   width: 100%;

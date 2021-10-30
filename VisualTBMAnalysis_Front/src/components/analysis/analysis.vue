@@ -251,6 +251,7 @@ export default {
   margin-bottom: 0px;
   font-family: "zcool_title";
   text-align: center;
+  z-index: 5;
 }
 .noText {
   color: #96dee8;
