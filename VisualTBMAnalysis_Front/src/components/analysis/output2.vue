@@ -1,7 +1,7 @@
 <template>
   <dv-border-box-8>
     <div class="table-wrapper">
-      <div class="text">泥水仓压力控制参数优化结果</div>
+      <div class="text">优化建议结果</div>
       <el-container>
         <el-table
           :show-header="false"
@@ -10,11 +10,11 @@
           style="width: 100%"
           size="mini"
         >
-          <el-table-column prop="Name" label="参数名称" width="150">
+          <el-table-column prop="Name" label="参数名称" width="160">
           </el-table-column>
-          <el-table-column prop="Value" label="取值" width="180">
+          <el-table-column prop="Value" label="取值" width="130">
           </el-table-column>
-          <el-table-column prop="Unit" label="单位" width="130">
+          <el-table-column prop="Unit" label="单位" width="120">
           </el-table-column>
         </el-table>
       </el-container>
@@ -24,37 +24,37 @@
 
 <script>
 export default {
+  props: ["FK_SRingNo"],
   data() {
     return {
-      recordID1: "0",
-      recordID2: "0",
+      recordID1: "",
+      recordID2: "",
       modelName1: "掘进参数优化模型",
       modelName2: "泥水仓压力优化模型",
       analyseInfo1: [],
       analyseInfo2: [],
+      currentFK_SRingNo: this.FK_SRingNo,
     };
   },
 
+  watch: {
+    FK_SRingNo: {
+      handler(newValue) {
+        if (newValue) {
+          console.log(newValue);
+          this.currentFK_SRingNo = newValue;
+          this.getInfo2();
+        }
+      },
+    },
+  },
+
   methods: {
-    // 和并列
-    // objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-    //   if (columnIndex === 0) {
-    //     if (rowIndex % 4 === 0) {
-    //       return {
-    //         rowspan: 4,
-    //         colspan: 1,
-    //       };
-    //     } else {
-    //       return {
-    //         rowspan: 0,
-    //         colspan: 0,
-    //       };
-    //     }
-    //   }
-    // },
     async getID2() {
+      console.log("现在");
+      console.log(this.currentFK_SRingNo);
       let queryID = {
-        where: `(([AnalysisObject]='S1245') and ([AnalysisModel]='${this.modelName2}'))`,
+        where: `(([AnalysisObject]='S1245') and ([AnalysisModel]='${this.modelName2}') and ([FK_SRingNo]=${this.currentFK_SRingNo}))`,
       };
       const { data: res } = await this.$http.post(
         "/api/universal/Structure/TunnelingAnalysisRecord/where?prj=shushui&dataset=3871633455494201344&increase=false&pagesize=1&pageindex=1",
@@ -62,37 +62,48 @@ export default {
       );
 
       if (res.data == null) {
-        console.log("获取掘进参数优化模型ID失败！");
+        console.log("获取泥水仓压力优化模型ID失败！");
+        console.log(res.data);
       } else {
+        console.log("泥水仓压力优化模型分析记录:");
+        console.log(res.data);
         this.recordID2 = res.data[0]["ID"];
-        console.log("掘进参数优化模型ID:");
+        console.log("泥水仓压力优化模型ID:");
         console.log(this.recordID2);
       }
     },
 
     async getInfo2() {
+      this.analyseInfo2 = [];
+      this.recordID2 = "";
       await this.getID2();
-
-      let queryInfo = {
-        where: `([FK_TunnelingAnalysisRecord]=${this.recordID2})`,
-      };
-      const { data: res } = await this.$http.post(
-        "/api/universal/Structure/TunnelingAnalysisInfo/where?prj=shushui&dataset=3871633545889841152",
-        queryInfo
-      );
-
-      if (res.data == null) {
-        console.log("获取泥水仓压力优化模型分析记录数据失败！");
+      if (this.recordID2 == null) {
       } else {
-        console.log("泥水仓压力优化模型分析记录数据:");
-        console.log(res.data);
+        let queryInfo = {
+          where: `([FK_TunnelingAnalysisRecord]=${this.recordID2})`,
+        };
+        const { data: res } = await this.$http.post(
+          "/api/universal/Structure/TunnelingAnalysisInfo/where?prj=shushui&dataset=3871633545889841152",
+          queryInfo
+        );
+
+        if (res.data == null) {
+          console.log("获取泥水仓压力优化模型分析记录数据失败！");
+        } else {
+          console.log("泥水仓压力优化模型分析记录数据:");
+          console.log(res.data);
+        var queryData = res.data.filter(function (fp) {
+          return fp.Type === "输出" || fp.Type === "预测值";
+        });
+        this.analyseInfo2 = queryData;
+        console.log("筛选后：");
+        console.log(queryData);
+        for (var i = queryData.length - 1; i >= 0; i--) {
+          const newValue = parseFloat(queryData[i].Value).toFixed(4);
+          this.analyseInfo2[i].Value = newValue;
+        }
+        }
       }
-      var queryData = res.data.filter(function (fp) {
-        return fp.Type === "输出" || fp.Type === "预测值";
-      });
-      this.analyseInfo2 = queryData;
-      console.log("筛选后：");
-      console.log(queryData);
     },
 
     cellStyle(row, column, rowIndex, columnIndex) {
@@ -100,7 +111,6 @@ export default {
     },
   },
   mounted() {
-    // this.getInfo1();
     this.getInfo2();
   },
 };
@@ -119,7 +129,7 @@ export default {
 }
 
 .dv-border-box-8 {
-  width: 40%;
+  width: 39%;
   height: 200px;
 }
 
