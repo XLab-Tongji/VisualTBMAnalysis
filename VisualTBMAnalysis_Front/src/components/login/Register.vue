@@ -21,8 +21,8 @@
       class="lizi"
     />
 
-    <div align="center" style="position:relative;top:80px">  <img src="@/assets/image/title1.png"  style="width:700px;" /></div>
-  <div align="center" style="position:relative;bottom:-35px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
+    <div align="center" style="position:relative;top:15px">  <img src="@/assets/image/title1.png"  style="width:650px;" /></div>
+  <div align="center" style="position:relative;bottom:30px">  <img src="@/assets/image/title2.png"  style="width:530px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box2">
       <!-- 表单区域 -->
       <el-form

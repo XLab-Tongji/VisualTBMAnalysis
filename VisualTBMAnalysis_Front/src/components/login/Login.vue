@@ -21,8 +21,8 @@
       class="lizi"
     />
 
-  <div align="center" style="position:relative;top:80px">  <img src="@/assets/image/title1.png"  style="width:700px;" /></div>
-  <div align="center" style="position:relative;bottom:-35px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
+  <div align="center" style="position:relative;top:35px">  <img src="@/assets/image/title1.png"  style="width:700px;" /></div>
+  <div align="center" style="position:relative;bottom:5px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box">
       <!-- 登录表单区域 -->   
       <el-form  ref="loginFormRef" :model="loginForm" :rules="loginFormRules"
@@ -198,7 +198,7 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -26%);
+  transform: translate(-50%, -23%);
   z-index: 1;
   border: 1px solid #d8d2d2;
 }

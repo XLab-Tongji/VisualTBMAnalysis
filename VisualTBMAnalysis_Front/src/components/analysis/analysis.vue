@@ -314,6 +314,13 @@ export default {
 .dv-border-box-1 {
   width: 95%;
 }
+
+.el-input /deep/.el-input__inner {
+  background-color: #a3774400 !important; 
+  border: none !important; 
+  color: #fff !important;
+  color: #fff !important;
+}
 </style>
 
 <style>
@@ -344,11 +351,6 @@ export default {
   color: #fff;
 }
 
-.el-input__inner {
-  background-color: #a3774400 !important;
-  border: none !important;
-  color: #fff !important;
-}
 .el-table__body tr.current-row>td.el-table__cell {
     background-color: #066e7c  !important;
 }
