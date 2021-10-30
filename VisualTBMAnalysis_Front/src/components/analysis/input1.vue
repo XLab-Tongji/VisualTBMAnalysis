@@ -1,7 +1,7 @@
 <template>
   <dv-border-box-8>
     <div class="table-wrapper">
-     <div class="text">掘进优化输入参数</div>
+      <div class="text">输入参数</div>
       <el-container>
         <el-table
           :show-header="false"
@@ -10,9 +10,9 @@
           style="width: 100%"
           size="mini"
         >
-          <el-table-column prop="Name" label="参数名称" width="150">
+          <el-table-column prop="Name" label="参数名称" width="140">
           </el-table-column>
-          <el-table-column prop="Value" label="取值" width="150">
+          <el-table-column prop="Value" label="取值" width="120">
           </el-table-column>
           <el-table-column prop="Unit" label="单位" width="160">
           </el-table-column>
@@ -24,38 +24,36 @@
 
 <script>
 export default {
+  props: ["FK_SRingNo"],
   data() {
     return {
-      recordID1: "0",
-      recordID2: "0",
+      recordID1: "",
+      recordID2: "",
       modelName1: "掘进参数优化模型",
       modelName2: "泥水仓压力优化模型",
       analyseInfo1: [],
       analyseInfo2: [],
+      currentFK_SRingNo: this.FK_SRingNo,
     };
+  },
+  watch: {
+    FK_SRingNo: {
+      handler(newValue) {
+        if (newValue) {
+          console.log(newValue);
+          this.currentFK_SRingNo = newValue;
+          this.getInfo1();
+        }
+      },
+    },
   },
 
   methods: {
-    // 和并列
-    // objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-    //   if (columnIndex === 0) {
-    //     if (rowIndex % 4 === 0) {
-    //       return {
-    //         rowspan: 4,
-    //         colspan: 1,
-    //       };
-    //     } else {
-    //       return {
-    //         rowspan: 0,
-    //         colspan: 0,
-    //       };
-    //     }
-    //   }
-    // },
-
     async getID1() {
+      console.log("现在");
+      console.log(this.currentFK_SRingNo);
       let queryID = {
-        where: `(([AnalysisObject]='S1245') and ([AnalysisModel]='${this.modelName1}'))`,
+        where: `(([AnalysisObject]='S1245') and ([AnalysisModel]='${this.modelName1}') and ([FK_SRingNo]=${this.currentFK_SRingNo}))`,
       };
       const { data: res } = await this.$http.post(
         "/api/universal/Structure/TunnelingAnalysisRecord/where?prj=shushui&dataset=3871633455494201344&increase=false&pagesize=1&pageindex=1",
@@ -64,6 +62,7 @@ export default {
 
       if (res.data == null) {
         console.log("获取掘进参数优化模型ID失败！");
+        console.log(res.data);
       } else {
         console.log("掘进参数优化模型分析记录:");
         console.log(res.data);
@@ -74,29 +73,37 @@ export default {
     },
 
     async getInfo1() {
+      this.analyseInfo1 = [];
+      this.recordID1="";
       await this.getID1();
       //console.log(this.recordID1)
-      let queryInfo = {
-        where: `([FK_TunnelingAnalysisRecord]=${this.recordID1})`,
-      };
-      const { data: res } = await this.$http.post(
-        "/api/universal/Structure/TunnelingAnalysisInfo/where?prj=shushui&dataset=3871633545889841152",
-        queryInfo
-      );
-
-      if (res.data == null) {
-        console.log("获取掘进参数优化模型分析记录数据失败！");
+      if (this.recordID1 == null) {
       } else {
-        console.log("掘进参数优化模型分析记录数据:");
-        console.log(res.data);
-      }
+        let queryInfo = {
+          where: `([FK_TunnelingAnalysisRecord]=${this.recordID1})`,
+        };
+        const { data: res } = await this.$http.post(
+          "/api/universal/Structure/TunnelingAnalysisInfo/where?prj=shushui&dataset=3871633545889841152",
+          queryInfo
+        );
 
-      var queryData = res.data.filter(function (fp) {
-        return fp.Type === "输入";
-      });
-      this.analyseInfo1 = queryData;
-      console.log("筛选后：");
-      console.log(queryData);
+        if (res.data == null) {
+          console.log("获取掘进参数优化模型分析记录数据失败！");
+        } else {
+          console.log("掘进参数优化模型分析记录数据:");
+          console.log(res.data);
+          var queryData = res.data.filter(function (fp) {
+            return fp.Type === "输入";
+          });
+          this.analyseInfo1 = queryData;
+          console.log("筛选后：");
+          console.log(queryData);
+          for (var i = queryData.length - 1; i >= 0; i--) {
+            const newValue = parseFloat(queryData[i].Value).toFixed(4);
+            this.analyseInfo1[i].Value = newValue;
+          }
+        }
+      }
     },
 
     cellStyle(row, column, rowIndex, columnIndex) {
@@ -105,20 +112,19 @@ export default {
   },
   mounted() {
     this.getInfo1();
-    // this.getInfo2();
   },
 };
 </script>
 
 <style lang="less" scoped>
-.text{
-    color: #96dee8;
-    //font-weight: bold;
-    font-size: 30px;
-     padding-top: 5px;
-    margin-bottom: 0px;
-    font-family: 'zcool_title';
-    text-align: center;
+.text {
+  color: #96dee8;
+  //font-weight: bold;
+  font-size: 30px;
+  padding-top: 5px;
+  margin-bottom: 0px;
+  font-family: "zcool_title";
+  text-align: center;
 }
 
 .dv-border-box-8 {
