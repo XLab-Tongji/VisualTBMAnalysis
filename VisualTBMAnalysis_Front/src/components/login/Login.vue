@@ -72,7 +72,7 @@
 
 <script>
 import request from "@/utils/request";
-import validCode from "./validCode";
+import validCode from "./ValidCode";
 
 export default {
   name: "login",
