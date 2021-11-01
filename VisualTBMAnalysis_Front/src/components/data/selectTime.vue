@@ -5,7 +5,7 @@
   
 <el-container>
 
-    <el-container  style="width:60%; height:100%" direction="vertical" >
+    <el-container  style="width:30%; height:100%" direction="vertical" >
  
         <el-date-picker
         v-model="value"
@@ -17,53 +17,51 @@
 
         <el-button @click="submitTime" style="width:100px">筛选</el-button>
 
-    </el-container>
-
-    <el-container style="width:40%;height:100%">
-        <dv-border-box-11 title="总推力变化情况" 
-        style="font-family: 'zcool_title';font-size: 25px;"  
-        :color="['#3f7c8b', '#96dee8']" >
-            <div style="width:500px;height:500px" ref="chart"></div>
-        </dv-border-box-11>
-        
-    </el-container>
-</el-container>
-</el-container>
-
-   
-
-  <!-- <middle /> -->
-    <el-container style="height:100%; width:100%; ">    
-    <dv-border-box-12 style="height:100%; width:33%;">
-        <div class="text">贯入度变化情况</div>
-         <div style="width:450px;height:350px" ref="chart1" class="chart"></div>
+      <dv-border-box-12 style="height:420px; width:100%;">
+        <div class="text" style="margin-top:5px">贯入度变化情况</div>
+         <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
     </dv-border-box-12>
 
-    <dv-border-box-12 style="height:100%; width:34%;">
+    </el-container>
+
+   <el-container style="width:50%;height:100%">
+                <dv-border-box-11 title="总推力变化情况" 
+                style="font-family: 'zcool_title';font-size: 25px;"  
+                :color="['#3f7c8b', '#96dee8']" >
+                    <div style="width:680px;height:490px" ref="push_force_chart"></div>
+                </dv-border-box-11>
+                
+        </el-container>
+    </el-container>
+
+</el-container>
+
+ <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
+
+  <el-container style="height:100%; width:100%; ">    
+    
+
+    <dv-border-box-10 style="height:100%; width:31%;margin-left:8px;">
                 <div class="text">扭矩变化情况</div>
-         <div style="width:450px;height:350px" ref="chart2" class="chart"></div>
-    </dv-border-box-12>
+         <div style="width:390px;height:350px" ref="torsion_chart" class="chart"></div>
+    </dv-border-box-10>
+
+    <dv-border-box-10 style="height:100%; width:31%;margin-right:20px;margin-left:20px;">
+        <div class="text">推进速度变化情况</div>
+         <div style="width:390px;height:350px" ref="v_push_chart" class="chart"></div>
+    </dv-border-box-10>
+
+    <dv-border-box-10 style="height:100%; width:31%;">
+                <div class="text">刀盘转速变化情况</div>
+         <div style="width:390px;height:350px" ref="v_rotate_chart" class="chart"></div>
+    </dv-border-box-10>
 
 
   </el-container>
+  
 
   <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
 
-    <!-- <bottom /> -->
-     <el-container style="height:100%; width:100%; ">
-
-    
-    <dv-border-box-10 style="height:100%; width:32%;margin-right:10px;margin-left:10px;">
-        <div class="text">推进速度变化情况</div>
-         <div style="width:450px;height:350px" ref="chart3" class="chart"></div>
-    </dv-border-box-10>
-
-    <dv-border-box-10 style="height:100%; width:33%;">
-                <div class="text">刀盘转速变化情况</div>
-         <div style="width:450px;height:350px" ref="chart4" class="chart"></div>
-    </dv-border-box-10>
-
-  </el-container>
 
 
     </div>
@@ -103,12 +101,12 @@ export default{
 },
 methods: {
 　　initCharts () {
-        let myChart1 = this.$echarts.init(this.$refs.chart1,'walden');
-        let myChart2 = this.$echarts.init(this.$refs.chart2,'walden');
-        let myChart = this.$echarts.init(this.$refs.chart,'walden');
-    　　//console.log(this.$refs.chart)
-    　　// 绘制图表
-    　　myChart.setOption({
+        let myChart0 = this.$echarts.init(this.$refs.push_force_chart,'walden');
+        let myChart1 = this.$echarts.init(this.$refs.degree_chart,'walden');
+        let myChart2 = this.$echarts.init(this.$refs.torsion_chart,'walden');
+        let myChart3 = this.$echarts.init(this.$refs.v_push_chart,'walden');
+        let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
+    　　myChart0.setOption({
         //图表开始
             tooltip: {
                 trigger: 'axis',
@@ -264,12 +262,7 @@ methods: {
             ]
             //结束
         　　});
-    　
-    let myChart3 = this.$echarts.init(this.$refs.chart3,'walden');
-    let myChart4 = this.$echarts.init(this.$refs.chart4,'walden');
-　　//console.log(this.$refs.chart)
-　　// 绘制图表
-　　　myChart3.setOption({
+　　　  myChart3.setOption({
     //图表开始
          tooltip: {
             trigger: 'axis',
@@ -321,7 +314,7 @@ methods: {
         ]
         //结束
     　　});
-　　　myChart4.setOption({
+　　　  myChart4.setOption({
     //图表开始
          tooltip: {
             trigger: 'axis',
@@ -387,7 +380,7 @@ methods: {
         this.all_data=res.data
 
         var i;
-        if(res.data.SYS_DataSet == null){
+        if(res.data == null){
             console.log("获取数据失败！")
         }else{
             this.push_force=[]

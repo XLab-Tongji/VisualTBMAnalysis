@@ -3,60 +3,56 @@
 <div >
     
     <!-- top -->
-    <el-container  direction="vertical" >
+<el-container  direction="vertical" >
   
-<el-container>
+    <el-container>
 
-    <el-container  style="width:60%; height:100%" direction="vertical" >
-            <dv-decoration-11 style="width:100%;height:150px;"><h1 class="text1">当前掘进环号：{{this.cur_loop}} <br> 当前掘进状态：{{this.cur_state}}
-                </h1></dv-decoration-11>   
+        <el-container  style="width:30%; height:100%" direction="vertical" >
+                <dv-decoration-11 style="width:100%;height:150px;"><h1 class="text1">当前掘进环号：{{this.cur_loop}} <br> 当前掘进状态：{{this.cur_state}}
+                    </h1></dv-decoration-11>   
 
 
-    </el-container>
-
-    <el-container style="width:40%;height:100%">
-        <dv-border-box-11 title="总推力变化情况" 
-        style="font-family: 'zcool_title';font-size: 25px;"  
-        :color="['#3f7c8b', '#96dee8']" >
-            <div style="width:500px;height:500px" ref="chart"></div>
-        </dv-border-box-11>
-        
-    </el-container>
-</el-container>
-</el-container>
-
-  
-
-  <!-- <middle /> -->
-    <el-container style="height:100%; width:100%; ">    
-    <dv-border-box-12 style="height:100%; width:33%;">
-        <div class="text">贯入度变化情况</div>
-         <div style="width:450px;height:350px" ref="chart1" class="chart"></div>
-    </dv-border-box-12>
-
-    <dv-border-box-12 style="height:100%; width:34%;">
-                <div class="text">扭矩变化情况</div>
-         <div style="width:450px;height:350px" ref="chart2" class="chart"></div>
+        <dv-border-box-12 style="height:420px; width:100%;">
+        <div class="text" style="margin-top:5px">贯入度变化情况</div>
+         <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
     </dv-border-box-12>
 
 
-  </el-container>
 
-  <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
+        </el-container>
 
-    <!-- <bottom /> -->
-     <el-container style="height:100%; width:100%; ">
+        <el-container style="width:50%;height:100%">
+                <dv-border-box-11 title="总推力变化情况" 
+                style="font-family: 'zcool_title';font-size: 25px;"  
+                :color="['#3f7c8b', '#96dee8']" >
+                    <div style="width:680px;height:490px" ref="push_force_chart"></div>
+                </dv-border-box-11>
+                
+        </el-container>
+    </el-container>
 
+</el-container>
+
+    <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
     
-    <dv-border-box-10 style="height:100%; width:32%;margin-right:10px;margin-left:10px;">
-        <div class="text">推进速度变化情况</div>
-         <div style="width:450px;height:350px" ref="chart3" class="chart"></div>
+    <el-container style="height:100%; width:100%; ">    
+    
+
+    <dv-border-box-10 style="height:100%; width:31%;margin-left:8px;">
+                <div class="text">扭矩变化情况</div>
+         <div style="width:390px;height:350px" ref="torsion_chart" class="chart"></div>
     </dv-border-box-10>
 
-    <dv-border-box-10 style="height:100%; width:33%;">
-                <div class="text">刀盘转速变化情况</div>
-         <div style="width:450px;height:350px" ref="chart4" class="chart"></div>
+    <dv-border-box-10 style="height:100%; width:31%;margin-right:20px;margin-left:20px;">
+        <div class="text">推进速度变化情况</div>
+         <div style="width:390px;height:350px" ref="v_push_chart" class="chart"></div>
     </dv-border-box-10>
+
+    <dv-border-box-10 style="height:100%; width:31%;">
+                <div class="text">刀盘转速变化情况</div>
+         <div style="width:390px;height:350px" ref="v_rotate_chart" class="chart"></div>
+    </dv-border-box-10>
+
 
   </el-container>
 
@@ -101,12 +97,12 @@ export default{
 },
 methods: {
 　　initCharts () {
-        let myChart1 = this.$echarts.init(this.$refs.chart1,'walden');
-        let myChart2 = this.$echarts.init(this.$refs.chart2,'walden');
-        let myChart = this.$echarts.init(this.$refs.chart,'walden');
-    　　//console.log(this.$refs.chart)
-    　　// 绘制图表
-    　　myChart.setOption({
+        let myChart0 = this.$echarts.init(this.$refs.push_force_chart,'walden');
+        let myChart1 = this.$echarts.init(this.$refs.degree_chart,'walden');
+        let myChart2 = this.$echarts.init(this.$refs.torsion_chart,'walden');
+        let myChart3 = this.$echarts.init(this.$refs.v_push_chart,'walden');
+        let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
+    　　myChart0.setOption({
         //图表开始
             tooltip: {
                 trigger: 'axis',
@@ -262,12 +258,7 @@ methods: {
             ]
             //结束
         　　});
-    　
-    let myChart3 = this.$echarts.init(this.$refs.chart3,'walden');
-    let myChart4 = this.$echarts.init(this.$refs.chart4,'walden');
-　　//console.log(this.$refs.chart)
-　　// 绘制图表
-　　　myChart3.setOption({
+　　　  myChart3.setOption({
     //图表开始
          tooltip: {
             trigger: 'axis',
@@ -319,7 +310,7 @@ methods: {
         ]
         //结束
     　　});
-　　　myChart4.setOption({
+　　　  myChart4.setOption({
     //图表开始
          tooltip: {
             trigger: 'axis',
@@ -385,16 +376,16 @@ methods: {
         this.all_data=res.data
 
         var i;
-        if(res.data.SYS_DataSet == null){
+        if(res.data == null){
             console.log("获取数据失败！")
         }else{
-            this.push_force=[]
+            this.push_force=[] //总推力
             this.time_point=[]
-            this.torsion=[]
-            this.degree=[]
+            this.torsion=[] //扭矩
+            this.degree=[] //贯入度
             this.time_point=[]
-            this.v_push=[]
-            this.v_rotate=[]
+            this.v_push=[] //推进速度
+            this.v_rotate=[] //刀盘转速
             
             for(i=0;i<this.all_data.length;i++){
                 this.push_force.push(this.all_data[i][100005]-'0')
