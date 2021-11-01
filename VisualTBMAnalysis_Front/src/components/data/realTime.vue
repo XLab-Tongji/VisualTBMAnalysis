@@ -13,7 +13,7 @@
 
 
         <dv-border-box-12 style="height:420px; width:100%;">
-        <div class="text" style="margin-top:5px">贯入度变化情况</div>
+        <div class="text" style="margin-top:5px">贯入度实时数据</div>
          <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
     </dv-border-box-12>
 
@@ -22,7 +22,7 @@
         </el-container>
 
         <el-container style="width:50%;height:100%">
-                <dv-border-box-11 title="总推力变化情况" 
+                <dv-border-box-11 title="总推力实时数据" 
                 style="font-family: 'zcool_title';font-size: 25px;"  
                 :color="['#3f7c8b', '#96dee8']" >
                     <div style="width:680px;height:490px" ref="push_force_chart"></div>
@@ -34,22 +34,22 @@
 </el-container>
 
     <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
-    
+
     <el-container style="height:100%; width:100%; ">    
     
 
     <dv-border-box-10 style="height:100%; width:31%;margin-left:8px;">
-                <div class="text">扭矩变化情况</div>
+                <div class="text">扭矩实时数据</div>
          <div style="width:390px;height:350px" ref="torsion_chart" class="chart"></div>
     </dv-border-box-10>
 
     <dv-border-box-10 style="height:100%; width:31%;margin-right:20px;margin-left:20px;">
-        <div class="text">推进速度变化情况</div>
+        <div class="text">推进速度实时数据</div>
          <div style="width:390px;height:350px" ref="v_push_chart" class="chart"></div>
     </dv-border-box-10>
 
     <dv-border-box-10 style="height:100%; width:31%;">
-                <div class="text">刀盘转速变化情况</div>
+                <div class="text">刀盘转速实时数据</div>
          <div style="width:390px;height:350px" ref="v_rotate_chart" class="chart"></div>
     </dv-border-box-10>
 
@@ -66,11 +66,14 @@ export default{
  data () { 
 　　return {
         all_data:[],
+        new_data:[],
         time_point:['test1','test2','test3','test4','test5','test6','test7'],
         push_force:[24680,24650,24620,24680,24700,24680,24720],
         cur_loop:0,
         cur_state:'',
         value: [new Date(2021, 9, 22, 23, 50), new Date(2021, 9, 22, 23, 59)],
+        cur_time:'',
+        start_time:'',
         time:['2021-09-22 23:55:00','2021-09-22 23:59:00'],
 
         v_push:[80,50,20,80,70,80,20],//推进速度
@@ -104,7 +107,7 @@ methods: {
         let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
     　　myChart0.setOption({
         //图表开始
-            tooltip: {
+        tooltip: {
                 trigger: 'axis',
                 position: function (pt) {
                 return [pt[0], '10%'];
@@ -127,28 +130,12 @@ methods: {
             yAxis: {
                 type: 'value',
                 scale: true,
-                // min:24000,
-                // max:40000,
-            
-                boundaryGap: [0, '100%']
+                
             },
-            dataZoom: [
-                {
-                    type: 'inside',
-                    start: 0,
-                    end: 20
-                },
-                {
-                    start: 0,
-                    end: 20
-                }
-            ],
             series: [
                 {
                 data: this.push_force,
-                //smooth: true,
                 symbol: 'none',
-                //areaStyle: {},
                 type: 'line',
                 }
             ]
@@ -179,28 +166,12 @@ methods: {
             yAxis: {
                 type: 'value',
                 scale: true,
-                // min:0,
-                // max:100,
-            
                 boundaryGap: [0, '100%']
             },
-            dataZoom: [
-                {
-                    type: 'inside',
-                    start: 0,
-                    end: 20
-                },
-                {
-                    start: 0,
-                    end: 20
-                }
-            ],
             series: [
                 {
                 data: this.degree,
-                //smooth: true,
                 symbol: 'none',
-                //areaStyle: {},
                 type: 'line',
                 }
             ]
@@ -231,28 +202,12 @@ methods: {
             yAxis: {
                 type: 'value',
                 scale: true,
-                // min:0,
-                // max:100,
-            
                 boundaryGap: [0, '100%']
             },
-            dataZoom: [
-                {
-                    type: 'inside',
-                    start: 0,
-                    end: 20
-                },
-                {
-                    start: 0,
-                    end: 20
-                }
-            ],
             series: [
                 {
                 data: this.torsion,
-                //smooth: true,
                 symbol: 'none',
-                //areaStyle: {},
                 type: 'line',
                 }
             ]
@@ -288,17 +243,6 @@ methods: {
            
             boundaryGap: [0, '100%']
         },
-          dataZoom: [
-            {
-                type: 'inside',
-                start: 0,
-                end: 20
-            },
-            {
-                start: 0,
-                end: 20
-            }
-        ],
         series: [
             {
             data: this.v_push,
@@ -340,17 +284,6 @@ methods: {
            
             boundaryGap: [0, '100%']
         },
-          dataZoom: [
-            {
-                type: 'inside',
-                start: 0,
-                end: 20
-            },
-            {
-                start: 0,
-                end: 20
-            }
-        ],
         series: [
             {
             data: this.v_rotate,
@@ -364,20 +297,41 @@ methods: {
     　　});
 　　
     },
+     getCurrentTime() {
+        //获取当前时间
+        var year = new Date().getFullYear();
+        var month = new Date().getMonth() + 1 < 10 ? "0"+ new Date().getMonth() + 1 : new Date().getMonth() + 1 ; 
+        var day = new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate(); 
+        var hour = new Date().getHours()< 10 ? "0" + new Date().getHours() : new Date().getHours(); 
+        var minute = new Date().getMinutes()< 10 ? "0" + new Date().getMinutes() : new Date().getMinutes(); 
+        var second = new Date().getSeconds()< 10 ? "0" + new Date().getSeconds() : new Date().getSeconds(); 
 
-    async getData () {
+        this.cur_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+
+        if(minute>19){
+            minute = minute-20
+        }else{
+            minute = 40 + (minute - "0") 
+            hour = hour - 1
+        }
+        this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+
+    },
+    async getLatestData () {
+        this.getCurrentTime()
+        console.log(this.start_time)
+        console.log(this.cur_time)
         let query={
-            where:`([t]>='${this.time[0]}' and [t]<='${this.time[1]}')`
+            where:`([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
         };
         const { data: res } =await this.$http.
         post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
-        query)
+            query)
         console.log(res.data)
         this.all_data=res.data
-
-        var i;
-        if(res.data == null){
-            console.log("获取数据失败！")
+       
+        if(res.data.length == 0|| res.data == null){
+            console.log("实时信息获取数据为空或失败！")
         }else{
             this.push_force=[] //总推力
             this.time_point=[]
@@ -387,17 +341,15 @@ methods: {
             this.v_push=[] //推进速度
             this.v_rotate=[] //刀盘转速
             
+            var i;
             for(i=0;i<this.all_data.length;i++){
                 this.push_force.push(this.all_data[i][100005]-'0')
                 this.time_point.push(this.all_data[i]['t'])
                 this.torsion.push(this.all_data[i][100004]-'0')
                 this.degree.push(this.all_data[i][100395]-'0')
-                this.time_point.push(this.all_data[i]['t'])
                 this.v_push.push(this.all_data[i][100002]-'0')
                 this.v_rotate.push(this.all_data[i][100003]-'0')
             }
-            console.log("getData执行")
-            // console.log(this.time_point)
             //获取当前环号
             this.cur_loop=this.all_data[i-1][100001]-"0"
             //获取当前掘进状态
@@ -410,44 +362,16 @@ methods: {
 
         this.initCharts(); 
     },
-    submitTime(){
-        var i=0;
-        for(i=0;i<2;i++){
-            var year = this.value[i].getFullYear(); //获取完整的年份(4位,1970-????)
-        var month = this.value[i].getMonth() + 1; //获取当前月份(0-11,0代表1月)
-        var day = this.value[i].getDate(); //获取当前日(1-31)
-        var hour = this.value[i].getHours(); 
-        var minute = this.value[i].getMinutes(); 
-        var second = this.value[i].getSeconds(); 
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        if (hour < 10) {
-            hour = "0" + hour;
-        }
-        if (minute < 10) {
-            minute = "0" + minute;
-        }
-        if (second < 10) {
-            second = "0" + second;
-        }
-        
-        this.time[i] =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
-        console.log(this.time[i]); 
-        }
-        this.getData();
-    },
+    
 },
-created () {
-        // this.timer = setInterval(() => {
-        //     this.getData()
-        // }, 60000) // 1min  
+    created () {
+        this.timer = setInterval(() => {
+            this.getLatestData()
+        }, 5000) // 10s刷新一次
+        
     },
-mounted () {
-        this.getData(); 
+    mounted () {
+        this.getLatestData(); 
         
 　 },
 }

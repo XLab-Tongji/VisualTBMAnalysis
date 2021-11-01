@@ -140,11 +140,11 @@ methods: {
                 {
                     type: 'inside',
                     start: 0,
-                    end: 20
+                    end: 60
                 },
                 {
-                    start: 0,
-                    end: 20
+                    start: 20,
+                    end: 100
                 }
             ],
             series: [
@@ -366,22 +366,20 @@ methods: {
         ]
         //结束
     　　});
-　　
     },
 
     async getData () {
         let query={
             where:`([t]>='${this.time[0]}' and [t]<='${this.time[1]}')`
         };
-        const { data: res } =await this.$http.
-        post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
-        query)
-        console.log(res.data)
+            const { data: res } =await this.$http.
+            post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
+            query)
         this.all_data=res.data
 
         var i;
-        if(res.data == null){
-            console.log("获取数据失败！")
+        if(res.data.length == 0 || res.data == null){
+            console.log("时间筛选获取数据为空或失败！")
         }else{
             this.push_force=[]
             this.time_point=[]
@@ -396,43 +394,26 @@ methods: {
                 this.time_point.push(this.all_data[i]['t'])
                 this.torsion.push(this.all_data[i][100004]-'0')
                 this.degree.push(this.all_data[i][100395]-'0')
-                this.time_point.push(this.all_data[i]['t'])
                 this.v_push.push(this.all_data[i][100002]-'0')
                 this.v_rotate.push(this.all_data[i][100003]-'0')
             }
-            console.log("getData执行")
-
-            // console.log(this.time_point)
         }
-        this.initCharts(); 
+       
+        this.initCharts();
+          
     },
     submitTime(){
         var i=0;
         for(i=0;i<2;i++){
-            var year = this.value[i].getFullYear(); //获取完整的年份(4位,1970-????)
-        var month = this.value[i].getMonth() + 1; //获取当前月份(0-11,0代表1月)
-        var day = this.value[i].getDate(); //获取当前日(1-31)
-        var hour = this.value[i].getHours(); 
-        var minute = this.value[i].getMinutes(); 
-        var second = this.value[i].getSeconds(); 
-        if (month < 10) {
-            month = "0" + month;
-        }
-        if (day < 10) {
-            day = "0" + day;
-        }
-        if (hour < 10) {
-            hour = "0" + hour;
-        }
-        if (minute < 10) {
-            minute = "0" + minute;
-        }
-        if (second < 10) {
-            second = "0" + second;
-        }
-        
-        this.time[i] =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
-        console.log(this.time[i]); 
+            var year = this.value[i].getFullYear();
+            var month = this.value[i].getMonth() + 1 < 10 ? "0"+ this.value[i].getMonth() + 1 : this.value[i].getMonth() + 1 ; 
+            var day = this.value[i].getDate() < 10 ? "0" + this.value[i].getDate() : this.value[i].getDate(); 
+            var hour = this.value[i].getHours()< 10 ? "0" + this.value[i].getHours() : this.value[i].getHours(); 
+            var minute = this.value[i].getMinutes()< 10 ? "0" + this.value[i].getMinutes() : this.value[i].getMinutes(); 
+            var second = this.value[i].getSeconds()< 10 ? "0" + this.value[i].getSeconds() : this.value[i].getSeconds(); 
+
+            this.time[i] =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+            console.log(this.time[i]); 
         }
         this.getData();
     },
