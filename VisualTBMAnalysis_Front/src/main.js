@@ -11,6 +11,7 @@ import VueParticles from 'vue-particles'
 import './assets/css/global.css'
 import './assets/css/font.css'
 import './assets/theme'
+import "./assets/date.less";
 
 // 全局注册
 Vue.use(dataV)

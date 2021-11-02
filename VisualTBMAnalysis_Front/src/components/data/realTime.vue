@@ -314,6 +314,7 @@ methods: {
             minute = 40 + (minute - "0") 
             hour = hour - 1
         }
+        if(minute<10) minute="0"+minute
         this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
 
     },
@@ -324,8 +325,8 @@ methods: {
         let query={
             where:`([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
         };
-        const { data: res } =await this.$http.
-        post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
+            const { data: res } =await this.$http.
+            post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
             query)
         console.log(res.data)
         this.all_data=res.data

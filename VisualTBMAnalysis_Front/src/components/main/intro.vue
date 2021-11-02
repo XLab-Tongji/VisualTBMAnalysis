@@ -1,5 +1,5 @@
 <template>
-<dv-border-box-9  >
+<dv-border-box-9  style="height:1500px">
   <el-container  direction="vertical" >
       <!-- 标题 -->
     <div align="center" style="margin-top:40px;margin-bottom:-10px">  <img src="@/assets/image/title1.png"  style="width:600px;" /></div>
@@ -50,8 +50,9 @@
 
         </div> </el-card></div>
     </el-container>
-
 </el-container>
+
+
 </el-container>
 
    
@@ -94,4 +95,5 @@ export default{
     background-color: #20404773;
     margin:10px;
 }
+
 </style>

@@ -6,16 +6,19 @@
 <el-container>
 
     <el-container  style="width:30%; height:100%" direction="vertical" >
- 
+
+        <div class="text">请选择时间范围后点击搜索</div>
+        <el-container>
         <el-date-picker
+        popper-class="mydatestyle"
         v-model="value"
         type="datetimerange"
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期">
         </el-date-picker>
-
-        <el-button @click="submitTime" style="width:100px">筛选</el-button>
+        <el-button icon="el-icon-search" circle @click="submitTime" style="margin-left:25px"></el-button>
+        </el-container>
 
       <dv-border-box-12 style="height:420px; width:100%;">
         <div class="text" style="margin-top:5px">贯入度变化情况</div>
@@ -26,9 +29,9 @@
 
    <el-container style="width:50%;height:100%">
                 <dv-border-box-11 title="总推力变化情况" 
-                style="font-family: 'zcool_title';font-size: 25px;"  
+                style="font-family: 'zcool_title';font-size: 25px;height:480px"  
                 :color="['#3f7c8b', '#96dee8']" >
-                    <div style="width:680px;height:490px" ref="push_force_chart"></div>
+                    <div style="width:680px;height:450px" ref="push_force_chart"></div>
                 </dv-border-box-11>
                 
         </el-container>
