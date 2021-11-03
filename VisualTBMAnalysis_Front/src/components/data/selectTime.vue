@@ -381,7 +381,7 @@ methods: {
     },
 
     async getData () {
-        console.log("根据时间段获取数据的请求时间结果为:")
+        console.log("根据时间段获取数据的请求的时间段为:")
         console.log(this.time[0])
         console.log(this.time[1])
         let query={
@@ -397,6 +397,7 @@ methods: {
         var i;
         if(res.data.length == 0 || res.data == null){
             console.log("时间筛选获取数据为空或失败！")
+            this.errorInfo()
         }else{
             this.time_point=[]
             this.push_force=[] //总推力
@@ -444,7 +445,12 @@ methods: {
                 "刀盘转速":this.all_data[i][100003]-'0',
             })
         }
-    }
+    },
+    errorInfo() {
+        this.$alert('所选时间段没有数据！', '错误提示', {
+          confirmButtonText: '确定',
+        });
+      }
 
 },
 created () {

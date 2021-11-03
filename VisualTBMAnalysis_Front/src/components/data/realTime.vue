@@ -10,15 +10,10 @@
         <el-container  style="width:30%; height:100%" direction="vertical" >
                 <dv-decoration-11 style="width:100%;height:150px;"><h1 class="text1">当前掘进环号：{{this.cur_loop}} <br> 当前掘进状态：{{this.cur_state}}
                     </h1></dv-decoration-11>   
-
-
-        <dv-border-box-12 style="height:420px; width:100%;">
-        <div class="text" style="margin-top:5px">贯入度实时数据</div>
-         <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
-    </dv-border-box-12>
-
-
-
+                <dv-border-box-12 style="height:420px; width:100%;">
+                    <div class="text" style="margin-top:5px">贯入度实时数据</div>
+                    <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
+                </dv-border-box-12>
         </el-container>
 
         <el-container style="width:50%;height:100%">
@@ -74,6 +69,7 @@ export default{
         value: [new Date(2021, 9, 22, 23, 50), new Date(2021, 9, 22, 23, 59)],
         cur_time:'',
         start_time:'',
+        end_time:'',
         time:['2021-09-22 23:55:00','2021-09-22 23:59:00'],
 
         v_push:[80,50,20,80,70,80,20],//推进速度
@@ -297,7 +293,7 @@ methods: {
     　　});
 
     },
-     getCurrentTime() {
+    getCurrentTime() {
         //获取当前时间
         var year = new Date().getFullYear();
         var month = new Date().getMonth() + 1 < 10 ? "0"+ new Date().getMonth() + 1 : new Date().getMonth() + 1 ; 
@@ -308,6 +304,7 @@ methods: {
 
         this.cur_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
 
+        //20min前的时间点,待完善
         if(minute>19){
             minute = minute-20
         }else{
@@ -317,111 +314,140 @@ methods: {
         if(minute<10) minute="0"+minute
         this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
 
+        //20min后的时间点,待完善
+        if(minute<20){
+            minute = minute+40
+        }else{
+            minute = (minute - "0") -20
+            hour = hour + 1
+        }
+        if(minute<10) minute="0"+minute
+        this.end_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+
     },
     async getRecentData () {
+      
         this.getCurrentTime()
-        console.log("实时信息获取数据的请求时间结果为:")
-        console.log(this.start_time)
-        console.log(this.cur_time)
         let query={
             where:`([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
         };
-            const { data: res } =await this.$http.
-            post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
-            query)
-            console.log("实时获取后端返回结果是:")
-            console.log(res.data)
-            this.all_data=res.data
-       
+        const { data: res } =await this.$http.
+        post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
+        query)
+
+        // while(this.all_data.length < 100) {
+        //     //推前20min
+        //     console.log("数据太少啦~需要再往前看看！");
+
+
+        //     //再发起请求
+        //     console.log("getRecentData执行！");
+           
+
+        // }
+
         if(res.data.length == 0|| res.data == null){
             console.log("实时信息获取数据为空或失败！开始渲染假数据")
-        }else{
-            this.time_point=[]
-            this.push_force=[] //总推力
-            this.torsion=[] //扭矩
-            this.degree=[] //贯入度
-            this.v_push=[] //推进速度
-            this.v_rotate=[] //刀盘转速
-            
-            var i;
-            for(i=0;i<this.all_data.length;i++){
-                this.push_force.push(this.all_data[i][100005]-'0')
-                this.time_point.push(this.all_data[i]['t'])
-                this.torsion.push(this.all_data[i][100004]-'0')
-                this.degree.push(this.all_data[i][100395]-'0')
-                this.v_push.push(this.all_data[i][100002]-'0')
-                this.v_rotate.push(this.all_data[i][100003]-'0')
-            }
-            //获取当前环号
-            this.cur_loop=this.all_data[i-1][100001]-"0"
-            //获取当前掘进状态
-            if(this.all_data[i-1][100007]>0){
-                this.cur_state='拼装'
-            }else{
-                this.cur_state='掘进'
-            }
+            this.initCharts(); 
+            return
         }
+
+        //插入渲染数据
+        console.log("实时信息获取数据的请求时间结果为:")
+        console.log(this.start_time)
+        console.log(this.cur_time)
+        console.log("实时获取后端返回结果是:")
+        console.log(res.data)
+        this.all_data=res.data
+       
+        
         console.log("要渲染的数据为")
         console.log(this.all_data)
+
+        this.time_point=[]
+        this.push_force=[] //总推力
+        this.torsion=[] //扭矩
+        this.degree=[] //贯入度
+        this.v_push=[] //推进速度
+        this.v_rotate=[] //刀盘转速
+        
+        var i;
+        for(i=0;i<this.all_data.length;i++){
+            this.push_force.push(this.all_data[i][100005]-'0')
+            this.time_point.push(this.all_data[i]['t'])
+            this.torsion.push(this.all_data[i][100004]-'0')
+            this.degree.push(this.all_data[i][100395]-'0')
+            this.v_push.push(this.all_data[i][100002]-'0')
+            this.v_rotate.push(this.all_data[i][100003]-'0')
+        }
+        //获取当前环号
+        this.cur_loop=this.all_data[i-1][100001]-"0"
+        //获取当前掘进状态
+        if(this.all_data[i-1][100007]>0){
+            this.cur_state='拼装'
+        }else{
+            this.cur_state='掘进'
+        }
+      
         this.initCharts(); 
     },
     async getLatestData () {
+        console.log("getLatestData执行！")
         this.getCurrentTime()
-        console.log("实时信息获取数据的请求时间结果为:")
-        console.log(this.start_time)
+        console.log("获取最新的一条数据的请求时间为:")       
         console.log(this.cur_time)
+        console.log(this.end_time)
+
         let query={
-            where:`([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
+            where:`([t]>='${this.cur_time}' and [t]<='${this.end_time}')`
         };
             const { data: res } =await this.$http.
-            post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
+            post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952&increase=false&pagesize=1&pageindex=1', 
             query)
-            console.log("实时获取后端返回结果是:")
+            console.log("最新的一个数据返回结果是:")
             console.log(res.data)
-            this.all_data=res.data
        
         if(res.data.length == 0|| res.data == null){
-            console.log("实时信息获取数据为空或失败！开始渲染假数据")
-        }else{
-            this.time_point=[]
-            this.push_force=[] //总推力
-            this.torsion=[] //扭矩
-            this.degree=[] //贯入度
-            this.v_push=[] //推进速度
-            this.v_rotate=[] //刀盘转速
-            
-            var i;
-            for(i=0;i<this.all_data.length;i++){
-                this.push_force.push(this.all_data[i][100005]-'0')
-                this.time_point.push(this.all_data[i]['t'])
-                this.torsion.push(this.all_data[i][100004]-'0')
-                this.degree.push(this.all_data[i][100395]-'0')
-                this.v_push.push(this.all_data[i][100002]-'0')
-                this.v_rotate.push(this.all_data[i][100003]-'0')
-            }
+            //console.log("没有最新数据！")
+            return
+        }
+
+        if(res.data!=this.all_data[this.all_data.length-1]){
+            //this.push_force.shift()
+            this.push_force.push(res.data[0][100005]-'0')
+            //this.time_point.shift()
+            this.time_point.push(res.data[0]['t'])
+            //this.torsion.shift()
+            this.torsion.push(res.data[0][100004]-'0')
+            //this.degree.shift()
+            this.degree.push(res.data[0][100395]-'0')
+            //this.v_push.shift()
+            this.v_push.push(res.data[0][100002]-'0')
+            //this.v_rotate.shift()
+            this.v_rotate.push(res.data[0][100003]-'0')
             //获取当前环号
-            this.cur_loop=this.all_data[i-1][100001]-"0"
+            this.cur_loop=res.data[0][100001]-"0"
             //获取当前掘进状态
-            if(this.all_data[i-1][100007]>0){
+            if(res.data[0][100007]>0){
                 this.cur_state='拼装'
             }else{
-                this.cur_state='掘进'
+                this.cur_state='掘进' //100006>0 或者 Wm>0
             }
         }
-        console.log("要渲染的数据为")
-        console.log(this.all_data)
         this.initCharts(); 
     },
 },
     created () {
+        // this.timer = setInterval(() => {
+        //     this.getRecentData()
+        // }, 30000), // 10s刷新一次
+
         this.timer = setInterval(() => {
-            this.getRecentData()
-        }, 30000) // 10s刷新一次
-        
+            this.getLatestData()
+        }, 10000);
     },
     mounted () {
-        this.getRecentData(); 
-        
+        this.getRecentData();         
 　 },
 }
 </script>
