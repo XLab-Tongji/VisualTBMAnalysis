@@ -1,5 +1,5 @@
 <template>
-  <dv-border-box-9>
+  <dv-border-box-9 style="height:1350px">
     <div>
       <!-- 输入参数 -->
       <div align="center" style="padding-top: 10px">
@@ -132,7 +132,7 @@
             class="dv-dec-6"
             :reverse="true"
             :color="['#3fb1e3', '#96dee8']"
-            style="margin-bottom: 5px"
+            style="margin-top: 15px"
           />
         </div>
       </div>

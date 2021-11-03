@@ -7,7 +7,7 @@
 
     <el-container  style="width:30%; height:100%" direction="vertical" >
 
-        <div class="text">请选择时间范围后点击搜索</div>
+        <div class="text">可选择数据时间范围</div>
         <el-container>
         <el-date-picker
         popper-class="mydatestyle"
@@ -17,7 +17,15 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期">
         </el-date-picker>
-        <el-button icon="el-icon-search" circle @click="submitTime" style="margin-left:25px"></el-button>
+        <el-button icon="el-icon-search" circle @click="submitTime" style="margin-left:25px;margin-right:10px"></el-button>
+        <!-- 导出按钮 -->
+        <download-excel
+                class = "export-excel-wrapper"
+                :data = "json_data"
+                name = "导出数据.xls">
+                <el-button @click="exportData" icon="el-icon-download" circle></el-button>
+        </download-excel>
+
         </el-container>
 
       <dv-border-box-12 style="height:420px; width:100%;">
@@ -75,6 +83,7 @@ export default{
  data () { 
 　　return {
         all_data:[],
+        json_data:[],
         time_point:['test1','test2','test3','test4','test5','test6','test7'],
         push_force:[24680,24650,24620,24680,24700,24680,24720],
         value: [new Date(2021, 9, 22, 23, 50), new Date(2021, 9, 22, 23, 59)],
@@ -113,8 +122,8 @@ methods: {
         //图表开始
             tooltip: {
                 trigger: 'axis',
-                position: function (pt) {
-                return [pt[0], '10%'];
+                axisPointer: {
+                type: 'cross'
                 }
             },
             toolbox: {
@@ -143,11 +152,11 @@ methods: {
                 {
                     type: 'inside',
                     start: 0,
-                    end: 60
+                    end: 20
                 },
                 {
-                    start: 20,
-                    end: 100
+                    start: 0,
+                    end: 20
                 }
             ],
             series: [
@@ -165,8 +174,8 @@ methods: {
         //图表开始
             tooltip: {
                 trigger: 'axis',
-                position: function (pt) {
-                return [pt[0], '10%'];
+                axisPointer: {
+                type: 'cross'
                 }
             },
             toolbox: {
@@ -217,8 +226,8 @@ methods: {
         //图表开始
             tooltip: {
                 trigger: 'axis',
-                position: function (pt) {
-                return [pt[0], '10%'];
+                axisPointer: {
+                type: 'cross'
                 }
             },
             toolbox: {
@@ -267,12 +276,12 @@ methods: {
         　　});
 　　　  myChart3.setOption({
     //图表开始
-         tooltip: {
-            trigger: 'axis',
-            position: function (pt) {
-            return [pt[0], '10%'];
-            }
-        },
+        tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross'
+                }
+            },
           toolbox: {
             feature: {
             dataZoom: {
@@ -320,11 +329,11 @@ methods: {
 　　　  myChart4.setOption({
     //图表开始
          tooltip: {
-            trigger: 'axis',
-            position: function (pt) {
-            return [pt[0], '10%'];
-            }
-        },
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross'
+                }
+            },
           toolbox: {
             feature: {
             dataZoom: {
@@ -372,25 +381,29 @@ methods: {
     },
 
     async getData () {
+        console.log("根据时间段获取数据的请求时间结果为:")
+        console.log(this.time[0])
+        console.log(this.time[1])
         let query={
             where:`([t]>='${this.time[0]}' and [t]<='${this.time[1]}')`
         };
             const { data: res } =await this.$http.
             post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
             query)
+        console.log("根据时间段获取后端返回结果是:")
+        console.log(res.data)
         this.all_data=res.data
 
         var i;
         if(res.data.length == 0 || res.data == null){
             console.log("时间筛选获取数据为空或失败！")
         }else{
-            this.push_force=[]
             this.time_point=[]
-            this.torsion=[]
-            this.degree=[]
-            this.time_point=[]
-            this.v_push=[]
-            this.v_rotate=[]
+            this.push_force=[] //总推力
+            this.torsion=[] //扭矩
+            this.degree=[] //贯入度
+            this.v_push=[] //推进速度
+            this.v_rotate=[] //刀盘转速
             
             for(i=0;i<this.all_data.length;i++){
                 this.push_force.push(this.all_data[i][100005]-'0')
@@ -420,11 +433,22 @@ methods: {
         }
         this.getData();
     },
+    exportData(){
+        for(var i=0;i<this.all_data.length;i++){
+            this.json_data.push({
+                "时间":this.all_data[i]['t'],
+                "推力":this.all_data[i][100005]-'0',
+                "扭矩":this.all_data[i][100004]-'0',
+                "贯入度":this.all_data[i][100395]-'0',
+                "推进速度":this.all_data[i][100002]-'0',
+                "刀盘转速":this.all_data[i][100003]-'0',
+            })
+        }
+    }
+
 },
 created () {
-        // this.timer = setInterval(() => {
-        //     this.getData()
-        // }, 60000) // 1min  
+ 
     },
 mounted () {
         this.getData(); 

@@ -107,10 +107,10 @@ methods: {
         let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
     　　myChart0.setOption({
         //图表开始
-        tooltip: {
+            tooltip: {
                 trigger: 'axis',
-                position: function (pt) {
-                return [pt[0], '10%'];
+                axisPointer: {
+                type: 'cross'
                 }
             },
             toolbox: {
@@ -145,8 +145,8 @@ methods: {
         //图表开始
             tooltip: {
                 trigger: 'axis',
-                position: function (pt) {
-                return [pt[0], '10%'];
+                axisPointer: {
+                type: 'cross'
                 }
             },
             toolbox: {
@@ -181,8 +181,8 @@ methods: {
         //图表开始
             tooltip: {
                 trigger: 'axis',
-                position: function (pt) {
-                return [pt[0], '10%'];
+                axisPointer: {
+                type: 'cross'
                 }
             },
             toolbox: {
@@ -216,11 +216,11 @@ methods: {
 　　　  myChart3.setOption({
     //图表开始
          tooltip: {
-            trigger: 'axis',
-            position: function (pt) {
-            return [pt[0], '10%'];
-            }
-        },
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross'
+                }
+            },
           toolbox: {
             feature: {
             dataZoom: {
@@ -257,11 +257,11 @@ methods: {
 　　　  myChart4.setOption({
     //图表开始
          tooltip: {
-            trigger: 'axis',
-            position: function (pt) {
-            return [pt[0], '10%'];
-            }
-        },
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross'
+                }
+            },
           toolbox: {
             feature: {
             dataZoom: {
@@ -295,7 +295,7 @@ methods: {
         ]
         //结束
     　　});
-　　
+
     },
      getCurrentTime() {
         //获取当前时间
@@ -318,8 +318,9 @@ methods: {
         this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
 
     },
-    async getLatestData () {
+    async getRecentData () {
         this.getCurrentTime()
+        console.log("实时信息获取数据的请求时间结果为:")
         console.log(this.start_time)
         console.log(this.cur_time)
         let query={
@@ -328,17 +329,17 @@ methods: {
             const { data: res } =await this.$http.
             post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
             query)
-        console.log(res.data)
-        this.all_data=res.data
+            console.log("实时获取后端返回结果是:")
+            console.log(res.data)
+            this.all_data=res.data
        
         if(res.data.length == 0|| res.data == null){
-            console.log("实时信息获取数据为空或失败！")
+            console.log("实时信息获取数据为空或失败！开始渲染假数据")
         }else{
-            this.push_force=[] //总推力
             this.time_point=[]
+            this.push_force=[] //总推力
             this.torsion=[] //扭矩
             this.degree=[] //贯入度
-            this.time_point=[]
             this.v_push=[] //推进速度
             this.v_rotate=[] //刀盘转速
             
@@ -360,19 +361,66 @@ methods: {
                 this.cur_state='掘进'
             }
         }
-
+        console.log("要渲染的数据为")
+        console.log(this.all_data)
         this.initCharts(); 
     },
-    
+    async getLatestData () {
+        this.getCurrentTime()
+        console.log("实时信息获取数据的请求时间结果为:")
+        console.log(this.start_time)
+        console.log(this.cur_time)
+        let query={
+            where:`([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
+        };
+            const { data: res } =await this.$http.
+            post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
+            query)
+            console.log("实时获取后端返回结果是:")
+            console.log(res.data)
+            this.all_data=res.data
+       
+        if(res.data.length == 0|| res.data == null){
+            console.log("实时信息获取数据为空或失败！开始渲染假数据")
+        }else{
+            this.time_point=[]
+            this.push_force=[] //总推力
+            this.torsion=[] //扭矩
+            this.degree=[] //贯入度
+            this.v_push=[] //推进速度
+            this.v_rotate=[] //刀盘转速
+            
+            var i;
+            for(i=0;i<this.all_data.length;i++){
+                this.push_force.push(this.all_data[i][100005]-'0')
+                this.time_point.push(this.all_data[i]['t'])
+                this.torsion.push(this.all_data[i][100004]-'0')
+                this.degree.push(this.all_data[i][100395]-'0')
+                this.v_push.push(this.all_data[i][100002]-'0')
+                this.v_rotate.push(this.all_data[i][100003]-'0')
+            }
+            //获取当前环号
+            this.cur_loop=this.all_data[i-1][100001]-"0"
+            //获取当前掘进状态
+            if(this.all_data[i-1][100007]>0){
+                this.cur_state='拼装'
+            }else{
+                this.cur_state='掘进'
+            }
+        }
+        console.log("要渲染的数据为")
+        console.log(this.all_data)
+        this.initCharts(); 
+    },
 },
     created () {
         this.timer = setInterval(() => {
-            this.getLatestData()
-        }, 5000) // 10s刷新一次
+            this.getRecentData()
+        }, 30000) // 10s刷新一次
         
     },
     mounted () {
-        this.getLatestData(); 
+        this.getRecentData(); 
         
 　 },
 }
