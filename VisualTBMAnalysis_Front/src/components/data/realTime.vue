@@ -291,7 +291,7 @@ methods: {
         ]
         //结束
     　　});
-
+    
     },
     getCurrentTime() {
         //获取当前时间
