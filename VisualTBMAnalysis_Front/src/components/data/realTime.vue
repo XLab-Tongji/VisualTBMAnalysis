@@ -408,7 +408,7 @@ methods: {
             console.log(res.data)
        
         if(res.data.length == 0|| res.data == null){
-            //console.log("没有最新数据！")
+            console.log("没有最新数据！")
             return
         }
 

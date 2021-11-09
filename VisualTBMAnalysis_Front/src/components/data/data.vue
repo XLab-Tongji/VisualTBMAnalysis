@@ -2,7 +2,7 @@
 
 <dv-border-box-9  >
     
-    <!-- top -->
+    <!-- 实时数据界面 -->
     <real-time />
 
     <div class="d-flex jc-center" >
@@ -16,8 +16,8 @@
         </div>
     </div>
 
+  <!-- 选择时间段数据界面 -->
   <select-time/>
-
 
 </dv-border-box-9>
 
@@ -95,7 +95,7 @@ export default {
     font-size: 25px;
 }
 .table-wrapper /deep/ .el-table--fit{
-        padding: 20px;
+    padding: 20px;
 }
  .table-wrapper /deep/  .el-table, .el-table__expanded-cell {
     background-color: #ffffff00;

@@ -1,37 +1,33 @@
 <template>
-    <div>
-    <!-- top -->
-    <el-container  direction="vertical" >
+<div>
+<el-container  direction="vertical" >
   
-<el-container>
-
+<el-container >
     <el-container  style="width:30%; height:100%" direction="vertical" >
-
         <div class="text">可选择数据时间范围</div>
         <el-container>
-        <el-date-picker
-        popper-class="mydatestyle"
-        v-model="value"
-        type="datetimerange"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期">
-        </el-date-picker>
-        <el-button icon="el-icon-search" circle @click="submitTime" style="margin-left:25px;margin-right:10px"></el-button>
-        <!-- 导出按钮 -->
-        <download-excel
-                class = "export-excel-wrapper"
-                :data = "json_data"
-                name = "导出数据.xls">
-                <el-button @click="exportData" icon="el-icon-download" circle></el-button>
-        </download-excel>
-
+            <el-date-picker
+                popper-class="mydatestyle"
+                v-model="value"
+                type="datetimerange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+            </el-date-picker>
+            <el-button icon="el-icon-search" circle @click="submitTime" style="margin-left:25px;margin-right:10px"></el-button>
+            <!-- 导出按钮 -->
+            <download-excel
+                    class = "export-excel-wrapper"
+                    :data = "json_data"
+                    name = "导出数据.xls">
+                    <el-button @click="exportData" icon="el-icon-download" circle></el-button>
+            </download-excel>
         </el-container>
 
-      <dv-border-box-12 style="height:420px; width:100%;">
-        <div class="text" style="margin-top:5px">贯入度变化情况</div>
-         <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
-    </dv-border-box-12>
+        <dv-border-box-12 style="height:420px; width:100%;">
+            <div class="text" style="margin-top:5px">贯入度变化情况</div>
+            <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
+        </dv-border-box-12>
 
     </el-container>
 
@@ -40,42 +36,34 @@
                 style="font-family: 'zcool_title';font-size: 25px;height:480px"  
                 :color="['#3f7c8b', '#96dee8']" >
                     <div style="width:680px;height:450px" ref="push_force_chart"></div>
-                </dv-border-box-11>
-                
-        </el-container>
+                </dv-border-box-11>    
     </el-container>
+</el-container>
 
 </el-container>
 
- <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
+<dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
 
-  <el-container style="height:100%; width:100%; ">    
-    
-
+<el-container style="height:100%; width:100%; ">    
     <dv-border-box-10 style="height:100%; width:31%;margin-left:8px;">
-                <div class="text">扭矩变化情况</div>
-         <div style="width:390px;height:350px" ref="torsion_chart" class="chart"></div>
+        <div class="text">扭矩变化情况</div>
+        <div style="width:390px;height:350px" ref="torsion_chart" class="chart"></div>
     </dv-border-box-10>
 
     <dv-border-box-10 style="height:100%; width:31%;margin-right:20px;margin-left:20px;">
         <div class="text">推进速度变化情况</div>
-         <div style="width:390px;height:350px" ref="v_push_chart" class="chart"></div>
+        <div style="width:390px;height:350px" ref="v_push_chart" class="chart"></div>
     </dv-border-box-10>
 
     <dv-border-box-10 style="height:100%; width:31%;">
-                <div class="text">刀盘转速变化情况</div>
-         <div style="width:390px;height:350px" ref="v_rotate_chart" class="chart"></div>
+        <div class="text">刀盘转速变化情况</div>
+        <div style="width:390px;height:350px" ref="v_rotate_chart" class="chart"></div>
     </dv-border-box-10>
-
-
-  </el-container>
+</el-container>
   
+<dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
 
-  <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
-
-
-
-    </div>
+</div>
 </template>
 
 <script>
@@ -465,7 +453,6 @@ mounted () {
 
 
 <style lang="less" scoped>
-
 .dv-border-box-9{
     width:100%;
     height: 100%;
@@ -477,9 +464,7 @@ mounted () {
 }
 .title_img{
     position: relative;
-    // left:300px;
     top: 30px;
-    //margin-top: 30px;
 }
 .headline{
     position: relative;
@@ -490,7 +475,6 @@ mounted () {
     font-size: 40px;
     font-family:'zcool_title'; 
     -webkit-text-stroke-color: rgb(255, 255, 255); 
-    //-webkit-text-stroke-width: 0.5px; 
 }
 .el-container{
     margin:10px;
@@ -500,12 +484,6 @@ mounted () {
     top:20px;
     left:35px;
 }
-.card_1{
-    margin: 10px;
-    margin-right: 30px;
-    //background-color:rgba(252, 252, 252, 0.5)
-
-}
 .card_2{
     margin: 10px;
     background-color:rgba(252, 252, 252, 0.5)
@@ -513,14 +491,13 @@ mounted () {
 .card_3{
     margin: 10px;
     background-color:rgba(252, 252, 252, 0.5)
-
 }
 .text{
     color: #96dee8;
     color: #bbecf3;
-    //font-weight: bold;
     font-family: 'zcool_title';
     font-size: 25px;
+    text-align: center;
 }
 .table-wrapper /deep/ .el-table--fit{
         padding: 20px;
@@ -535,7 +512,6 @@ mounted () {
  .table-wrapper /deep/  .el-table--enable-row-transition .el-table__body td, .el-table .cell{
     background-color: #0d1a2c18;;
 }
-
 .el-table{
     margin:30px;
 }
@@ -562,33 +538,13 @@ mounted () {
     position: relative;
     right:5px;
 }
-.title{
-    color:#ffffff;
-    font-size: 40px;
-    font-family:'zcool_title'; 
-    -webkit-text-stroke-color: rgb(255, 255, 255); 
-    //-webkit-text-stroke-width: 0.5px; 
-}
 .text1{
     color: #96dee8;
-    //font-weight: bold;
     font-size: 30px;
     margin-bottom: 30px;
     font-family: 'zcool_title';
     text-align: center;
 }
-.parm{
-    width:500px;
-    color: #96dee8;
-    //font-weight: bold;
-    font-size: 30px;
-    font-family: 'zcool_title';
-    position: relative;
-    margin-top:20px;
-    margin-bottom: 20px;
-}
-
-
 .dv-border-box-13{
     margin:10px;
     margin-left: 30px;
@@ -601,10 +557,6 @@ mounted () {
     padding-bottom: 20px;
     margin-bottom: 10px;
 }
-.chart{
-    position: relative;
-    left: 10px;
-}
 .card_1{
     margin: 15px;
     background-color:rgba(252, 252, 252, 0.5);
@@ -612,25 +564,9 @@ mounted () {
     position: relative;
     right:5px;
 }
-.title{
-    color:#ffffff;
-    font-size: 40px;
-    font-family:'zcool_title'; 
-    -webkit-text-stroke-color: rgb(255, 255, 255); 
-    //-webkit-text-stroke-width: 0.5px; 
-}
-.text{
-    color: #96dee8;
-    //font-weight: bold;
-    font-size: 30px;
-    margin-bottom: 10px;
-    font-family: 'zcool_title';
-    text-align: center;
-}
 .parm{
     width:500px;
     color: #96dee8;
-    //font-weight: bold;
     font-size: 30px;
     font-family: 'zcool_title';
     position: relative;
