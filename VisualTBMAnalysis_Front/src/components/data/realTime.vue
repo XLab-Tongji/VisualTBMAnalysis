@@ -311,7 +311,43 @@ methods: {
     this.end_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
   },
   async getRecentData () {
-    this.getCurrentTime()
+    //获取当前时间
+    var year = new Date().getFullYear();
+    var month = new Date().getMonth() + 1 < 10 ? "0"+ new Date().getMonth() + 1 : new Date().getMonth() + 1 ; 
+    var day = new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate(); 
+    var hour = new Date().getHours()< 10 ? "0" + new Date().getHours() : new Date().getHours(); 
+    var minute = new Date().getMinutes()< 10 ? "0" + new Date().getMinutes() : new Date().getMinutes(); 
+    var second = new Date().getSeconds()< 10 ? "0" + new Date().getSeconds() : new Date().getSeconds(); 
+
+    this.cur_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+
+     //20min后的时间点,待完善
+    if(minute<40){
+        minute = minute+20
+    }else{
+        minute = (minute - "0") - 40
+        hour = hour + 1
+    }
+    if(minute<10) minute="0"+minute
+    this.end_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+    //此步完成后时间是20min后
+
+    //20min前的时间点,（也就是当前存储的时间的40min前）待完善
+    // if(minute>39){
+    //     minute = minute-40
+    // }else{
+    //     minute = 20 + (minute - "0") 
+    //     hour = hour - 1
+    // }
+    // if(minute<10) minute="0"+minute
+    // this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+
+    //一个小时前的时间点
+    hour=hour-1
+    this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+
+
+    //开始发起请求
     let query={
       where:`([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
     };
@@ -336,13 +372,9 @@ methods: {
     }
 
     //插入渲染数据
-    console.log("实时信息获取数据的请求时间结果为:")
-    console.log(this.start_time)
-    console.log(this.cur_time)
     console.log("实时获取后端返回结果是:")
     console.log(res.data)
     this.all_data=res.data
-    
     
     console.log("要渲染的数据为")
     console.log(this.all_data)
@@ -418,18 +450,6 @@ methods: {
     }
     this.initCharts(); 
   },
-  dataFilter(arr){
-    var temp
-    var ans
-    for(var i=0;i<arr.length;i++){
-      temp = 0
-      for(var j=0;j<arr.length-5;j++){
-        temp=temp+arr[i+j]
-      }
-      temp = temp/5
-      ans.push(temp)
-    }
-  }
 },
   created () {
     // this.timer = setInterval(() => {

@@ -453,7 +453,7 @@ export default{
         }
     },
     errorInfo() {
-        this.$alert('所选时间段没有数据！', '错误提示', {
+        this.$alert('对不起！您所选时间段因为接口不稳定等原因没有可以展示的数据。', '错误提示', {
           confirmButtonText: '确定',
         });
     },
@@ -469,8 +469,8 @@ export default{
         temp = temp/step
         ans.push(temp)
       }
-      console.log('均值滤波的结果是：')
-      console.log(ans)
+      // console.log('均值滤波的结果是：')
+      // console.log(ans)
       return ans
     }
   },
