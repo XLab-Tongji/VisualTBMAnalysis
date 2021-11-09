@@ -1,6 +1,6 @@
 <template>
-  <dv-border-box-9 style="height:1350px">
-    <div>
+  <dv-border-box-9 >
+    
       <!-- 输入参数 -->
       <div align="center" style="padding-top: 10px">
         <input1 :FK_SRingNo="this.currentNo" />
@@ -136,7 +136,7 @@
           />
         </div>
       </div>
-    </div>
+   
   </dv-border-box-9>
 </template>
 
@@ -240,9 +240,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .dv-border-box-9 {
   width: 100%;
-  height: 100%;
 }
 .text {
   color: #96dee8;
@@ -321,6 +321,17 @@ export default {
   border: none !important; 
   color: #fff !important;
   color: #fff !important;
+}
+
+.el-container .el-table td,
+.el-container .el-table th.is-leaf,
+.el-container .el-table--border,
+.el-container .el-table--group {
+  border: none;
+  cursor: pointer;
+}
+.el-container .el-table::before {
+  height: 0;
 }
 </style>
 

@@ -151,4 +151,14 @@ export default {
 .el-table .cell {
   background-color: #0d1a2c18;
 }
+.el-container .el-table td,
+.el-container .el-table th.is-leaf,
+.el-container .el-table--border,
+.el-container .el-table--group {
+  border: none;
+  cursor: pointer;
+}
+.el-container .el-table::before {
+  height: 0;
+}
 </style>
