@@ -116,11 +116,11 @@ methods: {
             
         },
         series: [
-            {
+          {
             data: this.push_force,
             symbol: 'none',
             type: 'line',
-            }
+          },
         ]
         //结束
     　　});
@@ -418,6 +418,18 @@ methods: {
     }
     this.initCharts(); 
   },
+  dataFilter(arr){
+    var temp
+    var ans
+    for(var i=0;i<arr.length;i++){
+      temp = 0
+      for(var j=0;j<arr.length-5;j++){
+        temp=temp+arr[i+j]
+      }
+      temp = temp/5
+      ans.push(temp)
+    }
+  }
 },
   created () {
     // this.timer = setInterval(() => {

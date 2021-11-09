@@ -102,57 +102,61 @@ export default{
       let myChart3 = this.$echarts.init(this.$refs.v_push_chart,'walden');
       let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
   　　myChart0.setOption({
-      //图表开始
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-              type: 'cross'
-              }
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+            type: 'cross'
+            }
+        },
+        legend: {
+            data: ['原始数据', '滤波数据']
+        },
+        toolbox: {
+            feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: this.time_point,
+            boundaryGap: false
+        },
+        yAxis: {
+            type: 'value',
+            scale: true,
+            boundaryGap: [0, '100%']
+        },
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 0,
+                end: 40
+            },
+            {
+                start: 0,
+                end: 40
+            }
+        ],
+        series: [
+          { 
+            name:'原始数据',
+            data: this.push_force,
+            symbol: 'none',
+            type: 'line',
           },
-          toolbox: {
-              feature: {
-              dataZoom: {
-                  yAxisIndex: 'none'
-              },
-              restore: {},
-              saveAsImage: {}
-              }
-          },
-          xAxis: {
-              type: 'category',
-              data: this.time_point,
-              boundaryGap: false
-          },
-          yAxis: {
-              type: 'value',
-              scale: true,
-              // min:24000,
-              // max:40000,
-          
-              boundaryGap: [0, '100%']
-          },
-          dataZoom: [
-              {
-                  type: 'inside',
-                  start: 0,
-                  end: 40
-              },
-              {
-                  start: 0,
-                  end: 40
-              }
-          ],
-          series: [
-              {
-              data: this.push_force,
-              //smooth: true,
-              symbol: 'none',
-              //areaStyle: {},
-              type: 'line',
-              }
-          ]
-          //结束
-      　　});
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.push_force),
+            symbol: 'none',
+            type: 'line',
+          }
+        ]
+        //结束
+      });
   　　myChart1.setOption({
       //图表开始
           tooltip: {
@@ -161,6 +165,9 @@ export default{
               type: 'cross'
               }
           },
+          legend: {
+            data: ['原始数据', '滤波数据']
+          },
           toolbox: {
               feature: {
               dataZoom: {
@@ -176,11 +183,7 @@ export default{
               boundaryGap: false
           },
           yAxis: {
-              type: 'value',
-              scale: true,
-              // min:0,
-              // max:100,
-          
+              type: 'value',       
               boundaryGap: [0, '100%']
           },
           dataZoom: [
@@ -195,13 +198,19 @@ export default{
               }
           ],
           series: [
-              {
+            { 
+              name:'原始数据',
               data: this.degree,
-              //smooth: true,
               symbol: 'none',
-              //areaStyle: {},
               type: 'line',
-              }
+            },
+            {
+              name:'滤波数据',
+              data: this.dataFilter(this.degree),
+              symbol: 'none',
+              type: 'line',
+            }
+            
           ]
           //结束
       　　});
@@ -213,6 +222,9 @@ export default{
               type: 'cross'
               }
           },
+          legend: {
+              data: ['原始数据', '滤波数据']
+          },
           toolbox: {
               feature: {
               dataZoom: {
@@ -230,9 +242,6 @@ export default{
           yAxis: {
               type: 'value',
               scale: true,
-              // min:0,
-              // max:100,
-          
               boundaryGap: [0, '100%']
           },
           dataZoom: [
@@ -247,23 +256,31 @@ export default{
               }
           ],
           series: [
-              {
+            { 
+              name:'原始数据',
               data: this.torsion,
-              //smooth: true,
               symbol: 'none',
-              //areaStyle: {},
               type: 'line',
-              }
+            },
+            { 
+              name:'滤波数据',
+              data: this.dataFilter(this.torsion),
+              symbol: 'none',
+              type: 'line',
+            }
           ]
           //结束
       　　});
-  　　　myChart3.setOption({
-  //图表开始
+  　　myChart3.setOption({
+        //图表开始
       tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-              type: 'cross'
-              }
+                trigger: 'axis',
+                axisPointer: {
+                type: 'cross'
+            }
+          },
+          legend: {
+              data: ['原始数据', '滤波数据']
           },
         toolbox: {
           feature: {
@@ -281,10 +298,7 @@ export default{
       },
       yAxis: {
           type: 'value',
-          scale: true,
-          // min:0,
-          // max:100,
-          
+          scale: true,   
           boundaryGap: [0, '100%']
       },
         dataZoom: [
@@ -299,13 +313,18 @@ export default{
           }
       ],
       series: [
-          {
+        { 
+          name:'原始数据',
           data: this.v_push,
-          //smooth: true,
           symbol: 'none',
-          //areaStyle: {},
           type: 'line',
-          }
+        },
+        { 
+          name:'滤波数据',
+          data: this.dataFilter(this.v_push),
+          symbol: 'none',
+          type: 'line',
+        }
       ]
       //结束
   　　});
@@ -317,6 +336,9 @@ export default{
                 type: 'cross'
                 }
             },
+            legend: {
+              data: ['原始数据', '滤波数据']
+          },
           toolbox: {
             feature: {
             dataZoom: {
@@ -334,9 +356,6 @@ export default{
         yAxis: {
             type: 'value',
             scale: true,
-            // min:0,
-            // max:100,
-            
             boundaryGap: [0, '100%']
         },
           dataZoom: [
@@ -351,13 +370,18 @@ export default{
             }
         ],
         series: [
-            {
+          { 
+            name:'原始数据',
             data: this.v_rotate,
-            //smooth: true,
             symbol: 'none',
-            //areaStyle: {},
             type: 'line',
-            }
+          },
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.v_rotate),
+            symbol: 'none',
+            type: 'line',
+          }
         ]
         //结束
     　　});
@@ -432,6 +456,22 @@ export default{
         this.$alert('所选时间段没有数据！', '错误提示', {
           confirmButtonText: '确定',
         });
+    },
+    dataFilter(arr){
+      var step = 8
+      var temp
+      var ans= new Array()
+      for(var i=0;i<arr.length-5;i++){
+        temp = 0
+        for(var j=0;j<step;j++){
+          temp=temp+arr[i+j]
+        }
+        temp = temp/step
+        ans.push(temp)
+      }
+      console.log('均值滤波的结果是：')
+      console.log(ans)
+      return ans
     }
   },
   created () {
