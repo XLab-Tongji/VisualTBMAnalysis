@@ -1,142 +1,142 @@
 <template>
-  <dv-border-box-9 >
-    
-      <!-- 输入参数 -->
-      <div align="center" style="padding-top: 10px">
-        <input1 :FK_SRingNo="this.currentNo" />
-        <img src="@/assets/image/down.png" class="image" />
-      </div>
-      <!-- 环号筛选 -->
-      <div class="block" style="position: absolute; top: 25%; left: 2%">
-        <dv-border-box-1>
-          <div class="table-wrapper">
-            <div class="text">分析环号</div>
-            <div class="noText">当前展示环号：{{ this.currentNo }}</div>
-            <div align="center" class="noText">
-              根据环号搜索
-              <el-input
-                placeholder="请输入环号"
-                prefix-icon="el-icon-search"
-                v-model="inputNo"
-                style="width: 35%"
-                @keyup.enter.native="toChange"
+  <dv-border-box-9 style="height: 1320px">
+    <!-- 输入参数 -->
+    <div align="center" style="padding-top: 10px">
+      <input1 :FK_SRingNo="this.currentNo" />
+      <img src="@/assets/image/down.png" class="image" />
+    </div>
+    <dv-decoration-11
+      class="shownoText"
+      style="position: absolute; top: 20%; left: 2.5%; width: 340px; height: 80px"
+      >当前展示环号：{{ this.currentNo }}</dv-decoration-11
+    >
+    <!-- 环号筛选 -->
+    <div class="block" style="position: absolute; top: 27%; left: 2%">
+      <dv-border-box-1>
+        <div class="table-wrapper">
+          <div class="text">分析环号筛选</div>
+          <div align="center" class="noText">
+            根据环号搜索
+            <el-input
+              placeholder="请输入环号"
+              prefix-icon="el-icon-search"
+              v-model="inputNo"
+              style="width: 35%"
+              @keyup.enter.native="toChange"
+            >
+            </el-input>
+          </div>
+          <el-container>
+            <el-table
+              :show-header="true"
+              :data="
+                analyseNo.slice(
+                  (currentPage - 1) * pagesize,
+                  currentPage * pagesize
+                )
+              "
+              :cell-style="cellStyle"
+              style="width: 100%"
+              size="mini"
+              max-height="420"
+              :span-method="objectSpanMethod"
+              @current-change="handleCurrentChange"
+            >
+              <el-table-column prop="FK_SRingNo" label="分析环号" width="70">
+              </el-table-column>
+              <el-table-column
+                prop="AnalysisModel"
+                label="模型名称"
+                width="130"
               >
-              </el-input>
-            </div>
-            <el-container>
-              <el-table
-                :show-header="true"
-                :data="
-                  analyseNo.slice(
-                    (currentPage - 1) * pagesize,
-                    currentPage * pagesize
-                  )
-                "
-                :cell-style="cellStyle"
-                style="width: 100%"
-                size="mini"
-                max-height="420"
-                :span-method="objectSpanMethod"
-                @current-change="handleCurrentChange"
+              </el-table-column>
+              <el-table-column
+                prop="AnalysisTime"
+                label="数据更新时间"
+                width="150"
               >
-                <el-table-column prop="FK_SRingNo" label="分析环号" width="70">
-                </el-table-column>
-                <el-table-column
-                  prop="AnalysisModel"
-                  label="模型名称"
-                  width="130"
-                >
-                </el-table-column>
-                <el-table-column
-                  prop="AnalysisTime"
-                  label="数据更新时间"
-                  width="150"
-                >
-                </el-table-column>
-              </el-table>
-            </el-container>
-          </div>
-          <el-pagination
-            small
-            layout="prev, pager, next"
-            :pager-count="7"
-            :total="total"
-            @current-change="current_change"
-            align="center"
-            style="padding-bottom: 15px"
-          >
-          </el-pagination>
-        </dv-border-box-1>
-      </div>
-      <!-- 模型图形 -->
-      <div align="center">
-        <dv-decoration-9 style="width: 370px; height: 220px"
-          ><h1 class="text">
-            基于RF-PSO算法的掘进参数优化模型
-          </h1></dv-decoration-9
-        >
-        <!-- 模型简介 -->
-        <el-card style="position: absolute; top: 12%; right: 3.3%">
-          <div align="left" style="margin: 0px 0px">
-            <div class="introText">
-              &emsp;&emsp;在泥水盾构掘进过程中，掘进优化决策方法通常含有多个评价指标，如施工安全和高效掘进。在保证施工安全的前提下，掘进效率是施工中最关注的指标。在构建的泥水盾构岩机映射模型的基础上，结合珠三角水资源配置工程的特点，以“先安全，再高效”为掘进参数的优化目标，以贯入度p和刀盘转速n为优化变量，通过在不同地层条件下建立掘进参数优化控制范围作为多元约束条件保证掘进安全以及刀具磨损的合理化，最后采用粒子群优化算法以掘进速度v为目标函数给出盾构在安全且刀具磨损合理的范围内高效掘进的掘进参数建议结果。
-            </div>
-          </div>
-        </el-card>
-      </div>
-      <div align="center" style="margin-top: 0px; padding-right: 0px">
-        <img src="@/assets/image/line.png" class="line" />
-        <img
-          src="@/assets/image/right.png"
-          class="right"
-          style="position: absolute; right: 0; top: 47%; right: 41%"
-        />
-        <!-- 输出结果1 -->
-        <output1
-          :FK_SRingNo="this.currentNo"
-          style="position: absolute; top: 41%; right: 3%"
-        />
-      </div>
-      <div align="center">
-        <img
-          src="@/assets/image/down.png"
-          class="image"
-          style="margin-top: -20px"
-        />
-        <!-- 模型图形 -->
-        <dv-decoration-9 align="center" style="width: 380px; height: 220px"
-          ><h1 class="text">
-            基于RF-PSO算法的泥水仓压力控制参数优化模型
-          </h1></dv-decoration-9
-        >
-        <!-- 模型简介 -->
-        <el-card style="position: absolute; top: 62.5%; right: 3.2%">
-          <div align="left" style="margin: 0px 0px">
-            <div class="introText">
-              &emsp;&emsp;由所构建的泥水盾构掘进参数优化模型可知，当盾构PLC数据采集系统获得上一环的盾构掘进参数后，可计算得到上一环的FPI均值及方差、TPI均值及方差，将这四个参数作为实时的地质信息输入泥水盾构掘进参数优化模型，同时给定当前环的水土压力期望值，泥水盾构掘进参数优化模型就能给出当前环在掘进参数控制范围内最优的贯入度、刀盘转速以及掘进速度，从而代入岩机映射模型就能获得当前环的总推力和刀盘扭矩。
-            </div>
-            <div class="introText">
-              &emsp;&emsp;为了保证将水土压力期望值作为泥水仓顶部压力的方式具有较好的合理性同时，使得泥水仓顶部压力与前方理论水土压力保持平衡，在泥水盾构掘进参数优化模型的基础上，通过优化泥水仓压力控制变量使得当前环泥水仓压力与前方水土压力保持平衡。
-            </div>
-          </div>
-        </el-card>
-      </div>
-      <div align="center" style="padding-top: 0px">
-        <img src="@/assets/image/down.png" class="image" />
-        <!-- 输出结果2 -->
-        <output2 :FK_SRingNo="this.currentNo" />
-      </div>
-      <div class="d-flex jc-center">
-        <div class="title">
-          <dv-decoration-6
-            class="dv-dec-6"
-            :reverse="true"
-            :color="['#3fb1e3', '#96dee8']"
-            style="margin-top: 15px"
-          />
+              </el-table-column>
+            </el-table>
+          </el-container>
         </div>
+        <el-pagination
+          small
+          layout="prev, pager, next"
+          :pager-count="7"
+          :total="total"
+          @current-change="current_change"
+          align="center"
+          style="padding-bottom: 15px"
+        >
+        </el-pagination>
+      </dv-border-box-1>
+    </div>
+    <!-- 模型图形 -->
+    <div align="center">
+      <dv-decoration-9 style="width: 370px; height: 220px"
+        ><h1 class="text">基于RF-PSO算法的掘进参数优化模型</h1></dv-decoration-9
+      >
+      <!-- 模型简介 -->
+      <el-card style="position: absolute; top: 12%; right: 3.3%">
+        <div align="left" style="margin: 0px 0px">
+          <div class="introText">
+            &emsp;&emsp;在泥水盾构掘进过程中，掘进优化决策方法通常含有多个评价指标，如施工安全和高效掘进。在保证施工安全的前提下，掘进效率是施工中最关注的指标。在构建的泥水盾构岩机映射模型的基础上，结合珠三角水资源配置工程的特点，以“先安全，再高效”为掘进参数的优化目标，以贯入度p和刀盘转速n为优化变量，通过在不同地层条件下建立掘进参数优化控制范围作为多元约束条件保证掘进安全以及刀具磨损的合理化，最后采用粒子群优化算法以掘进速度v为目标函数给出盾构在安全且刀具磨损合理的范围内高效掘进的掘进参数建议结果。
+          </div>
+        </div>
+      </el-card>
+    </div>
+    <div align="center" style="margin-top: 0px; padding-right: 0px">
+      <img src="@/assets/image/line.png" class="line" />
+      <img
+        src="@/assets/image/right.png"
+        class="right"
+        style="position: absolute; right: 0; top: 47%; right: 41%"
+      />
+      <!-- 输出结果1 -->
+      <output1
+        :FK_SRingNo="this.currentNo"
+        style="position: absolute; top: 41%; right: 3%"
+      />
+    </div>
+    <div align="center">
+      <img
+        src="@/assets/image/down.png"
+        class="image"
+        style="margin-top: -20px"
+      />
+      <!-- 模型图形 -->
+      <dv-decoration-9 align="center" style="width: 380px; height: 220px"
+        ><h1 class="text">
+          基于RF-PSO算法的泥水仓压力控制参数优化模型
+        </h1></dv-decoration-9
+      >
+      <!-- 模型简介 -->
+      <el-card style="position: absolute; top: 62.5%; right: 3.2%">
+        <div align="left" style="margin: 0px 0px">
+          <div class="introText">
+            &emsp;&emsp;由所构建的泥水盾构掘进参数优化模型可知，当盾构PLC数据采集系统获得上一环的盾构掘进参数后，可计算得到上一环的FPI均值及方差、TPI均值及方差，将这四个参数作为实时的地质信息输入泥水盾构掘进参数优化模型，同时给定当前环的水土压力期望值，泥水盾构掘进参数优化模型就能给出当前环在掘进参数控制范围内最优的贯入度、刀盘转速以及掘进速度，从而代入岩机映射模型就能获得当前环的总推力和刀盘扭矩。
+          </div>
+          <div class="introText">
+            &emsp;&emsp;为了保证将水土压力期望值作为泥水仓顶部压力的方式具有较好的合理性同时，使得泥水仓顶部压力与前方理论水土压力保持平衡，在泥水盾构掘进参数优化模型的基础上，通过优化泥水仓压力控制变量使得当前环泥水仓压力与前方水土压力保持平衡。
+          </div>
+        </div>
+      </el-card>
+    </div>
+    <div align="center" style="padding-top: 0px">
+      <img src="@/assets/image/down.png" class="image" />
+      <!-- 输出结果2 -->
+      <output2 :FK_SRingNo="this.currentNo" />
+    </div>
+    <div class="d-flex jc-center">
+      <div class="title">
+        <dv-decoration-6
+          class="dv-dec-6"
+          :reverse="true"
+          :color="['#3fb1e3', '#96dee8']"
+          style="margin-top: 15px"
+        />
       </div>
-   
+    </div>
   </dv-border-box-9>
 </template>
 
@@ -170,7 +170,7 @@ export default {
     //设置选中行
     handleCurrentChange(val) {
       this.currentRow = val;
-      this.currentNo=this.currentRow.FK_SRingNo;
+      this.currentNo = this.currentRow.FK_SRingNo;
     },
     //选中行
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
@@ -240,7 +240,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .dv-border-box-9 {
   width: 100%;
 }
@@ -252,6 +251,14 @@ export default {
   font-family: "zcool_title";
   text-align: center;
   z-index: 5;
+}
+.shownoText {
+  color: #96dee8;
+  font-size: 25px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  font-family: "zcool_title";
+  text-align: center;
 }
 .noText {
   color: #96dee8;
@@ -317,8 +324,8 @@ export default {
 }
 
 .el-input /deep/.el-input__inner {
-  background-color: #a3774400 !important; 
-  border: none !important; 
+  background-color: #a3774400 !important;
+  border: none !important;
   color: #fff !important;
   color: #fff !important;
 }
@@ -333,6 +340,12 @@ export default {
 .el-container .el-table::before {
   height: 0;
 }
+
+.el-container  /deep/.el-table tbody tr:hover>td { 
+    background-color:#bb2b2b00!important
+}
+
+
 </style>
 
 <style>
@@ -363,7 +376,7 @@ export default {
   color: #fff;
 }
 
-.el-table__body tr.current-row>td.el-table__cell {
-    background-color: #066e7c  !important;
+.el-table__body tr.current-row > td.el-table__cell {
+  background-color: #066e7c !important;
 }
 </style>
