@@ -1,8 +1,15 @@
 <template>
 <div>
-<el-container  direction="vertical" >
-  <el-container >
-    <el-container  style="width:30%; height:100%" direction="vertical" >
+  <div style="height:40px" />
+
+  <el-container>
+        <dv-decoration-3 style="width:35%;height:30px;" />
+        <dv-decoration-7 class="headline" style="width:30%;height:30px;">  过往数据筛选  </dv-decoration-7>
+        <dv-decoration-3 style="width:35%;height:30px;" />
+  </el-container>
+
+  <el-container style="height:100%; width:96%; ">
+    <el-container style="height:100%;width:28%; margin-left:8px;" direction="vertical" >
       <div class="text">可选择数据时间范围</div>
       <el-container>
         <el-date-picker
@@ -13,7 +20,8 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
-        <el-button icon="el-icon-search" circle @click="submitTime" style="margin-left:25px;margin-right:10px"></el-button>
+        <el-button icon="el-icon-search" circle @click="submitTime" 
+            style="margin-left:20px;margin-right:10px;height:40px"></el-button>
         <download-excel
           class = "export-excel-wrapper"
           :data = "json_data"
@@ -22,21 +30,29 @@
         </download-excel>
       </el-container>
 
-      <dv-border-box-12 style="height:420px; width:100%;">
-        <div class="text" style="margin-top:5px">贯入度变化情况</div>
-        <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
-      </dv-border-box-12>
+      <!-- 这里需要一段说明文字 -->
+      <dv-border-box-4 :color="['#3fb1e3', '#96dee8']" style="padding:30px;width:350px;height:280px;">
+      <div class="info_text" style="">
+        说明：<br>
+        <br>可以通过上方时间选择框选择想要获取的数据区间。
+        <br>点击搜索按钮进行数据筛选展示，点击下载按钮下载excel文件。
+        <br>图表上方可选择性展示原始数据和滤波数据。滤波步长为8。</div>
+      </dv-border-box-4>
     </el-container>
 
-    <el-container style="width:50%;height:100%">
-      <dv-border-box-11 title="总推力变化情况" 
-        style="font-family: 'zcool_title';font-size: 25px;height:480px"  
-        :color="['#3f7c8b', '#96dee8']" >
-        <div style="width:680px;height:450px" ref="push_force_chart"></div>
-      </dv-border-box-11>    
-    </el-container>
+      <dv-border-box-10 style="height:100%; width:33%;margin-right:20px;margin-left:20px;">
+        <div class="text" style="margin-top:5px">总推力实时数据</div>
+        <div style="width:360px;height:350px;position:relative;left:30px"  ref="push_force_chart"></div>
+      </dv-border-box-10>
+
+      <dv-border-box-10 style="height:100%; width:30%;">
+        <div class="text" style="margin-top:5px">贯入度实时数据</div>
+          <div style="width:350px;height:350px;position:relative;left:16px" ref="degree_chart" ></div>
+      </dv-border-box-10>    
+
   </el-container>
-</el-container>
+
+  <div style="height:10px" />
 
 <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
 
@@ -57,7 +73,6 @@
   </dv-border-box-10>
 </el-container>
   
-<dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
 
 </div>
 </template>
@@ -70,13 +85,16 @@ export default{
       json_data:[],
       time_point:['test1','test2','test3','test4','test5','test6','test7'],
       push_force:[24680,24650,24620,24680,24700,24680,24720],
-      value: [new Date(2021, 9, 22, 23, 40), new Date(2021, 9, 22, 23, 59)],
+      value: ['',''],
+      //value: [new Date(2021, 9, 22, 23, 40), new Date(2021, 9, 22, 23, 59)],
+      // time:['2021-09-22 23:30:00','2021-09-22 23:59:00'],
       time:['2021-09-22 23:30:00','2021-09-22 23:59:00'],
 
       v_push:[80,50,20,80,70,80,20],
       v_rotate:[80,50,20,80,70,80,20],
       torsion:[80,50,20,80,70,80,20],
       degree:[80,50,20,80,70,80,20],
+      state:[],
 
       recordID_1:'0',
       recordID_2:'0',
@@ -328,7 +346,7 @@ export default{
       ]
       //结束
   　　});
-  　　　myChart4.setOption({
+  　　myChart4.setOption({
     //图表开始
           tooltip: {
                 trigger: 'axis',
@@ -411,6 +429,7 @@ export default{
             this.degree=[] //贯入度
             this.v_push=[] //推进速度
             this.v_rotate=[] //刀盘转速
+            this.state=[] //掘进状态
             
             for(i=0;i<this.all_data.length;i++){
                 this.push_force.push(this.all_data[i][100005]-'0')
@@ -419,6 +438,12 @@ export default{
                 this.degree.push(this.all_data[i][100395]-'0')
                 this.v_push.push(this.all_data[i][100002]-'0')
                 this.v_rotate.push(this.all_data[i][100003]-'0')
+
+                if(this.all_data[i][100007]>0){
+                  this.state.push('拼装')
+                }else{
+                  this.state.push('掘进')  //100006>0 或者 Wm>0
+                }
             }
         }
         
@@ -449,6 +474,7 @@ export default{
                 "贯入度":this.all_data[i][100395]-'0',
                 "推进速度":this.all_data[i][100002]-'0',
                 "刀盘转速":this.all_data[i][100003]-'0',
+                "掘进状态":this.state[i],
             })
         }
     },
@@ -509,12 +535,10 @@ export default{
   font-size: 25px;
   text-align: center;
 }
-.text1{
+.info_text{
   color: #96dee8;
-  font-size: 30px;
-  margin-bottom: 30px;
   font-family: 'zcool_title';
-  text-align: center;
+  font-size: 25px;
 }
 .dv-border-box-10{
   position: relative;
@@ -542,5 +566,12 @@ export default{
   position: relative;
   margin-top:20px;
   margin-bottom: 20px;
+}
+.headline{
+  color: #96dee8;
+  font-family: 'zcool_title';
+  font-size: 55px;
+  margin-bottom: 10px;
+  text-align: center; 
 }
 </style>

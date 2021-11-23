@@ -1,9 +1,9 @@
 <template>
-    <dv-border-box-9 style="height:2260px">
+    <dv-border-box-9 style="height:2000px">
         <!-- 实时数据界面 -->
         <real-time />
 
-        <div class="d-flex jc-center" >
+        <!-- <div class="d-flex jc-center" >
             <div class="title">
                 <dv-decoration-6
                 class="dv-dec-6"
@@ -12,7 +12,7 @@
                 style="margin=20px"
                 />
             </div>
-        </div>
+        </div> -->
 
         <!-- 选择时间段数据界面 -->
         <select-time/>

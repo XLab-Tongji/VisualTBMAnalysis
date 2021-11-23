@@ -1,44 +1,50 @@
 <template>
   <div>
-    <el-container  direction="vertical" >
+     <div style="height:20px" />
       <el-container>
-        <el-container  style="width:30%; height:100%" direction="vertical" >
-          <dv-decoration-11 style="width:100%;height:150px;">
-            <h1 class="text1">当前掘进环号：{{this.cur_loop}} <br> 当前掘进状态：{{this.cur_state}}
-          </h1></dv-decoration-11>   
-          <dv-border-box-12 style="height:420px; width:100%;">
-            <div class="text" style="margin-top:5px">贯入度实时数据</div>
-            <div style="width:450px;height:360px" ref="degree_chart" class="chart"></div>
-          </dv-border-box-12>
-        </el-container>
-
-        <el-container style="width:50%;height:100%">
-            <dv-border-box-11 title="总推力实时数据" 
-            style="font-family: 'zcool_title';font-size: 25px;"  
-            :color="['#3f7c8b', '#96dee8']" >
-                <div style="width:680px;height:490px" ref="push_force_chart"></div>
-            </dv-border-box-11>               
-        </el-container>
+        <dv-decoration-3 style="width:35%;height:30px;" />
+        <dv-decoration-7 class="headline" style="width:30%;height:30px;">  实时数据展示  </dv-decoration-7>
+         <dv-decoration-3 style="width:35%;height:30px;" />
       </el-container>
-    </el-container>
+      
+      <el-container style="width:96%">
+          <el-container  direction="vertical" style="width:330px;" >
+            <dv-decoration-12  style="width:330px;height:330px;margin-left:18px;">
+              <h1 class="text1">当前掘进环号<br> {{this.cur_loop}} <br><br>  当前掘进状态<br> {{this.cur_state}}
+            </h1></dv-decoration-12>   
 
+            <div class="text" style="margin-top:15px">本页面五张折线图展示获取的最新一个小时内数据</div>
+          </el-container>
+
+          <dv-border-box-12 style="height:380px; width:33%;margin-right:20px;margin-left:20px;">
+            <div class="text" style="margin-top:5px">总推力实时数据</div>
+            <div style="width:390px;height:350px;position:relative;left:16px"  ref="push_force_chart"></div>
+          </dv-border-box-12>
+
+            <dv-border-box-12 style="height:380px; width:33%;">
+              <div class="text" style="margin-top:5px">贯入度实时数据</div>
+                <div style="width:390px;height:350px;" ref="degree_chart" ></div>
+            </dv-border-box-12>               
+      </el-container>
+
+      <div style="height:5px" />
       <dv-decoration-10 style="width:96%;height:5px;margin:5px;position:relative;left:10px" />
 
     <el-container style="height:100%; width:100%; ">    
-      <dv-border-box-10 style="height:100%; width:31%;margin-left:8px;">
+      <dv-border-box-12 style="height:100%; width:31%;margin-left:8px;">
         <div class="text">扭矩实时数据</div>
         <div style="width:390px;height:350px" ref="torsion_chart" class="chart"></div>
-      </dv-border-box-10>
+      </dv-border-box-12>
 
-      <dv-border-box-10 style="height:100%; width:31%;margin-right:20px;margin-left:20px;">
+      <dv-border-box-12 style="height:100%; width:31%;margin-right:20px;margin-left:20px;">
         <div class="text">推进速度实时数据</div>
         <div style="width:390px;height:350px" ref="v_push_chart" class="chart"></div>
-      </dv-border-box-10>
+      </dv-border-box-12>
 
-      <dv-border-box-10 style="height:100%; width:31%;">
+      <dv-border-box-12 style="height:100%; width:31%;">
         <div class="text">刀盘转速实时数据</div>
         <div style="width:390px;height:350px" ref="v_rotate_chart" class="chart"></div>
-      </dv-border-box-10>
+      </dv-border-box-12>
     </el-container>
   </div>
 </template>
@@ -88,7 +94,7 @@ methods: {
     let myChart2 = this.$echarts.init(this.$refs.torsion_chart,'walden');
     let myChart3 = this.$echarts.init(this.$refs.v_push_chart,'walden');
     let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
-　　myChart0.setOption({
+    myChart0.setOption({
     //图表开始
         tooltip: {
             trigger: 'axis',
@@ -124,7 +130,7 @@ methods: {
         ]
         //结束
     　　});
-　　myChart1.setOption({
+　  myChart1.setOption({
     //图表开始
         tooltip: {
             trigger: 'axis',
@@ -322,14 +328,14 @@ methods: {
     this.cur_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
 
      //20min后的时间点,待完善
-    if(minute<40){
-        minute = minute+20
-    }else{
-        minute = (minute - "0") - 40
-        hour = hour + 1
-    }
-    if(minute<10) minute="0"+minute
-    this.end_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+    // if(minute<40){
+    //     minute = minute+20
+    // }else{
+    //     minute = (minute - "0") - 40
+    //     hour = hour + 1
+    // }
+    // if(minute<10) minute="0"+minute
+    // this.end_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
     //此步完成后时间是20min后
 
     //20min前的时间点,（也就是当前存储的时间的40min前）待完善
@@ -468,6 +474,9 @@ methods: {
 
 
 <style lang="less" scoped>
+.dv-loading{
+  z-index: 999;
+}
 .dv-border-box-9{
   width:100%;
   height: 100%;
@@ -477,15 +486,18 @@ methods: {
   padding-left: 30px;
   height:525px;
 }
-.headline{
-  position: relative;
-  transform: translate(0%,10%);
-}
 .title{
   color:#ffffff;
   font-size: 40px;
   font-family:'zcool_title'; 
   -webkit-text-stroke-color: rgb(255, 255, 255); 
+}
+.headline{
+  color: #96dee8;
+  font-family: 'zcool_title';
+  font-size: 55px;
+  margin-bottom: 10px;
+  text-align: center; 
 }
 .el-container{
   margin:10px;
@@ -500,7 +512,6 @@ methods: {
   font-family: 'zcool_title';
   font-size: 25px;
   margin-bottom: 10px;
-  font-family: 'zcool_title';
   text-align: center;
 }
 .dv-border-box-10{
