@@ -413,7 +413,7 @@ export default{
         var i;
         if(res.data.length == 0 || res.data == null){
             console.log("时间筛选获取数据为空或失败！")
-            this.$alert('对不起！您所选时间段因为接口不稳定等原因没有可以展示的数据。', '错误提示', {
+            this.$alert('对不起！您所选时间段没有可以展示的数据。', '错误提示', {
               confirmButtonText: '确定',
             });
         }else{
