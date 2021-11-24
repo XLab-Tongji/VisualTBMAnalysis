@@ -61,7 +61,7 @@
 }
 .el-breadcrumb  /deep/  .el-breadcrumb__inner 
       {
-        color: #96dee8 !important;				//你想要设置的字体颜色
+        color: #96dee8 !important;			
         font-size: 20px;
     }
 .footer{

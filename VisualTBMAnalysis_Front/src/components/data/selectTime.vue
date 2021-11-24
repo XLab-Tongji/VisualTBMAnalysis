@@ -4,13 +4,13 @@
 
   <el-container>
         <dv-decoration-3 style="width:35%;height:30px;" />
-        <dv-decoration-7 class="headline" style="width:30%;height:30px;">  过往数据筛选  </dv-decoration-7>
+        <dv-decoration-7 class="headline" style="width:30%;height:30px;">  过往数据获取  </dv-decoration-7>
         <dv-decoration-3 style="width:35%;height:30px;" />
   </el-container>
 
   <el-container style="height:100%; width:96%; ">
     <el-container style="height:100%;width:28%; margin-left:8px;" direction="vertical" >
-      <div class="text">可选择数据时间范围</div>
+      <div class="text">请选择数据时间范围</div>
       <el-container>
         <el-date-picker
           popper-class="mydatestyle"
@@ -26,14 +26,15 @@
           class = "export-excel-wrapper"
           :data = "json_data"
           name = "导出数据.xls">
-        <el-button @click="exportData" icon="el-icon-download" circle></el-button>
+        <el-button @click="downloadData" icon="el-icon-download" circle></el-button>
         </download-excel>
       </el-container>
 
       <!-- 这里需要一段说明文字 -->
-      <dv-border-box-4 :color="['#3fb1e3', '#96dee8']" style="padding:30px;width:350px;height:280px;">
-      <div class="info_text" style="">
-        说明：<br>
+      <dv-border-box-4 :color="['#3fb1e3', '#96dee8']" style="padding:30px;width:350px;height:280px;padding-left:40px">
+      <div class="info_text" >
+        说明： <dv-decoration-11 style="width:320px;height:50px;margin-bottom:-20px">
+          <el-button type="text" class="info_text" @click="showMarch" style="font-size:22px" >点击此处仅展示掘进数据</el-button></dv-decoration-11>
         <br>可以通过上方时间选择框选择想要获取的数据区间。
         <br>点击搜索按钮进行数据筛选展示，点击下载按钮下载excel文件。
         <br>图表上方可选择性展示原始数据和滤波数据。滤波步长为8。</div>
@@ -83,33 +84,24 @@ export default{
     return {
       all_data:[],
       json_data:[],
+      value: ['',''],
+      time:['2021-11-11 11:50:00','2021-11-11 12:10:00'],
+
       time_point:['test1','test2','test3','test4','test5','test6','test7'],
       push_force:[24680,24650,24620,24680,24700,24680,24720],
-      value: ['',''],
-      //value: [new Date(2021, 9, 22, 23, 40), new Date(2021, 9, 22, 23, 59)],
-      // time:['2021-09-22 23:30:00','2021-09-22 23:59:00'],
-      time:['2021-09-22 23:30:00','2021-09-22 23:59:00'],
-
       v_push:[80,50,20,80,70,80,20],
       v_rotate:[80,50,20,80,70,80,20],
       torsion:[80,50,20,80,70,80,20],
       degree:[80,50,20,80,70,80,20],
       state:[],
 
-      recordID_1:'0',
-      recordID_2:'0',
-      modelName_1:'掘进参数优化模型',
-      modelName_2:'泥水仓压力优化模型',
-
-      analyseInfo_1:[],
-      analyseInfo_2:[],
-        options: [{
-        value: '掘进参数优化模型',
-        label: '掘进参数优化模型'
-      }, {
-        value: '泥水仓压力优化模型',
-        label: '泥水仓压力优化模型'
-      }],
+      //存放掘进数据的数组
+      m_time_point:[],
+      m_push_force:[],
+      m_v_push:[],
+      m_v_rotate:[],
+      m_torsion:[],
+      m_degree:[],
     };
   },
   methods: {
@@ -421,7 +413,9 @@ export default{
         var i;
         if(res.data.length == 0 || res.data == null){
             console.log("时间筛选获取数据为空或失败！")
-            this.errorInfo()
+            this.$alert('对不起！您所选时间段因为接口不稳定等原因没有可以展示的数据。', '错误提示', {
+              confirmButtonText: '确定',
+            });
         }else{
             this.time_point=[]
             this.push_force=[] //总推力
@@ -465,29 +459,25 @@ export default{
         }
         this.getData();
     },
-    exportData(){
+    downloadData(){
         for(var i=0;i<this.all_data.length;i++){
-            this.json_data.push({
-                "时间":this.all_data[i]['t'],
-                "推力":this.all_data[i][100005]-'0',
-                "扭矩":this.all_data[i][100004]-'0',
-                "贯入度":this.all_data[i][100395]-'0',
-                "推进速度":this.all_data[i][100002]-'0',
-                "刀盘转速":this.all_data[i][100003]-'0',
-                "掘进状态":this.state[i],
-            })
+          this.json_data.push({
+              "时间":this.all_data[i]['t'],
+              "推力":this.all_data[i][100005]-'0',
+              "扭矩":this.all_data[i][100004]-'0',
+              "贯入度":this.all_data[i][100395]-'0',
+              "推进速度":this.all_data[i][100002]-'0',
+              "刀盘转速":this.all_data[i][100003]-'0',
+              "掘进状态":this.state[i],
+          })
         }
     },
-    errorInfo() {
-        this.$alert('对不起！您所选时间段因为接口不稳定等原因没有可以展示的数据。', '错误提示', {
-          confirmButtonText: '确定',
-        });
-    },
     dataFilter(arr){
-      var step = 8
+      var step = 5
       var temp
       var ans= new Array()
-      for(var i=0;i<arr.length-5;i++){
+      
+      for(var i=0;i<arr.length-step;i++){
         temp = 0
         for(var j=0;j<step;j++){
           temp=temp+arr[i+j]
@@ -495,9 +485,156 @@ export default{
         temp = temp/step
         ans.push(temp)
       }
+      temp=ans[0]
+      ans.unshift(temp)
+      ans.unshift(temp)
+      ans.unshift(temp)
       // console.log('均值滤波的结果是：')
       // console.log(ans)
       return ans
+    },
+    showMarch(){
+      this.m_time_point=[]
+      this.m_push_force=[]
+      this.m_v_push=[]
+      this.m_v_rotate=[]
+      this.m_torsion=[]
+      this.m_degree=[]
+
+      //1. 首先将all_data的数据过滤，掘进状态的数据放到各个参数掘进的数组里
+      //2. 如果数据为空就弹窗提示所选时间段无掘进数据。否则重新启动每个chart的setoption
+      console.log('111111')
+      var i
+
+      for(i=0;i<this.all_data.length;i++){
+        if(!(this.all_data[i][100007]>0)){
+          this.m_push_force.push(this.all_data[i][100005]-'0')
+          this.m_time_point.push(this.all_data[i]['t'])
+          this.m_torsion.push(this.all_data[i][100004]-'0')
+          this.m_degree.push(this.all_data[i][100395]-'0')
+          this.m_v_push.push(this.all_data[i][100002]-'0')
+          this.m_v_rotate.push(this.all_data[i][100003]-'0')
+        }
+      }
+
+      //如果没有掘进数据则做错误提示
+      if(this.m_time_point.length==0){
+        this.$alert('对不起！您所选时间段没有在掘进状态下的数据。', '错误提示', {
+          confirmButtonText: '确定',
+        });
+        return
+      }
+
+      let myChart0 = this.$echarts.init(this.$refs.push_force_chart,'walden');
+      let myChart1 = this.$echarts.init(this.$refs.degree_chart,'walden');
+      let myChart2 = this.$echarts.init(this.$refs.torsion_chart,'walden');
+      let myChart3 = this.$echarts.init(this.$refs.v_push_chart,'walden');
+      let myChart4 = this.$echarts.init(this.$refs.v_rotate_chart,'walden');
+  　　myChart0.setOption({
+        xAxis: {
+            type: 'category',
+            data: this.m_time_point,
+            boundaryGap: false
+        },
+        series: [
+          { 
+            name:'原始数据',
+            data: this.m_push_force,
+            symbol: 'none',
+            type: 'line',
+          },
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.m_push_force),
+            symbol: 'none',
+            type: 'line',
+          }
+        ]
+      });
+      myChart1.setOption({
+        xAxis: {
+            type: 'category',
+            data: this.m_time_point,
+            boundaryGap: false
+        },
+        series: [
+          { 
+            name:'原始数据',
+            data: this.m_degree,
+            symbol: 'none',
+            type: 'line',
+          },
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.m_degree),
+            symbol: 'none',
+            type: 'line',
+          }
+        ]
+      });
+      myChart2.setOption({
+        xAxis: {
+            type: 'category',
+            data: this.m_time_point,
+            boundaryGap: false
+        },
+        series: [
+          { 
+            name:'原始数据',
+            data: this.m_torsion,
+            symbol: 'none',
+            type: 'line',
+          },
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.m_torsion),
+            symbol: 'none',
+            type: 'line',
+          }
+        ]
+      });
+      myChart3.setOption({
+        xAxis: {
+            type: 'category',
+            data: this.m_time_point,
+            boundaryGap: false
+        },
+        series: [
+          { 
+            name:'原始数据',
+            data: this.m_v_push,
+            symbol: 'none',
+            type: 'line',
+          },
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.m_v_push),
+            symbol: 'none',
+            type: 'line',
+          }
+        ]
+      });
+      myChart4.setOption({
+        xAxis: {
+            type: 'category',
+            data: this.m_time_point,
+            boundaryGap: false
+        },
+        series: [
+          { 
+            name:'原始数据',
+            data: this.m_v_rotate,
+            symbol: 'none',
+            type: 'line',
+          },
+          { 
+            name:'滤波数据',
+            data: this.dataFilter(this.m_v_rotate),
+            symbol: 'none',
+            type: 'line',
+          }
+        ]
+      });
     }
   },
   created () {
@@ -568,7 +705,7 @@ export default{
   margin-bottom: 20px;
 }
 .headline{
-  color: #96dee8;
+  color: #dbfbff;
   font-family: 'zcool_title';
   font-size: 55px;
   margin-bottom: 10px;

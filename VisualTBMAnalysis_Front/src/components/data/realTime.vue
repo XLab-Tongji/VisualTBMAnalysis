@@ -16,14 +16,14 @@
             <div class="text" style="margin-top:15px">本页面五张折线图展示获取的最新一个小时内数据</div>
           </el-container>
 
-          <dv-border-box-12 style="height:380px; width:33%;margin-right:20px;margin-left:20px;">
+          <dv-border-box-12 style="height:400px; width:33%;margin-right:20px;margin-left:20px;">
             <div class="text" style="margin-top:5px">总推力实时数据</div>
-            <div style="width:390px;height:350px;position:relative;left:16px"  ref="push_force_chart"></div>
+            <div style="width:390px;height:380px;position:relative;left:16px"  ref="push_force_chart"></div>
           </dv-border-box-12>
 
-            <dv-border-box-12 style="height:380px; width:33%;">
+            <dv-border-box-12 style="height:400px; width:33%;">
               <div class="text" style="margin-top:5px">贯入度实时数据</div>
-                <div style="width:390px;height:350px;" ref="degree_chart" ></div>
+                <div style="width:390px;height:380px;" ref="degree_chart" ></div>
             </dv-border-box-12>               
       </el-container>
 
@@ -121,6 +121,17 @@ methods: {
             scale: true,
             
         },
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 60,
+                end: 100
+            },
+            {
+                start: 0,
+                end: 40
+            }
+        ],
         series: [
           {
             data: this.push_force,
@@ -157,6 +168,17 @@ methods: {
             scale: true,
             boundaryGap: [0, '100%']
         },
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 60,
+                end: 100
+            },
+            {
+                start: 0,
+                end: 40
+            }
+        ],
         series: [
             {
             data: this.degree,
@@ -193,6 +215,17 @@ methods: {
             scale: true,
             boundaryGap: [0, '100%']
         },
+        dataZoom: [
+            {
+                type: 'inside',
+                start: 60,
+                end: 100
+            },
+            {
+                start: 0,
+                end: 40
+            }
+        ],
         series: [
             {
             data: this.torsion,
@@ -232,6 +265,17 @@ methods: {
         
         boundaryGap: [0, '100%']
     },
+    dataZoom: [
+            {
+                type: 'inside',
+                start: 60,
+                end: 100
+            },
+            {
+                start: 0,
+                end: 40
+            }
+        ],
     series: [
         {
         data: this.v_push,
@@ -273,6 +317,17 @@ methods: {
         
         boundaryGap: [0, '100%']
     },
+    dataZoom: [
+            {
+                type: 'inside',
+                start: 60,
+                end: 100
+            },
+            {
+                start: 0,
+                end: 40
+            }
+        ],
     series: [
         {
         data: this.v_rotate,
@@ -360,17 +415,7 @@ methods: {
     const { data: res } =await this.$http.
     post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', 
     query)
-
-    // while(this.all_data.length < 100) {
-    //     //推前20min
-    //     console.log("数据太少啦~需要再往前看看！");
-
-
-    //     //再发起请求
-    //     console.log("getRecentData执行！");
-        
-    // }
-
+    
     if(res.data.length == 0|| res.data == null){
       console.log("实时信息获取数据为空或失败！开始渲染假数据")
       this.initCharts(); 
@@ -411,60 +456,58 @@ methods: {
     }
     this.initCharts(); 
   },
-  async getLatestData () {
-    console.log("getLatestData执行！")
-    this.getCurrentTime()
-    console.log("获取最新的一条数据的请求时间为:")       
-    console.log(this.cur_time)
-    console.log(this.end_time)
 
-    let query={
-      where:`([t]>='${this.cur_time}' and [t]<='${this.end_time}')`
-    };
-      const { data: res } =await this.$http.
-      post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952&increase=false&pagesize=1&pageindex=1', 
-      query)
-      console.log("最新的一个数据返回结果是:")
-      console.log(res.data)
+  //由于后端数据更新按小时更新，因此本函数作废
+  // async getLatestData () {
+  //   console.log("getLatestData执行！")
+  //   this.getCurrentTime()
+  //   console.log("获取最新的一条数据的请求时间为:")       
+  //   console.log(this.cur_time)
+  //   console.log(this.end_time)
+
+  //   let query={
+  //     where:`([t]>='${this.cur_time}' and [t]<='${this.end_time}')`
+  //   };
+  //     const { data: res } =await this.$http.
+  //     post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952&increase=false&pagesize=1&pageindex=1', 
+  //     query)
+  //     console.log("最新的一个数据返回结果是:")
+  //     console.log(res.data)
     
-    if(res.data.length == 0|| res.data == null){
-      console.log("没有最新数据！")
-      return
-    }
+  //   if(res.data.length == 0|| res.data == null){
+  //     console.log("没有最新数据！")
+  //     return
+  //   }
 
-    if(res.data!=this.all_data[this.all_data.length-1]){
-      //this.push_force.shift()
-      this.push_force.push(res.data[0][100005]-'0')
-      //this.time_point.shift()
-      this.time_point.push(res.data[0]['t'])
-      //this.torsion.shift()
-      this.torsion.push(res.data[0][100004]-'0')
-      //this.degree.shift()
-      this.degree.push(res.data[0][100395]-'0')
-      //this.v_push.shift()
-      this.v_push.push(res.data[0][100002]-'0')
-      //this.v_rotate.shift()
-      this.v_rotate.push(res.data[0][100003]-'0')
-      //获取当前环号
-      this.cur_loop=res.data[0][100001]-"0"
-      //获取当前掘进状态
-      if(res.data[0][100007]>0){
-          this.cur_state='拼装'
-      }else{
-          this.cur_state='掘进' //100006>0 或者 Wm>0
-      }
-    }
-    this.initCharts(); 
-  },
+  //   if(res.data!=this.all_data[this.all_data.length-1]){
+  //     //this.push_force.shift()
+  //     this.push_force.push(res.data[0][100005]-'0')
+  //     //this.time_point.shift()
+  //     this.time_point.push(res.data[0]['t'])
+  //     //this.torsion.shift()
+  //     this.torsion.push(res.data[0][100004]-'0')
+  //     //this.degree.shift()
+  //     this.degree.push(res.data[0][100395]-'0')
+  //     //this.v_push.shift()
+  //     this.v_push.push(res.data[0][100002]-'0')
+  //     //this.v_rotate.shift()
+  //     this.v_rotate.push(res.data[0][100003]-'0')
+  //     //获取当前环号
+  //     this.cur_loop=res.data[0][100001]-"0"
+  //     //获取当前掘进状态
+  //     if(res.data[0][100007]>0){
+  //         this.cur_state='拼装'
+  //     }else{
+  //         this.cur_state='掘进' //100006>0 或者 Wm>0
+  //     }
+  //   }
+  //   this.initCharts(); 
+  // },
 },
   created () {
     // this.timer = setInterval(() => {
-    //     this.getRecentData()
-    // }, 30000), // 10s刷新一次
-
-    this.timer = setInterval(() => {
-      this.getLatestData()
-    }, 10000);
+    //   this.getLatestData()
+    // }, 10000);
   },
   mounted () {
     this.getRecentData();         
@@ -493,7 +536,7 @@ methods: {
   -webkit-text-stroke-color: rgb(255, 255, 255); 
 }
 .headline{
-  color: #96dee8;
+  color: #dbfbff;
   font-family: 'zcool_title';
   font-size: 55px;
   margin-bottom: 10px;
