@@ -3,9 +3,16 @@
   <div style="height:40px" />
 
   <el-container>
-        <dv-decoration-3 style="width:35%;height:30px;" />
-        <dv-decoration-7 class="headline" style="width:30%;height:30px;">  过往数据获取  </dv-decoration-7>
-        <dv-decoration-3 style="width:35%;height:30px;" />
+      <dv-decoration-3 style="width:40%;height:30px;" />
+      <dv-decoration-7 class="headline" style="width:30%;height:30px;">  历史数据  </dv-decoration-7>
+      <dv-decoration-3 style="width:40%;height:30px;" />
+  </el-container>
+
+  <el-container style="position:relative;left:420px;">
+    <dv-decoration-11 style="width:220px;height:50px;">
+            <el-button type="text" class="info_text" @click="initCharts" style="font-size:22px" >全部数据</el-button></dv-decoration-11>
+    <dv-decoration-11 style="width:220px;height:50px;">
+            <el-button type="text" class="info_text" @click="showMarch" style="font-size:22px" >掘进数据</el-button></dv-decoration-11>
   </el-container>
 
   <el-container style="height:100%; width:96%; ">
@@ -33,10 +40,10 @@
       <!-- 这里需要一段说明文字 -->
       <dv-border-box-4 :color="['#3fb1e3', '#96dee8']" style="padding:30px;width:350px;height:280px;padding-left:40px">
       <div class="info_text" >
-        说明： <dv-decoration-11 style="width:320px;height:50px;margin-bottom:-20px">
-          <el-button type="text" class="info_text" @click="showMarch" style="font-size:22px" >点击此处仅展示掘进数据</el-button></dv-decoration-11>
+        说明： 
         <br>可以通过上方时间选择框选择想要获取的数据区间。
         <br>点击搜索按钮进行数据筛选展示，点击下载按钮下载excel文件。
+        <br>最上方可选择性展示掘进状态的数据或者全部数据。
         <br>图表上方可选择性展示原始数据和滤波数据。滤波步长为8。</div>
       </dv-border-box-4>
     </el-container>
@@ -411,7 +418,7 @@ export default{
         this.all_data=res.data
 
         var i;
-        if(res.data.length == 0 || res.data == null){
+        if(res.data == null || res.data.length == 0 ){
             console.log("时间筛选获取数据为空或失败！")
             this.$alert('对不起！您所选时间段没有可以展示的数据。', '错误提示', {
               confirmButtonText: '确定',
@@ -440,8 +447,15 @@ export default{
                 }
             }
         }
-        
-        this.initCharts();
+        console.log('this.time_point')
+      console.log(this.time_point)
+      console.log(this.push_force)
+      console.log(this.torsion)
+      console.log(this.degree)
+      console.log(this.v_push)
+      console.log(this.v_rotate)
+
+      this.initCharts();
           
     },
     submitTime(){

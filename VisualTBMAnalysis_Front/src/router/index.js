@@ -18,9 +18,9 @@ const routes = [
   {
     path: '/home',
     component: home,
-    redirect:'/intoduction',
+    redirect:'/intro',
     children:[
-      { path: '/intoduction', component: Intro },
+      { path: '/intro', component: Intro },
       { path: '/data', component: Data },
       { path: '/analysis', component: Analysis },
     ]
@@ -34,23 +34,23 @@ const router = new Router({
   routes
 })
 
-// 限制某些页面禁止未登录访问
-//let limitPagePath = ['/home']
+//限制某些页面禁止未登录访问
+let limitPagePath = ['/home']
 
-// router.beforeEach((to, from, next) => {
-//     if (limitPagePath.includes(to.path)) {
-//         // 判断sessionStorage是否保存了用户信息
-//         let userStr = sessionStorage.getItem("user") || "{}"
-//         let user = JSON.parse(userStr)
-//         if (!user.id) {
-//             // 跳转到登录页面
-//             next({path: "/login"})
-//         } else {
-//             next()
-//         }
-//     } else {
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if (limitPagePath.includes(to.path)) {
+        // 判断sessionStorage是否保存了用户信息
+        let userStr = sessionStorage.getItem("user") || "{}"
+        let user = JSON.parse(userStr)
+        if (!user.id) {
+            // 跳转到登录页面
+            next({path: "/login"})
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
+})
 
 export default router
