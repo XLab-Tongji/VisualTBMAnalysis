@@ -447,7 +447,7 @@ export default{
                 }
             }
         }
-        console.log('this.time_point')
+      console.log('this.time_point')
       console.log(this.time_point)
       console.log(this.push_force)
       console.log(this.torsion)
