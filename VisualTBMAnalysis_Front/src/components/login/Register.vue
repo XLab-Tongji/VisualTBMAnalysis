@@ -142,7 +142,14 @@ export default {
             trigger: "blur",
           },
         ],
+    
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+        ],
 
+        code: [
+          { required: true, message: "请输入验证码", trigger: "blur" },
+        ],
         //验证密码是否合法
         password: [
           { required: true, message: "请输入登录密码", trigger: "blur" },
