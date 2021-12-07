@@ -111,6 +111,7 @@ export default {
             trigger: "blur",
           },
         ],
+        validCode:[ { required: true, message: "请输入验证码", trigger: "blur" },]
       },
       activeName: "first",
       /* 背景图片 imgSrc: require("../assets/bg2.png"), */
