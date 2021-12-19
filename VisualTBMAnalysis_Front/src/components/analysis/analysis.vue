@@ -1,5 +1,5 @@
 <template>
-  <dv-border-box-9 style="height: 1320px">
+  <dv-border-box-9 style="height: 1420px">
     <!-- 输入参数 -->
     <div align="center" style="padding-top: 10px">
       <input1 :FK_SRingNo="this.currentNo" />

@@ -1,5 +1,5 @@
 <template>
-    <dv-border-box-9 style="height:2000px">
+    <dv-border-box-9 style="height:2100px">
         <!-- 实时数据界面 -->
         <real-time />
 
