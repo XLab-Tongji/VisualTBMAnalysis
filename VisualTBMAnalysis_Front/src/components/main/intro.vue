@@ -1,33 +1,53 @@
 <template>
-<dv-border-box-9  style="height:1500px">
+<dv-border-box-9  style="height:1350px">
   <el-container  direction="vertical" >
       <!-- 标题 -->
-    <div align="center" style="margin-top:40px;margin-bottom:-10px">  <img src="@/assets/image/title1.png"  style="width:600px;" /></div>
-  <div align="center" style="margin-bottom:-70px">  <img src="@/assets/image/title2.png"  style="width:450px;" /></div>
-  
-        <dv-decoration-5 class="headline" dur=3  :color="['#3fb1e3', '#96dee8']" style="width:1200px;height:150px;margin:0 auto" />
-<el-container>
+  <div align="center" style="margin-top:40px;margin-bottom:-10px">  <img src="@/assets/image/title1.png"  style="width:500px;" /></div>
+  <div align="center" style="margin-bottom:-80px">  <img src="@/assets/image/title2.png"  style="width:350px;" /></div>
+  <dv-decoration-5 class="headline" dur=3  :color="['#3fb1e3', '#96dee8']" style="width:1000px;height:150px;margin:0 auto" />
 
-    <el-container  style="width:60%; height:100%" direction="vertical" >
+<div align="center">
+    <el-container style="width:90%" >
          <!-- 走马灯 -->
-         <div align="center">
-        <dv-border-box-8 class="card_1" dur=6 style="width:88%; height:650px;" >
-        <el-carousel indicator-position="outside" height="600px" style="width:90%;">
-            <el-carousel-item>
-            <img src='@/assets/image/img1.jpeg' style="height: 100%; width:100%;">
-            </el-carousel-item>
-            <el-carousel-item>
-            <img src='@/assets/image/img2.jpeg' style="height: 100%; width:100%">
-            </el-carousel-item>  
-            <el-carousel-item>
-            <img src='@/assets/image/img3.jpeg' style="height: 100%; width:100%">
-            </el-carousel-item>  
-            <el-carousel-item>
-            <img src='@/assets/image/img4.jpeg' style="height: 100%; width:100%">
-            </el-carousel-item>  
-        </el-carousel>  
-        </dv-border-box-8></div>
+    
+          <el-carousel indicator-position="outside" height="480px" style="width:70%;">
+              <el-carousel-item>
+              <img src='@/assets/image/img1.jpeg' style="height: 100%; width:100%;">
+              </el-carousel-item>
+              <el-carousel-item>
+              <img src='@/assets/image/img2.jpeg' style="height: 100%; width:100%">
+              </el-carousel-item>  
+              <el-carousel-item>
+              <img src='@/assets/image/img3.jpeg' style="height: 100%; width:100%">
+              </el-carousel-item>  
+              <el-carousel-item>
+              <img src='@/assets/image/img4.jpeg' style="height: 100%; width:100%">
+              </el-carousel-item>  
+          </el-carousel>  
 
+          <div class="block" style="width:30%;">
+            <el-timeline>
+              <el-timeline-item timestamp="2018/6/28"  placement="top">
+                <el-card>
+                  <div class="info_text">珠江三角洲水资源配置工程试验段项目首台盾构机在广东深圳顺利始发。</div>
+                </el-card>
+              </el-timeline-item>
+              <el-timeline-item timestamp="2019/2/3" placement="top">
+                <el-card>
+                  <div class="info_text">工程初步设计获水利部批复，输水线路总长度113.2公里。</div>
+                </el-card>
+              </el-timeline-item>
+              <el-timeline-item timestamp="2020/3/18" placement="top">
+                <el-card>
+                  <div class="info_text">首台盾构机“粤海1号”在佛山顺德鲤鱼洲交通隧洞正式始发，标志项目正式进入盾构施工阶段。</div>
+                </el-card>
+              </el-timeline-item>
+            </el-timeline>
+          </div>
+  
+    </el-container>
+</div>
+      <el-container>
         <!-- 文字介绍 -->
          <div align="center">
         <el-card>
@@ -50,7 +70,7 @@
 
         </div> </el-card></div>
     </el-container>
-</el-container>
+
 
 
 </el-container>
@@ -80,6 +100,15 @@ export default{
     text-indent: 2em; 
     margin:5px;
 }
+.info_text{
+    color: #d1faff;
+    //color: #bbecf3;
+    //font-weight: bold;
+    font-family: 'zcool_title';
+    font-size: 19px;
+    //text-indent: 2em; 
+    //margin:5px;
+}
 .el-carousel{
     position: relative;
     top:20px;
@@ -88,6 +117,11 @@ export default{
 .card_1{
     margin: 10px;
     margin-right: 30px;
+}
+/deep/ .el-timeline-item__timestamp {
+    color: #2df1ff !important;
+    line-height: 2;
+    font-size: 15px;
 }
 .el-card{
     width: 90%;

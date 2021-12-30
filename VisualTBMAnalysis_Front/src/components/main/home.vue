@@ -1,47 +1,48 @@
 <template>
 <el-container style="height:100%;" direction="vertical" >
-<div class="bg">
-<div style="margin:10px;">
-
+<div class="bg" v-bind:style="{height: myHeight,width:myWidth}" style="padding-top:10px">
+<div >
+<el-header style="position:relative; top:10px">
     <el-breadcrumb separator="|" style="margin-bottom:30px;margin-left:15px;">
     <el-breadcrumb-item :to="{ path: '/home' }">主页</el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/data' }">数据概况</el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/analysis' }">机器学习分析</el-breadcrumb-item>
     <el-breadcrumb-item :to="{ path: '/login' }">退出</el-breadcrumb-item>
-</el-breadcrumb>
-
+  </el-breadcrumb>
+</el-header>
+<el-main v-bind:style="{width:mainWidth}">
     <!--路由占位符-->
     <router-view></router-view>
 
+    <!-- 页脚 -->
+    <div class="container">
+        <div class="fa-left fl text">
+            <h4>联系我们</h4>
+                <p>地址：中国 上海曹安公路4800号同济大学软件学院</p>
+
+                <p>邮编：201804</p>
+
+                <p>联系电话：86-21-69589585,69589332(FAX)</p>
+        </div>
+        <div class="fa-mid fl text">
+            <a target="_blank" href="http://www.tongji.edu.cn">
+            <img src="@/assets/image/tjlogo.png" alt style="
+                filter:drop-shadow(2px 2px 10px white);
+                margin-top:30px;
+            "></a>
+          
+        </div>
+        <div class="fa-right fr text">
+            <h4>快速链接</h4>
+                <ul>
+                    <li><a target="_blank" href="http://sse.tongji.edu.cn/" class="text">软件学院官网</a></li>
+                    <br>
+                    <li><a target="_blank" href="http://www.tongji.edu.cn" class="text">同济大学官网 </a></li>
+                </ul>
+        </div>
+    </div>
+  </el-main>     
 </div>
-
-<div class="container">
-    <div class="fa-left fl text">
-        <h4>联系我们</h4>
-            <p>地址：中国 上海曹安公路4800号同济大学软件学院</p>
-
-            <p>邮编：201804</p>
-
-            <p>联系电话：86-21-69589585,69589332(FAX)</p>
-    </div>
-     <div class="fa-mid fl text">
-         <a target="_blank" href="http://www.tongji.edu.cn">
-        <img src="@/assets/image/tjlogo.png" alt style="
-            filter:drop-shadow(2px 2px 10px white);
-            margin-top:30px;
-        "></a>
-       
-    </div>
-    <div class="fa-right fr text">
-         <h4>快速链接</h4>
-            <ul>
-                <li><a target="_blank" href="http://sse.tongji.edu.cn/" class="text">软件学院官网</a></li>
-                <br>
-                <li><a target="_blank" href="http://www.tongji.edu.cn" class="text">同济大学官网 </a></li>
-            </ul>
-    </div>
-</div>
-        
 
 </div>
 
@@ -50,7 +51,25 @@
 </template>
 
 <script>
-
+ export default {
+    data() {
+      return {
+        myHeight: (window.innerHeight-26) + 'px',
+        myWidth: (window.innerWidth-50) + 'px',
+        mainWidth: (window.innerWidth) + 'px',
+      };
+    },
+    // mounted() {
+    //   this.screenWidth = document.body.clientWidth;
+    //   this.screenHeight = document.body.clientHeight;
+    //   window.onresize = () => {
+    //     return (() => {
+    //       this.screenWidth = document.body.clientWidth;
+    //       this.screenHeight = document.body.clientHeight;
+    //     })();
+    //   };
+    // }
+  }
 </script>
 
 
@@ -59,6 +78,18 @@
     width:100%;
     height: 100%;
 }
+.el-header {
+    position: relative;
+    width: 100%;
+    height: 60px;      
+}
+.el-main {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
+  }
 .el-breadcrumb  /deep/  .el-breadcrumb__inner 
       {
         color: #96dee8 !important;			

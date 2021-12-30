@@ -1,5 +1,5 @@
 <template>
-  <dv-border-box-9 style="height: 1420px">
+  <dv-border-box-9 style="height: 1300px; padding-top:20px">
     <!-- 输入参数 -->
     <div align="center" style="padding-top: 10px">
       <input1 :FK_SRingNo="this.currentNo" />
@@ -127,16 +127,6 @@
       <!-- 输出结果2 -->
       <output2 :FK_SRingNo="this.currentNo" />
     </div>
-    <div class="d-flex jc-center">
-      <div class="title">
-        <dv-decoration-6
-          class="dv-dec-6"
-          :reverse="true"
-          :color="['#3fb1e3', '#96dee8']"
-          style="margin-top: 15px"
-        />
-      </div>
-    </div>
   </dv-border-box-9>
 </template>
 
@@ -153,6 +143,8 @@ export default {
   },
   data() {
     return {
+      myWidth: (window.innerWidth) + 'px',
+
       analyseNo: [],
       recordID1: "0",
       recordID2: "0",
@@ -241,7 +233,15 @@ export default {
 
 <style lang="less" scoped>
 .dv-border-box-9 {
-  width: 100%;
+  //width:100%;
+  height: 100%;
+}
+.el-main {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
 }
 .text {
   color: #96dee8;
@@ -345,10 +345,6 @@ export default {
     background-color:#bb2b2b00!important
 }
 
-
-</style>
-
-<style>
 .el-table th.el-table__cell {
   background-color: #a3774400 !important;
 }
