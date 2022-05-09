@@ -4,7 +4,7 @@
       <!-- 标题 -->
   <div align="center" style="margin-top:40px;margin-bottom:-10px">  <img src="@/assets/image/title1.png"  style="width:500px;" /></div>
   <div align="center" style="margin-bottom:-80px">  <img src="@/assets/image/title2.png"  style="width:350px;" /></div>
-  <dv-decoration-5 class="headline" dur=3  :color="['#3fb1e3', '#96dee8']" style="width:1000px;height:150px;margin:0 auto" />
+  <dv-decoration-5 class="headline" :dur=3  :color="['#3fb1e3', '#96dee8']" style="width:1000px;height:150px;margin:0 auto" />
 
 <div align="center">
     <el-container style="width:90%" >
