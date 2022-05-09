@@ -345,7 +345,7 @@ export default {
     background-color:#bb2b2b00!important
 }
 
-.el-table th.el-table__cell {
+.el-table /deep/ th.el-table__cell {
   background-color: #a3774400 !important;
 }
 .el-table td.el-table__cell,
@@ -355,21 +355,21 @@ export default {
 .el-table .el-table__cell {
   color: #96dee8;
 }
-.el-pagination button:disabled {
+.el-pagination  /deep/ button:disabled {
   background-color: #a3774400 !important;
 }
 .el-pager,
-.el-pager li {
+/deep/ .el-pager   li {
   background-color: #a3774400 !important;
   color: #fff;
 }
-.el-pagination .btn-next,
-.el-pagination .btn-prev {
+.el-pagination  /deep/ .btn-next,
+.el-pagination  /deep/ .btn-prev {
   background-color: #a3774400 !important;
 }
-.el-pagination .btn-next .el-icon,
-.el-pagination .btn-prev .el-icon {
-  color: #fff;
+.el-pagination  /deep/ .btn-next .el-icon,
+.el-pagination  /deep/ .btn-prev .el-icon {
+  background: rgba(255, 255, 255, 0) !important;
 }
 
 .el-table__body tr.current-row > td.el-table__cell {
