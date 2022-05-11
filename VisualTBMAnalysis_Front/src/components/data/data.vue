@@ -30,7 +30,6 @@ export default {
 }
 </script>
 
-
 <style lang="less" scoped>
 .dv-border-box-9{
     width:100%;
@@ -39,7 +38,7 @@ export default {
 .title{
     color:#ffffff;
     font-size: 40px;
-    font-family:'zcool_title'; 
-    -webkit-text-stroke-color: rgb(255, 255, 255); 
+    font-family:'zcool_title';
+    -webkit-text-stroke-color: rgb(255, 255, 255);
 }
 </style>

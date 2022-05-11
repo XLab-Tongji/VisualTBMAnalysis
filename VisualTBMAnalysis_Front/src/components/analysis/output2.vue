@@ -92,16 +92,16 @@ export default {
         } else {
           console.log("泥水仓压力优化模型分析记录数据:");
           console.log(res.data);
-        var queryData = res.data.filter(function (fp) {
-          return fp.Type === "输出" || fp.Type === "预测值";
-        });
-        this.analyseInfo2 = queryData;
-        console.log("筛选后：");
-        console.log(queryData);
-        for (var i = queryData.length - 1; i >= 0; i--) {
-          const newValue = parseFloat(queryData[i].Value).toFixed(4);
-          this.analyseInfo2[i].Value = newValue;
-        }
+          var queryData = res.data.filter(function (fp) {
+            return fp.Type === "输出" || fp.Type === "预测值";
+          });
+          this.analyseInfo2 = queryData;
+          console.log("筛选后：");
+          console.log(queryData);
+          for (var i = queryData.length - 1; i >= 0; i--) {
+            const newValue = parseFloat(queryData[i].Value).toFixed(4);
+            this.analyseInfo2[i].Value = newValue;
+          }
         }
       }
     },

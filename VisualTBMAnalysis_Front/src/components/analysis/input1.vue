@@ -74,7 +74,7 @@ export default {
 
     async getInfo1() {
       this.analyseInfo1 = [];
-      this.recordID1="";
+      this.recordID1 = "";
       await this.getID1();
       //console.log(this.recordID1)
       if (this.recordID1 == null) {

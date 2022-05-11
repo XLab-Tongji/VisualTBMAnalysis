@@ -30,7 +30,7 @@
                 filter:drop-shadow(2px 2px 10px white);
                 margin-top:30px;
             "></a>
-          
+
         </div>
         <div class="fa-right fr text">
             <h4>快速链接</h4>
@@ -41,37 +41,35 @@
                 </ul>
         </div>
     </div>
-  </el-main>     
+  </el-main>
 </div>
 
 </div>
-
 
 </el-container>
 </template>
 
 <script>
- export default {
-    data() {
-      return {
-        myHeight: (window.innerHeight-26) + 'px',
-        myWidth: (window.innerWidth-50) + 'px',
-        mainWidth: (window.innerWidth) + 'px',
-      };
-    },
-    // mounted() {
-    //   this.screenWidth = document.body.clientWidth;
-    //   this.screenHeight = document.body.clientHeight;
-    //   window.onresize = () => {
-    //     return (() => {
-    //       this.screenWidth = document.body.clientWidth;
-    //       this.screenHeight = document.body.clientHeight;
-    //     })();
-    //   };
-    // }
-  }
+export default {
+  data() {
+    return {
+      myHeight: (window.innerHeight - 26) + 'px',
+      myWidth: (window.innerWidth - 50) + 'px',
+      mainWidth: (window.innerWidth) + 'px',
+    };
+  },
+  // mounted() {
+  //   this.screenWidth = document.body.clientWidth;
+  //   this.screenHeight = document.body.clientHeight;
+  //   window.onresize = () => {
+  //     return (() => {
+  //       this.screenWidth = document.body.clientWidth;
+  //       this.screenHeight = document.body.clientHeight;
+  //     })();
+  //   };
+  // }
+}
 </script>
-
 
 <style lang="less" scoped>
 .dv-border-box-9{
@@ -81,7 +79,7 @@
 .el-header {
     position: relative;
     width: 100%;
-    height: 60px;      
+    height: 60px;
 }
 .el-main {
   position: absolute;
@@ -90,15 +88,15 @@
   bottom: 0;
   overflow-y: scroll;
   }
-.el-breadcrumb  /deep/  .el-breadcrumb__inner 
+.el-breadcrumb  /deep/  .el-breadcrumb__inner
       {
-        color: #96dee8 !important;			
+        color: #96dee8 !important;
         font-size: 20px;
     }
 .footer{
     color: #96dee8;
     font-size: 15px;
-    text-indent: 2em; 
+    text-indent: 2em;
     margin:5px;
     text-align: center;
     margin-top: 20px;

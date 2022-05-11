@@ -24,7 +24,7 @@
   <div align="center" style="position:relative;top:35px">  <img src="@/assets/image/title1.png"  style="width:700px;" /></div>
   <div align="center" style="position:relative;bottom:5px">  <img src="@/assets/image/title2.png"  style="width:600px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box">
-      <!-- 登录表单区域 -->   
+      <!-- 登录表单区域 -->
       <el-form  ref="loginFormRef" :model="loginForm" :rules="loginFormRules"
         label-width="0px" class="login_form"  >
         <!-- 用户名 -->
@@ -111,7 +111,7 @@ export default {
             trigger: "blur",
           },
         ],
-        validCode:[ { required: true, message: "请输入验证码", trigger: "blur" },]
+        validCode: [ { required: true, message: "请输入验证码", trigger: "blur" }, ]
       },
       activeName: "first",
       /* 背景图片 imgSrc: require("../assets/bg2.png"), */
@@ -169,7 +169,6 @@ export default {
           });
         }
       });
-
     },
 
     toRegister() {
@@ -224,7 +223,6 @@ export default {
   width: 100%;
   background: #ffffff00;
 }
-
 
 h2 {
   color: #ffffff;

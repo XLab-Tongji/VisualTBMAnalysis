@@ -217,8 +217,8 @@ export default {
         "/api/universal/Structure/TunnelingAnalysisRecord/where?prj=shushui&dataset=3871633455494201344&increase=false",
         queryID2
       );
-      for (var i = res2.data.length - 1; i >= 0; i--) {
-        var j = i + i;
+      for (i = res2.data.length - 1; i >= 0; i--) {
+        j = i + i;
         this.analyseNo[j] = res2.data[i];
       }
       this.total = res1.data.length + res2.data.length;
@@ -341,7 +341,7 @@ export default {
   height: 0;
 }
 
-.el-container  /deep/.el-table tbody tr:hover>td { 
+.el-container  /deep/.el-table tbody tr:hover>td {
     background-color:#bb2b2b00!important
 }
 

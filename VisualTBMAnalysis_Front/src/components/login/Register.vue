@@ -56,7 +56,7 @@
         </el-form-item>
         <!-- 邮箱验证码 -->
         <el-form-item  prop="code">
-          <el-input 
+          <el-input
             v-model="loginForm.code"
             prefix-icon="el-icon-chat-round"
             style="width: 50%; "
@@ -104,9 +104,9 @@
 </template>
 
 <script>
-const TIME_COUNT = 60; // 设置一个全局的倒计时的时间
+// 设置一个全局的倒计时的时间
 
-import request from "@/utils/request";
+import request from "@/utils/request"; const TIME_COUNT = 60;
 export default {
   name: "Register",
   data() {
@@ -120,7 +120,7 @@ export default {
     };
 
     return {
-      count:0,
+      count: 0,
       //这是注册表单的数据绑定对象
       loginForm: {
         username: "",
@@ -142,7 +142,7 @@ export default {
             trigger: "blur",
           },
         ],
-    
+
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
         ],
@@ -259,7 +259,7 @@ export default {
 
     //跳转到登录界面
     toLogin() {
-     this.$router.push("/login");//not
+      this.$router.push("/login");//not
     },
     //点击重置按钮，重置登录
     resetloginForm() {
@@ -288,17 +288,16 @@ export default {
                 showClose: true,
               });
               this.$router.push("/login"); //登录成功之后进行页面的跳转，跳转到主页not
-            } 
-            else {
+            } else {
               this.$notify({
                 title: "提示",
                 message: res.msg,
                 type: "error",
                 duration: 3000,
-              });}
+              });
+            }
           });
-        } 
-        else {
+        } else {
           console.log(valid, wrongstring);
           console.log("error submit");
           return false;
@@ -317,7 +316,6 @@ export default {
   position: absolute;
   background-color: rgb(255, 255, 255);
 }
-
 
 .login_box2 {
   width: 450px;
