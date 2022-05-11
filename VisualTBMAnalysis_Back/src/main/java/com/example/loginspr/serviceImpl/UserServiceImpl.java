@@ -18,16 +18,26 @@ import com.example.loginspr.common.Result;
 import javax.annotation.Resource;
 import java.util.Random;
 
+/**
+ * @author Li wenyan
+ */
 @Service
 public class UserServiceImpl implements UserService {
-    //将DAO注入Service层
+    /**
+     * 将DAO注入Service层
+     */
     @Resource
     private UserMapper userMapper;
 
     @Autowired
     private JavaMailSenderImpl mailSender;
 
-    //用于登录
+    /**
+     * 用于登录
+     * @author Wenyan Li
+     * @param user 用户
+     * @return 返回
+     */
     @Override
     public Result<?> selectUserName(@RequestBody UserBean user) {
         QueryWrapper<UserBean> queryWrapper = new QueryWrapper<>();
@@ -43,7 +53,12 @@ public class UserServiceImpl implements UserService {
         return Result.success(res);
     }
 
-    //用于注册
+    /**
+     * 用于注册
+     * @author Wenyan Li
+     * @param user 用户
+     * @return 返回
+     */
     @Override
     public Result<?> addUser(@RequestBody UserBean user) {
         UserBean res = userMapper.selectOne(Wrappers.<UserBean>lambdaQuery().eq(UserBean::getUsername, user.getUsername()));
@@ -70,11 +85,13 @@ public class UserServiceImpl implements UserService {
         }
         // 生成随机数
         String code = randomCode();
-
-        simpleMailMessage.setSubject("泥水盾构可视化平台验证码邮件"); // 主题
-        simpleMailMessage.setText("本次请求的邮箱验证码是：" + code+"，请及时输入。" ); // 内容
+        // 主题
+        simpleMailMessage.setSubject("泥水盾构可视化平台验证码邮件");
+        // 内容
+        simpleMailMessage.setText("本次请求的邮箱验证码是：" + code+"，请及时输入。" );
         simpleMailMessage.setFrom("1685757000@qq.com");
-        simpleMailMessage.setTo(user.getEmail()); // 收件人
+        // 收件人
+        simpleMailMessage.setTo(user.getEmail());
         try {
             mailSender.send(simpleMailMessage);
         } // 发送
@@ -91,14 +108,14 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 随机生成6位数的验证码
-     *
      * @return String code
      */
     @Override
     public String randomCode() {
+        final Integer NUM = 6;
         StringBuilder str = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < NUM; i++) {
             str.append(random.nextInt(10));
         }
         return str.toString();

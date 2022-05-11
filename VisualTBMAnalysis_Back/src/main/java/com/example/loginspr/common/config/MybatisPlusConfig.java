@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  *  mybatis-plus 分页插件
+ * @author Wenyan Li
  */
 @Configuration
 @MapperScan("com.example.loginspr.mapper")

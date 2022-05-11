@@ -1,17 +1,20 @@
 package com.example.loginspr.common;
 
+/**
+ * @author Wenyan Li
+ */
 public class Result<T> {
     private String code;
     private String msg;
     private T data;
-    public String Ecode;
+    public String ecode;
 
     public String getECode() {
-        return Ecode;
+        return ecode;
     }
 
     public void setEcode(String code) {
-        this.Ecode = code;
+        this.ecode = code;
     }
 
     public String getCode() {
