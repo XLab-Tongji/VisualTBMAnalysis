@@ -116,7 +116,9 @@ public class UserServiceImpl implements UserService {
         StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < NUM; i++) {
-            str.append(random.nextInt(10));
+            //str.append(random.nextInt(10));
+            //为测试注册登录先注释掉，验证码统一为000000
+            str.append(random.nextInt(1));
         }
         return str.toString();
     }

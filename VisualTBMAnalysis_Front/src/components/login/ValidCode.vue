@@ -57,12 +57,15 @@ export default {
       const len = this.length
       const codeList = []
       const chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789'
-      const charsLen = chars.length
+      //为登录注册测试先将验证码改为9999,此行暂时注释
+      //const charsLen = chars.length
       // 生成
       for (let i = 0; i < len; i++) {
         const rgb = [Math.round(Math.random() * 220), Math.round(Math.random() * 240), Math.round(Math.random() * 200)]
         codeList.push({
-          code: chars.charAt(Math.floor(Math.random() * charsLen)),
+          //为登录注册测试先将验证码改为9999
+          code: chars.charAt(Math.floor(50)),
+          //code: chars.charAt(Math.floor(Math.random() * charsLen)),
           color: `rgb(${rgb})`,
           fontSize: `${10 + (+[Math.floor(Math.random() * 10)] + 6)}px`,
           padding: `${[Math.floor(Math.random() * 10)]}px`,
