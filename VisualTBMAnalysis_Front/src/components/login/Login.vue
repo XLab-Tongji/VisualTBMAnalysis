@@ -167,6 +167,8 @@ export default {
               });
             }
           });
+        } else{
+          this.$message.error('请填写正确的信息');
         }
       });
     },

@@ -136,7 +136,7 @@ export default {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
           {
-            min: 2,
+            min: 3,
             max: 10,
             message: "长度在 3 到 10 个字符",
             trigger: "blur",
@@ -195,7 +195,7 @@ export default {
       redirect: undefined,
       show: true,
       activeName: "first",
-      Ecode: "",
+      ecode: "",
       radio: "1",
     };
   },
@@ -205,7 +205,7 @@ export default {
     },
     //向邮箱发送验证码
     getEmailCode() {
-      console.log("eess6@163.com");
+      //console.log("eess6@163.com");
       if (this.loginForm.email === "") {
         this.$message.error("请先输入邮箱再点击获取验证码");
       } else {
@@ -219,18 +219,18 @@ export default {
         } else {
           console.log("经过检验格式正确");//已执行
           request.post("/email", this.loginForm).then((res) => {
-            console.log("2222222");//未执行
+            //console.log("2222222");//未执行
             if (res.code === "0") {
               this.$message({
                 showClose: true,
                 type: "success",
                 message: "验证码已发送",
               });
-              console.log("3333333");//未执行
-              this.Ecode = res.Ecode;
-              console.log(res.Ecode);
+              //console.log("3333333");//未执行
+              this.ecode = res.ecode;
+              console.log(res.ecode);
             } else {
-              console.log("4444444");//未执行
+              //console.log("4444444");//未执行
               this.$message({
                 message: res.msg,
                 type: "error",
@@ -240,7 +240,7 @@ export default {
           });
         }
       }
-      console.log("55555");//执行
+      //console.log("55555");//执行
       // 验证码倒计时
       if (!this.timer) {
         this.count = TIME_COUNT;
@@ -274,7 +274,7 @@ export default {
             this.$message.error("请填写验证码");
             return;
           }
-          if (this.loginForm.code.toLowerCase() !== this.Ecode.toLowerCase()) {
+          if (this.loginForm.code.toLowerCase() !== this.ecode.toLowerCase()) {
             this.$message.error("验证码错误");
             return;
           }
@@ -299,7 +299,8 @@ export default {
           });
         } else {
           console.log(valid, wrongstring);
-          console.log("error submit");
+          //console.log("error submit");
+          this.$message.error('请填写正确的信息');
           return false;
         }
       });
