@@ -11,7 +11,6 @@ public class UsersBo {
 
     @Override
     public String toString() {
-
         return "UsersBo{" +
                 "email='" + email + '\'' +
                 '}';

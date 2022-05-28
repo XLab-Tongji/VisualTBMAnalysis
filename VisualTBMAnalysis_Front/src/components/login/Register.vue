@@ -211,6 +211,9 @@ export default {
       } else {
         let regemail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
         if (!regemail.test(this.loginForm.email)) {
+          // this.$alert('请输入格式正确的邮箱！', '操作错误', {
+          //   confirmButtonText: '确定'
+          // });
           this.$message({
             showClose: true,
             message: "请输入格式正确有效的邮箱号!",
