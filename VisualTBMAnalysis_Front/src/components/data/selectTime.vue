@@ -732,16 +732,22 @@ export default{
       this.getData();
     },
     downloadData() {
-      for(var i = 0; i < this.all_data.length; i++) {
-        this.json_data.push({
-          "时间": this.all_data[i]['t'],
-          "推力": this.all_data[i][100005] - '0',
-          "扭矩": this.all_data[i][100004] - '0',
-          "贯入度": this.all_data[i][100395] - '0',
-          "推进速度": this.all_data[i][100002] - '0',
-          "刀盘转速": this.all_data[i][100003] - '0',
-          "掘进状态": this.state[i],
-        })
+      if(this.all_data == null || this.all_data.length == 0 || this.all_data[0].SYS_DataFile == null) {
+        this.$alert('由于服务器不稳定，获取数据失败，无法下载数据！', '错误提示', {
+          confirmButtonText: '确定',
+        });
+      }else{
+        for(var i = 0; i < this.all_data.length; i++) {
+          this.json_data.push({
+            "时间": this.all_data[i]['t'],
+            "推力": this.all_data[i][100005] - '0',
+            "扭矩": this.all_data[i][100004] - '0',
+            "贯入度": this.all_data[i][100395] - '0',
+            "推进速度": this.all_data[i][100002] - '0',
+            "刀盘转速": this.all_data[i][100003] - '0',
+            "掘进状态": this.state[i],
+          })
+        }
       }
     },
     dataFilter(arr) {
