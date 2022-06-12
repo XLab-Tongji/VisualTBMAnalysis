@@ -672,17 +672,18 @@ export default{
       const { data: res } = await this.$http
         .post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952',
           query)
-      console.log("根据时间段获取后端返回结果是:")
-      console.log(res.data)
-      this.all_data = res.data
-
       var i;
       if(res.data == null || res.data.length == 0 || res.data[0].SYS_DataFile == null) {
         console.log("时间筛选获取数据为空或失败！")
-        this.$alert('由于服务器不稳定，获取数据失败！', '错误提示', {
-          confirmButtonText: '确定',
+        this.$message({
+          message: '由于服务器不稳定，获取数据失败',
+          type: 'warning'
         });
       }else{
+        console.log("根据时间段获取后端返回结果是:")
+        console.log(res.data)
+        this.all_data = res.data
+
         this.time_point = []
         this.push_force = [] //总推力
         this.torsion = [] //扭矩
@@ -706,13 +707,13 @@ export default{
           }
         }
       }
-      console.log('this.time_point')
-      console.log(this.time_point)
-      console.log(this.push_force)
-      console.log(this.torsion)
-      console.log(this.degree)
-      console.log(this.v_push)
-      console.log(this.v_rotate)
+      // console.log('this.time_point')
+      // console.log(this.time_point)
+      // console.log(this.push_force)
+      // console.log(this.torsion)
+      // console.log(this.degree)
+      // console.log(this.v_push)
+      // console.log(this.v_rotate)
 
       this.initCharts();
     },
@@ -733,7 +734,7 @@ export default{
     },
     downloadData() {
       if(this.all_data == null || this.all_data.length == 0 || this.all_data[0].SYS_DataFile == null) {
-        this.$alert('由于服务器不稳定，获取数据失败，无法下载数据！', '错误提示', {
+        this.$alert('由于服务器不稳定，获取数据失败，无法下载数据~', '错误提示', {
           confirmButtonText: '确定',
         });
       }else{

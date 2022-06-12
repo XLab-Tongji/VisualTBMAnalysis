@@ -1,11 +1,11 @@
 import seldom
-from seldom import Steps
 import time
 
-class LoginTest(seldom.TestCase):
+class LinkTest(seldom.TestCase):
     """测试页脚链接是否可以跳转"""
 
     def test_img_link(self):
+        """同济大学官网跳转测试"""
         self.open("http://localhost:8080/login")
         self.type(xpath="//input[@type='text']",text="yangjing")
         self.type(xpath="//input[@type='password']",text="123abc")
@@ -19,6 +19,7 @@ class LoginTest(seldom.TestCase):
         self.assertTitle("同济大学")
     
     def test_text_link(self):
+        """软件学院官网跳转测试"""
         self.open("http://localhost:8080/login")
         self.type(xpath="//input[@type='text']",text="yangjing")
         self.type(xpath="//input[@type='password']",text="123abc")

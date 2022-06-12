@@ -1,5 +1,4 @@
 import seldom
-from seldom import Steps
 import time
 
 class LoginTest(seldom.TestCase):
@@ -13,6 +12,7 @@ class LoginTest(seldom.TestCase):
         self.type(xpath="//div[@id='app']/div/div[5]/div/form/div[3]/div/div/div/input",text="9999")
         self.click(xpath="//button[@type='button']")
         time.sleep(1)
+        self.screenshots()
         self.assertUrl("http://localhost:8080/intro")
     
     def test_login_neg(self):
@@ -23,6 +23,7 @@ class LoginTest(seldom.TestCase):
         self.type(xpath="//div[@id='app']/div/div[5]/div/form/div[3]/div/div/div/input",text="9999")
         self.click(xpath="//button[@type='button']")
         time.sleep(1)
+        self.screenshots()
         self.assertUrl("http://localhost:8080/login")
 
 if __name__ == '__main__':

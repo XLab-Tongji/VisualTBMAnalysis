@@ -547,84 +547,33 @@ export default{
         //结束
       });
     },
-    getCurrentTime() {
-    //获取当前时间
-      var year = new Date().getFullYear();
-      var month = new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1;
-      var day = new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate();
-      var hour = new Date().getHours() < 10 ? "0" + new Date().getHours() : new Date().getHours();
-      var minute = new Date().getMinutes() < 10 ? "0" + new Date().getMinutes() : new Date().getMinutes();
-      var second = new Date().getSeconds() < 10 ? "0" + new Date().getSeconds() : new Date().getSeconds();
-
-      this.cur_time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
-
-      //20min前的时间点,待完善
-      if(minute > 19) {
-        minute = minute - 20
-      }else{
-        minute = 40 + (minute - "0")
-        hour = hour - 1
-      }
-      if(minute < 10) minute = "0" + minute
-      this.start_time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
-
-      //20min后的时间点,待完善
-      if(minute < 20) {
-        minute = minute + 40
-      }else{
-        minute = (minute - "0") - 20
-        hour = hour + 1
-      }
-      if(minute < 10) minute = "0" + minute
-      this.end_time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
-    },
     async getRecentData () {
     //获取当前时间
       var year = new Date().getFullYear();
-      var month = new Date().getMonth() + 1 < 10 ? "0" + new Date().getMonth() + 1 : new Date().getMonth() + 1;
+      var month = new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
       var day = new Date().getDate() < 10 ? "0" + new Date().getDate() : new Date().getDate();
       var hour = new Date().getHours() < 10 ? "0" + new Date().getHours() : new Date().getHours();
       var minute = new Date().getMinutes() < 10 ? "0" + new Date().getMinutes() : new Date().getMinutes();
       var second = new Date().getSeconds() < 10 ? "0" + new Date().getSeconds() : new Date().getSeconds();
 
       this.cur_time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
-
-      //20min后的时间点,待完善
-      // if(minute<40){
-      //     minute = minute+20
-      // }else{
-      //     minute = (minute - "0") - 40
-      //     hour = hour + 1
-      // }
-      // if(minute<10) minute="0"+minute
-      // this.end_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
-      //此步完成后时间是20min后
-
-      //20min前的时间点,（也就是当前存储的时间的40min前）待完善
-      // if(minute>39){
-      //     minute = minute-40
-      // }else{
-      //     minute = 20 + (minute - "0")
-      //     hour = hour - 1
-      // }
-      // if(minute<10) minute="0"+minute
-      // this.start_time =  year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second
+      console.log(this.cur_time)
 
       //一个小时前的时间点
-      hour = hour - 1
+      hour = new Date().getHours() < 10 ? "0" + (new Date().getHours() - 1) : (new Date().getHours() - 1);
       this.start_time = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second
+      console.log(this.start_time)
 
       //开始发起请求
       let query = {
         where: `([t]>='${this.start_time}' and [t]<='${this.cur_time}')`
+        //这个接口没有数据的话也会提示“括弧附近有语法错误”
       };
       const { data: res } = await this.$http
-        .post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952',
-          query)
+        .post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952', query)
 
-      if(res.data == null || res.data.length == 0) {
+      if(res.data == null || res.data.length == 0 || res.data[0].SYS_DataFile == null) {
         console.log("实时信息获取数据为空或失败！开始渲染假数据")
-
         this.initCharts();
         return
       }
@@ -662,59 +611,10 @@ export default{
         this.cur_state = '掘进'
       }
       this.initCharts();
-    },
-
-    //由于后端数据更新按小时更新，因此本函数作废
-    // async getLatestData () {
-    //   console.log("getLatestData执行！")
-    //   this.getCurrentTime()
-    //   console.log("获取最新的一条数据的请求时间为:")
-    //   console.log(this.cur_time)
-    //   console.log(this.end_time)
-
-    //   let query={
-    //     where:`([t]>='${this.cur_time}' and [t]<='${this.end_time}')`
-    //   };
-    //     const { data: res } =await this.$http.
-    //     post('/api/universal/Monitoring/MonDataEqu_shushui/where?prj=shushui&dataset=3835049491879165952&increase=false&pagesize=1&pageindex=1',
-    //     query)
-    //     console.log("最新的一个数据返回结果是:")
-    //     console.log(res.data)
-
-    //   if(res.data.length == 0|| res.data == null){
-    //     console.log("没有最新数据！")
-    //     return
-    //   }
-
-  //   if(res.data!=this.all_data[this.all_data.length-1]){
-  //     //this.push_force.shift()
-  //     this.push_force.push(res.data[0][100005]-'0')
-  //     //this.time_point.shift()
-  //     this.time_point.push(res.data[0]['t'])
-  //     //this.torsion.shift()
-  //     this.torsion.push(res.data[0][100004]-'0')
-  //     //this.degree.shift()
-  //     this.degree.push(res.data[0][100395]-'0')
-  //     //this.v_push.shift()
-  //     this.v_push.push(res.data[0][100002]-'0')
-  //     //this.v_rotate.shift()
-  //     this.v_rotate.push(res.data[0][100003]-'0')
-  //     //获取当前环号
-  //     this.cur_loop=res.data[0][100001]-"0"
-  //     //获取当前掘进状态
-  //     if(res.data[0][100007]>0){
-  //         this.cur_state='拼装'
-  //     }else{
-  //         this.cur_state='掘进' //100006>0 或者 Wm>0
-  //     }
-  //   }
-  //   this.initCharts();
-  // },
+    }
   },
   created () {
-    // this.timer = setInterval(() => {
-    //   this.getLatestData()
-    // }, 10000);
+
   },
   mounted () {
     this.getRecentData();

@@ -26,7 +26,7 @@ public class UserController {
      * @return 返回
      */
     @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST )
     public Result<?> login(@RequestBody UserBean user) {
         return userService.selectUserName(user);
     }
