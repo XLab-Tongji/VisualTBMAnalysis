@@ -243,6 +243,7 @@ export default {
   background-image: none !important;
   border-radius: 4px !important;
   border: 1px solid #4593c4 !important;
+  color: #fdfeff !important;
 }
 
 h2 {

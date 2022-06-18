@@ -61,17 +61,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Result<?> addUser(@RequestBody UserBean user) {
-        UserBean res = userMapper.selectOne(Wrappers.<UserBean>lambdaQuery().eq(UserBean::getUsername, user.getUsername()));
+        UserBean res = userMapper.selectOne(Wrappers.<UserBean>lambdaQuery()
+                        .eq(UserBean::getUsername, user.getUsername()));
         if (res != null) {
             return Result.error("-1", "用户名重复");
         }
         userMapper.insert(user);
         return Result.success();
-    }
-
-    @Override
-    public Result<?> getById(@PathVariable Long id) {
-        return Result.success(userMapper.selectById(id));
     }
 
     @Override
@@ -84,11 +80,11 @@ public class UserServiceImpl implements UserService {
             return Result.error("-1", "该邮箱已被注册");
         }
         // 生成随机数
-        String code = randomCode();
+        String email_code = randomCode();
         // 主题
         simpleMailMessage.setSubject("泥水盾构可视化平台验证码邮件");
         // 内容
-        simpleMailMessage.setText("本次请求的邮箱验证码是：" + code+"，请及时输入。" );
+        simpleMailMessage.setText("本次请求的邮箱验证码是：" + email_code+"，请及时输入。" );
         simpleMailMessage.setFrom("1685757000@qq.com");
         // 收件人
         simpleMailMessage.setTo(user.getEmail());
@@ -100,7 +96,7 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return Result.error("-1", "验证码发送失败");
         }
-        result.setEcode(code);
+        result.setEcode(email_code);
         result.setCode("0");
         result.setMsg("成功");
         return result;
@@ -121,12 +117,6 @@ public class UserServiceImpl implements UserService {
             str.append(random.nextInt(1));
         }
         return str.toString();
-    }
-
-    @Override
-    public Result<?> deleteUser(@PathVariable Long id)
-    {
-        return Result.success(userMapper.deleteById(id));
     }
 
 }

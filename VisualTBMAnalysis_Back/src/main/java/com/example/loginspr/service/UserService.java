@@ -36,18 +36,5 @@ public interface UserService {
      * @return 返回结果
      */
     public String randomCode();
-    /**
-     * 通过id返回结果
-     * @author Wenyan Li
-     * @param id 用户对应 id
-     * @return 返回结果
-     */
-    public Result<?> getById(@PathVariable Long id);
-    /**
-     * 注销用户
-     * @author Wenyan Li
-     * @param id 用户对应 id
-     * @return 返回结果
-     */
-    public Result<?> deleteUser(@PathVariable Long id);
+
 }

@@ -55,27 +55,4 @@ public class UserController {
         return userService.email(user);
     }
 
-    /**
-     * 确认当前用户是否合法
-     * @author Wenyan Li
-     * @param id 用户id
-     * @return 返回
-     */
-    @ResponseBody
-    @RequestMapping(value = "/user/{id}",method = RequestMethod.GET)
-    public Result<?> getById(@PathVariable Long id){
-        return userService.getById(id);
-    }
-
-    /**
-     * 删除用户
-     * @author Wenyan Li
-     * @param id 用户id
-     * @return 返回
-     */
-    @ResponseBody
-    @RequestMapping(value="/deleteUser/{id}", method = RequestMethod.POST)
-    public Result<?> deleteUser(@PathVariable Long id){
-        return userService.deleteUser(id);
-    }
 }
