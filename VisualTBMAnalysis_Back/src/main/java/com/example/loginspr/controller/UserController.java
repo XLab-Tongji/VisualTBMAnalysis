@@ -43,7 +43,6 @@ public class UserController {
         return userService.addUser(user);
     }
 
-
     /**
      * 邮箱验证
      * @author Wenyan Li
