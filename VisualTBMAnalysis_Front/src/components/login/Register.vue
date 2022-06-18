@@ -21,8 +21,8 @@
       class="particle"
     />
 
-    <div align="center" style="position:relative;top:15px">  <img src="@/assets/image/title1.png"  style="width:650px;" /></div>
-  <div align="center" style="position:relative;bottom:30px">  <img src="@/assets/image/title2.png"  style="width:530px;" /></div>
+    <div align="center" style="position:relative;top:45px">  <img src="@/assets/image/title1.png"  style="width:650px;" /></div>
+  <div align="center" style="position:relative;bottom:-20px">  <img src="@/assets/image/title2.png"  style="width:530px;" /></div>
     <dv-border-box-10 :color="['#3fb1e3', '#96dee8']" class="login_box2">
       <!-- 表单区域 -->
       <el-form
@@ -32,9 +32,9 @@
         label-width="0px"
         size="medium"
         class="login_form2"
+        style="margin-top:-20px"
       >
-        <p align="center" style="color: #d8e2e7;
-  font-size: 18px;">请填写您的注册信息</p>
+        <p align="center" class="info_text" style="margin-bottom:10px">请填写您的注册信息</p>
 
         <!-- 用户名 -->
         <el-form-item prop="username">
@@ -62,8 +62,8 @@
             style="width: 50%; "
             placeholder="请输入验证码"
           ></el-input>
-          <el-button @click="getEmailCode()" :disabled="!show" style="width: 40%; float: right; ">
-            <span v-show="show">发送验证码</span>
+          <el-button type="text" @click="getEmailCode()" :disabled="!show" style="width: 30%; float: right; ">
+            <span v-show="show" class="info_text" style="margin-left:-50px">点击发送验证码</span>
             <span v-show="!show" class="count">{{ count }} s后可点击重发</span>
           </el-button>
         </el-form-item>
@@ -90,11 +90,16 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="text" @click="toLogin">已有账号，登陆</el-button>
-          <el-button type="primary" @click="Register('loginForm')"
-            >注册</el-button
-          >
-          <el-button type="info" @click="resetloginForm">重置</el-button>
+          <el-container>
+            <el-button type="text"  @click="toLogin">已有账号，登陆</el-button>
+          <dv-decoration-11 style="width:130px;height:50px;">
+            <el-button type="text" class="info_text" @click="Register('loginForm')">注册</el-button></dv-decoration-11>
+          <dv-decoration-11 style="width:130px;height:50px;">
+            <el-button type="text" class="info_text" @click="resetloginForm">重置</el-button></dv-decoration-11>
+          </el-container>
+          <!-- <el-button type="text" @click="toLogin">已有账号，登陆</el-button>
+          <el-button type="primary" @click="Register('loginForm')">注册</el-button>
+          <el-button type="info" @click="resetloginForm">重置</el-button> -->
         </el-form-item>
       </el-form>
       <!-- </el-form> -->
@@ -323,7 +328,7 @@ export default {
 
 .login_box2 {
   width: 450px;
-  height: 415px;
+  height: 425px;
   // background-color: #ffffff42;
   opacity: 0.9;
   border-radius: 10px;
@@ -333,6 +338,13 @@ export default {
   transform: translate(-50%, -29%);
   z-index: 1;
   border: 1px solid #d8d2d2;
+}
+
+/deep/ .el-input__inner{
+  background-color: #03151d4f !important;
+  background-image: none !important;
+  border-radius: 4px !important;
+  border: 1px solid #4593c4 !important;
 }
 
 .login_form2 {
@@ -354,6 +366,12 @@ export default {
   top: 0;
   width: 100%;
   background: #ffffff00;
+}
+
+.info_text{
+  color: #96dee8;
+  font-family: 'zcool_title';
+  font-size: 22px;
 }
 
 h2 {

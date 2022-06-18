@@ -59,9 +59,15 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="Login">登录</el-button>
+          <el-container>
+          <dv-decoration-11 style="width:130px;height:50px;">
+            <el-button type="text" class="info_text" @click="Login">登录</el-button></dv-decoration-11>
+          <dv-decoration-11 style="width:130px;height:50px;">
+            <el-button type="text" class="info_text" @click="toRegister">注册</el-button></dv-decoration-11>
+          </el-container>
+          <!-- <el-button type="primary" @click="Login">登录</el-button>
           <el-button type="primary" @click="toRegister">注册</el-button>
-          <el-button type="info" @click="resetloginForm">重置</el-button>
+          <el-button type="info" @click="resetloginForm">重置</el-button> -->
         </el-form-item>
       </el-form>
     </dv-border-box-10>
@@ -219,11 +225,24 @@ export default {
   justify-content: flex-end;
 }
 
+.info_text{
+  color: #96dee8;
+  font-family: 'zcool_title';
+  font-size: 22px;
+}
+
 .particle {
   position: fixed;
   top: 0;
   width: 100%;
   background: #ffffff00;
+}
+
+/deep/ .el-input__inner{
+  background-color: #03151d4f !important;
+  background-image: none !important;
+  border-radius: 4px !important;
+  border: 1px solid #4593c4 !important;
 }
 
 h2 {
