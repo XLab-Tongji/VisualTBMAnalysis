@@ -1,29 +1,15 @@
 package com.example.loginspr.serviceImpl;
 
 import com.example.loginspr.LoginsprApplication;
-import com.example.loginspr.common.Result;
 import com.example.loginspr.service.UserService;
 import com.example.loginspr.bean.UsersBo;
 import com.example.loginspr.bean.UserBean;
-import javafx.application.Application;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import com.example.loginspr.bean.UserBean;
-import org.junit.jupiter.api.Test;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -3,7 +3,6 @@ package com.example.loginspr.service;
 import com.example.loginspr.bean.UserBean;
 import com.example.loginspr.bean.UsersBo;
 import com.example.loginspr.common.Result;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @author Wenyan Li
@@ -36,5 +35,5 @@ public interface UserService {
      * @return 返回结果
      */
     public String randomCode();
-
 }
+
